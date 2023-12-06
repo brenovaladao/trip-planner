@@ -22,9 +22,15 @@ public protocol FlightSearchViewModeling: ObservableObject {
 }
 
 public final class FlightSearchViewModel: FlightSearchViewModeling {
-    @Published private(set) public var cityNames: [String] = []
-    @Published private(set) public var isLoading: Bool = false
-    @Published private(set) public var errorMessage: String?
+    @Published private(set) public var cityNames: [String] = [] {
+        didSet { print("cn: \(cityNames)") }
+    }
+    @Published private(set) public var isLoading: Bool = false {
+        didSet { print("i: \(isLoading)") }
+    }
+    @Published private(set) public var errorMessage: String? {
+        didSet { print("e: \(errorMessage ?? "nil")") }
+    }
 
     private let searchType: SearchType
     private let citySelectionSubject: PassthroughSubject<CitySelection, Never>
@@ -51,10 +57,14 @@ public extension FlightSearchViewModel {
     
     func loadCityNames() -> Task<Void, Never> {
         Task { [weak self] in
-            guard let self, !Task.isCancelled else { return }
+            guard let self, !Task.isCancelled else { 
+                return
+            }
             
-            defer { isLoading = false }
-            isLoading = !cityNames.isEmpty
+            defer {
+                isLoading = false
+            }
+            isLoading = cityNames.isEmpty
             errorMessage = nil
             
             do {

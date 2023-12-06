@@ -13,15 +13,17 @@ import XCTest
 final class FlightSearchViewModelTests: XCTestCase {
     private var cancellables: Set<AnyCancellable> = []
     
-    func test_init_hasNoSideEffects() {
-        let (sut, spy) = makeSUT()
+    func test_init_hasNoSideEffects() async {
+        let citySelectionSubject = PassthroughSubject<CitySelection, Never>()
+        let (sut, spy) = makeSUT(citySelectionSubject: citySelectionSubject)
         
-        expect(
+        await expect(
             sut,
             cityNamesOutputs: [[]],
             isLoadingOutputs: [false],
             errorMessageOutputs: [nil],
             locationSelectedOutputs: nil,
+            citySelectionSubject: citySelectionSubject,
             actions: {},
             asserting: {
                 XCTAssertEqual(spy.messages, [])
@@ -29,12 +31,12 @@ final class FlightSearchViewModelTests: XCTestCase {
         )
     }
     
-    func test_citySelected_emitsValuesOnPublisher() {
+    func test_citySelected_emitsValuesOnInjectedPublisher() async {
         let citySelectionSubject = PassthroughSubject<CitySelection, Never>()
         let citySelection = CitySelection(type: .departure, cityName: "a city name")
         let (sut, spy) = makeSUT(citySelectionSubject: citySelectionSubject)
         
-        expect(
+        await expect(
             sut,
             locationSelectedOutputs: [citySelection],
             citySelectionSubject: citySelectionSubject,
@@ -45,6 +47,25 @@ final class FlightSearchViewModelTests: XCTestCase {
                 XCTAssertEqual(spy.messages, [])
             }
         )
+    }
+    
+    func test_loadCityNames_succeedsOnNonEmptyListOfCityNames() async {
+        let cityNames = ["Cape Town", "London", "Tokyo"]
+        let (sut, spy) = makeSUT(mockResult: .success(cityNames))
+        
+        await expect(
+            sut,
+            cityNamesOutputs: [[], cityNames],
+            isLoadingOutputs: [false, true, false],
+            errorMessageOutputs: [nil, nil],
+            actions: {
+                await sut.loadCityNames().value
+            },
+            asserting: {
+                XCTAssertEqual(spy.messages, [.fetchCityNames])
+            }
+        )
+        
     }
 }
 
@@ -76,12 +97,12 @@ private extension FlightSearchViewModelTests {
         errorMessageOutputs: [String?] = [nil],
         locationSelectedOutputs: [CitySelection]? = nil,
         citySelectionSubject: PassthroughSubject<CitySelection, Never> = .init(),
-        actions: () -> Void,
+        actions: () async  -> Void,
         asserting: () -> Void
-    ) {
+    ) async {
         let cityNamesExp = expectation(description: "cityNames expectation")
         let isLoadingExp = expectation(description: "isLoading expectation")
-        let errorExp = expectation(description: "errorMessage expectation")
+        let errorMessageExp = expectation(description: "errorMessage expectation")
         let citySelectionExp = expectation(description: "citySelection expectation")
 
         cancellables = [
@@ -90,14 +111,17 @@ private extension FlightSearchViewModelTests {
             sut.$isLoading
                 .assertOutput(matches: isLoadingOutputs, expectation: isLoadingExp),
             sut.$errorMessage
-                .assertOutput(matches: errorMessageOutputs, expectation: errorExp),
+                .assertOutput(matches: errorMessageOutputs, expectation: errorMessageExp),
             citySelectionSubject
                 .assertOutput(matches: locationSelectedOutputs, expectation: citySelectionExp)
         ]
         
-        actions()
+        await actions()
         
-        waitForExpectations(timeout: 1)
+        await fulfillment(
+            of: [cityNamesExp, isLoadingExp, errorMessageExp, citySelectionExp],
+            timeout: 1.0
+        )
         
         asserting()
     }
