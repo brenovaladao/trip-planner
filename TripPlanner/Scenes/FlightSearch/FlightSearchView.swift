@@ -15,11 +15,14 @@ struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
     }
     
     var body: some View {
-        NavigationView {
-            VStack(alignment: .leading, spacing: 0) {
-                Text("Hello, World!")
-            }
-            .navigationTitle(viewModel.title)
+        VStack(alignment: .leading, spacing: 0) {
+            Text("Hello, World!")
+            
+            Button(action: {
+                viewModel.citySelected("test")
+            }, label: {
+                Text("navigate back")
+            })
         }
     }
 }

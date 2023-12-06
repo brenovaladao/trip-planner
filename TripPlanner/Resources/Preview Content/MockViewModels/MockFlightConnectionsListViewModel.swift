@@ -9,4 +9,8 @@ import Foundation
 
 final class MockFlightConnectionsListViewModel: FlightConnectionsListViewModeling {
     init() {}
+    
+    func selectDepartureTapped() {}
+    
+    func selectDestinationTapped() {}
 }

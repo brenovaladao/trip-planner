@@ -19,14 +19,14 @@ public struct FlightConnectionsListView<ViewModel: FlightConnectionsListViewMode
             VStack(alignment: .leading, spacing: 8) {
                 Group {
                     Button(action: {
-                        print("selected")
+                        viewModel.selectDepartureTapped()
                     }, label: {
                         Text("Departure:")
                             .frame(maxWidth: .infinity)
                     })
                     
                     Button(action: {
-                        print("selected")
+                        viewModel.selectDestinationTapped()
                     }, label: {
                         Text("Destination:")
                             .frame(maxWidth: .infinity)
