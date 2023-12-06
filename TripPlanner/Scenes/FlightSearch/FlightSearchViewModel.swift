@@ -44,7 +44,9 @@ public final class FlightSearchViewModel: FlightSearchViewModeling {
 @MainActor
 public extension FlightSearchViewModel {
     func citySelected(_ name: String) {
-        citySelectionSubject.send((searchType, name))
+        citySelectionSubject.send(
+            CitySelection(type: searchType, cityName: name)
+        )
     }
     
     func loadCityNames() -> Task<Void, Never> {
