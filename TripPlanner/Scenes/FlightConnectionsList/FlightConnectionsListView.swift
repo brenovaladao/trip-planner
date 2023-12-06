@@ -21,14 +21,14 @@ public struct FlightConnectionsListView<ViewModel: FlightConnectionsListViewMode
                     Button(action: {
                         viewModel.selectDepartureTapped()
                     }, label: {
-                        Text("Departure:")
+                        Text("Departure: \(viewModel.departure ?? "")")
                             .frame(maxWidth: .infinity)
                     })
                     
                     Button(action: {
                         viewModel.selectDestinationTapped()
                     }, label: {
-                        Text("Destination:")
+                        Text("Destination: \(viewModel.destination ?? "")")
                             .frame(maxWidth: .infinity)
                     })
                 }

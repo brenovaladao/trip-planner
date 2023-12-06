@@ -9,7 +9,10 @@ import Foundation
 
 final class MockFlightConnectionsListViewModel: FlightConnectionsListViewModeling {
     init() {}
-    
+
+    var departure: String? = "Tokyo"
+    var destination: String? = "Porto"
+
     func selectDepartureTapped() {}
     
     func selectDestinationTapped() {}

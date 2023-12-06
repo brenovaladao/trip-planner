@@ -11,11 +11,16 @@ import SwiftUI
 
 @MainActor
 public protocol FlightConnectionsListViewModeling: ObservableObject {
+    @MainActor var departure: String? { get }
+    @MainActor var destination: String? { get }
+
     func selectDepartureTapped()
     func selectDestinationTapped()
 }
 
 final public class FlightConnectionsListViewModel: FlightConnectionsListViewModeling {
+    @Published private(set) public var departure: String?
+    @Published private(set) public var destination: String?
     
     private let citySelectionPublisher: any Publisher<CitySelection, Never>
     @Binding private var navigationPath: NavigationPath
@@ -46,9 +51,19 @@ private extension FlightConnectionsListViewModel {
         citySelectionPublisher
             .eraseToAnyPublisher()
             .receive(on: DispatchQueue.main)
-            .sink { (type, name) in
-                print(type.displayRepresentation, name)
+            .sink { [weak self] citySelection in
+                guard let self else { return }
+                handleCitySelection(citySelection)
             }
             .store(in: &cancellables)
+    }
+    
+    func handleCitySelection(_ citySelection: CitySelection) {
+        switch citySelection.type {
+        case .departure:
+            departure = citySelection.cityName
+        case .destination:
+            destination = citySelection.cityName
+        }
     }
 }

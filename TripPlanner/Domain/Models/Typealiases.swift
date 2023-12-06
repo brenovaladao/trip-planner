@@ -7,4 +7,4 @@
 
 import Foundation
 
-public typealias CitySelection = (SearchType, cityName: String)
+public typealias CitySelection = (type: SearchType, cityName: String)
