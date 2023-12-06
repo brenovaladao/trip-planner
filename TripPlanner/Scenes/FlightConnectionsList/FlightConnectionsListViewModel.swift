@@ -11,8 +11,8 @@ import SwiftUI
 
 @MainActor
 public protocol FlightConnectionsListViewModeling: ObservableObject {
-    @MainActor var departure: String? { get }
-    @MainActor var destination: String? { get }
+    var departure: String? { get }
+    var destination: String? { get }
 
     func selectDepartureTapped()
     func selectDestinationTapped()

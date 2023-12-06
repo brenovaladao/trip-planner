@@ -11,9 +11,9 @@ import SwiftUI
 
 @MainActor
 public protocol FlightSearchViewModeling: ObservableObject {
-    @MainActor var cityNames: [String] { get }
-    @MainActor var isLoading: Bool { get }
-    @MainActor var errorMessage: String? { get }
+    var cityNames: [String] { get }
+    var isLoading: Bool { get }
+    var errorMessage: String? { get }
 
     func citySelected(_ name: String)
     
