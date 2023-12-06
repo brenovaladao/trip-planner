@@ -11,7 +11,9 @@ import SwiftUI
 struct TripPlannerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            FlightConnectionsListView(
+                viewModel: Dependencies.makeFlightConnectionsListViewModel()
+            )
         }
     }
 }

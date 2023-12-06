@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		40F688DD2B207C5E0021E50D /* TripPlannerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F688DC2B207C5E0021E50D /* TripPlannerApp.swift */; };
-		40F688DF2B207C5E0021E50D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F688DE2B207C5E0021E50D /* ContentView.swift */; };
 		40F688E12B207C600021E50D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40F688E02B207C600021E50D /* Assets.xcassets */; };
 		40F688E52B207C600021E50D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40F688E42B207C600021E50D /* Preview Assets.xcassets */; };
 		40F689102B2084A60021E50D /* FlightConnectionsFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F6890F2B2084A60021E50D /* FlightConnectionsFetching.swift */; };
@@ -22,6 +21,10 @@
 		40F689242B20910A0021E50D /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F689232B20910A0021E50D /* MockURLProtocol.swift */; };
 		40F689262B2093190021E50D /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F689252B2093190021E50D /* Helpers.swift */; };
 		40F6892B2B20A24D0021E50D /* XCTestCase+MemoryLeaksTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F6892A2B20A24D0021E50D /* XCTestCase+MemoryLeaksTracker.swift */; };
+		40F6892D2B20A2DC0021E50D /* FlightConnectionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F6892C2B20A2DC0021E50D /* FlightConnectionsListView.swift */; };
+		40F689302B20A3BA0021E50D /* FlightConnectionsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F6892F2B20A3BA0021E50D /* FlightConnectionsListViewModel.swift */; };
+		40F689322B20A99B0021E50D /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F689312B20A99B0021E50D /* Dependencies.swift */; };
+		40F689352B20AB8C0021E50D /* MockFlightConnectionsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F689342B20AB8C0021E50D /* MockFlightConnectionsListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +40,6 @@
 /* Begin PBXFileReference section */
 		40F688D92B207C5E0021E50D /* TripPlanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripPlanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40F688DC2B207C5E0021E50D /* TripPlannerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripPlannerApp.swift; sourceTree = "<group>"; };
-		40F688DE2B207C5E0021E50D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		40F688E02B207C600021E50D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		40F688E22B207C600021E50D /* TripPlanner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TripPlanner.entitlements; sourceTree = "<group>"; };
 		40F688E42B207C600021E50D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -54,6 +56,10 @@
 		40F689232B20910A0021E50D /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		40F689252B2093190021E50D /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		40F6892A2B20A24D0021E50D /* XCTestCase+MemoryLeaksTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeaksTracker.swift"; sourceTree = "<group>"; };
+		40F6892C2B20A2DC0021E50D /* FlightConnectionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightConnectionsListView.swift; sourceTree = "<group>"; };
+		40F6892F2B20A3BA0021E50D /* FlightConnectionsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightConnectionsListViewModel.swift; sourceTree = "<group>"; };
+		40F689312B20A99B0021E50D /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
+		40F689342B20AB8C0021E50D /* MockFlightConnectionsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlightConnectionsListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +103,6 @@
 			children = (
 				40F689072B207D030021E50D /* App */,
 				40F6890D2B2084700021E50D /* Domain */,
-				40F6890A2B207D6C0021E50D /* Entitlements */,
 				40F689282B20A16A0021E50D /* Networking */,
 				40F689082B207D0B0021E50D /* Resources */,
 				40F689092B207D280021E50D /* Scenes */,
@@ -108,6 +113,7 @@
 		40F688E32B207C600021E50D /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				40F689332B20AB7E0021E50D /* MockViewModels */,
 				40F688E42B207C600021E50D /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
@@ -126,6 +132,8 @@
 		40F689072B207D030021E50D /* App */ = {
 			isa = PBXGroup;
 			children = (
+				40F688E22B207C600021E50D /* TripPlanner.entitlements */,
+				40F689312B20A99B0021E50D /* Dependencies.swift */,
 				40F688DC2B207C5E0021E50D /* TripPlannerApp.swift */,
 			);
 			path = App;
@@ -143,17 +151,10 @@
 		40F689092B207D280021E50D /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				40F688DE2B207C5E0021E50D /* ContentView.swift */,
+				40F6892E2B20A3340021E50D /* FlightConnectionsList */,
+				40F689362B20B0BF0021E50D /* FlightSearch */,
 			);
 			path = Scenes;
-			sourceTree = "<group>";
-		};
-		40F6890A2B207D6C0021E50D /* Entitlements */ = {
-			isa = PBXGroup;
-			children = (
-				40F688E22B207C600021E50D /* TripPlanner.entitlements */,
-			);
-			path = Entitlements;
 			sourceTree = "<group>";
 		};
 		40F6890D2B2084700021E50D /* Domain */ = {
@@ -225,6 +226,30 @@
 				40F689112B20853D0021E50D /* RemoteFlightConnectionsLoader.swift */,
 			);
 			path = RemoteFlightConnections;
+			sourceTree = "<group>";
+		};
+		40F6892E2B20A3340021E50D /* FlightConnectionsList */ = {
+			isa = PBXGroup;
+			children = (
+				40F6892C2B20A2DC0021E50D /* FlightConnectionsListView.swift */,
+				40F6892F2B20A3BA0021E50D /* FlightConnectionsListViewModel.swift */,
+			);
+			path = FlightConnectionsList;
+			sourceTree = "<group>";
+		};
+		40F689332B20AB7E0021E50D /* MockViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				40F689342B20AB8C0021E50D /* MockFlightConnectionsListViewModel.swift */,
+			);
+			path = MockViewModels;
+			sourceTree = "<group>";
+		};
+		40F689362B20B0BF0021E50D /* FlightSearch */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FlightSearch;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -330,10 +355,13 @@
 			files = (
 				40F689192B2086A30021E50D /* Coordinate.swift in Sources */,
 				40F689102B2084A60021E50D /* FlightConnectionsFetching.swift in Sources */,
-				40F688DF2B207C5E0021E50D /* ContentView.swift in Sources */,
+				40F689352B20AB8C0021E50D /* MockFlightConnectionsListViewModel.swift in Sources */,
 				40F689152B20856F0021E50D /* FlightConnection.swift in Sources */,
 				40F689122B20853D0021E50D /* RemoteFlightConnectionsLoader.swift in Sources */,
+				40F689302B20A3BA0021E50D /* FlightConnectionsListViewModel.swift in Sources */,
 				40F689222B208C620021E50D /* HTTPURLResponse.swift in Sources */,
+				40F689322B20A99B0021E50D /* Dependencies.swift in Sources */,
+				40F6892D2B20A2DC0021E50D /* FlightConnectionsListView.swift in Sources */,
 				40F688DD2B207C5E0021E50D /* TripPlannerApp.swift in Sources */,
 				40F6891F2B2089F00021E50D /* FlightConnectionsMapper.swift in Sources */,
 				40F689172B20869E0021E50D /* CoordinatesInfo.swift in Sources */,
@@ -485,7 +513,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = TripPlanner/Entitlements/TripPlanner.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TripPlanner/App/TripPlanner.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TripPlanner/Resources/Preview Content\"";
@@ -525,7 +553,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = TripPlanner/Entitlements/TripPlanner.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TripPlanner/App/TripPlanner.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TripPlanner/Resources/Preview Content\"";
