@@ -64,7 +64,7 @@ struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
 #Preview {
     NavigationView {
         FlightSearchView(
-            viewModel: MockFlightSearchViewModel()
+            viewModel: MockFlightSearchViewModel(cityNames: ["Porto", "London"])
         )
         .navigationTitle("Preview Title")
         .navigationBarTitleDisplayMode(.inline)
