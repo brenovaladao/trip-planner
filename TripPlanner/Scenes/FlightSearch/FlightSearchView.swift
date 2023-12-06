@@ -17,12 +17,21 @@ struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
     var body: some View {
         content
             .onAppear { viewModel.loadCityNames() }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(
+                        action: { viewModel.loadCityNames() },
+                        label: { Image(systemName: "arrow.clockwise") }
+                    )
+                }
+            }
     }
     
     @ViewBuilder
     private var content: some View {
         if let errorMessage = viewModel.errorMessage {
             Text(errorMessage)
+                .multilineTextAlignment(.center)
                 .padding()
         } else {
             if viewModel.isLoading {
@@ -37,13 +46,19 @@ struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
                     }
                     .padding()
                 }
+                
+                Spacer()
             }
         }
     }
 }
 
 #Preview {
-    FlightSearchView(
-        viewModel: MockFlightSearchViewModel()
-    )
+    NavigationView {
+        FlightSearchView(
+            viewModel: MockFlightSearchViewModel()
+        )
+        .navigationTitle("Preview Title")
+        .navigationBarTitleDisplayMode(.inline)
+    }
 }
