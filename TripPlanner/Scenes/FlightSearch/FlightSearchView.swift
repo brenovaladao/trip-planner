@@ -39,15 +39,15 @@ struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
                     .padding()
             }
             
-            LazyVStack(alignment: .leading, spacing: 0) {
-                ForEach(viewModel.cityNames, id: \.self) { name in
-                    HStack(alignment: .center, spacing: 0) {
-                        Text(name)
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 0) {
+                    ForEach(viewModel.cityNames, id: \.self) { name in
+                        HStack(alignment: .center, spacing: 0) {
+                            Text(name)
+                        }
+                        .padding()
                     }
-                    .padding()
                 }
-                
-                Spacer()
             }
         }
     }
