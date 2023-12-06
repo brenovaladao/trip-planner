@@ -1,5 +1,5 @@
 //
-//  RemoteFlightConnectionsLoader.swift.swift
+//  RemoteFlightConnectionsService.swift.swift
 //  TripPlanner
 //
 //  Created by Breno Valadão on 06/12/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RemoteFlightConnectionsLoader {
+public final class RemoteFlightConnectionsService {
     private let urlSession: URLSession
     private let endpoint: URL
     
@@ -19,7 +19,7 @@ public final class RemoteFlightConnectionsLoader {
     private struct UnexpectedValuesError: Error {}
 }
 
-extension RemoteFlightConnectionsLoader: FlightConnectionsFetching {
+extension RemoteFlightConnectionsService: FlightConnectionsFetching {
     public func fetchConnections() async throws -> [FlightConnection] {
         let (data, response) = try await urlSession.data(from: endpoint)
         guard let response = response as? HTTPURLResponse else {
