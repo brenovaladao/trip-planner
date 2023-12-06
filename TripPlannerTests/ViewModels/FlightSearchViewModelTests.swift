@@ -143,12 +143,13 @@ final class FlightSearchViewModelTests: XCTestCase {
 
         await expect(
             sut,
+            isLoadingOutputs: [false, true, false],
             actions: {
                 let task = sut.loadCityNames()
                 task.cancel()
                 await task.value
             },
-            asserting: { XCTAssertEqual(spy.messages, []) }
+            asserting: { XCTAssertEqual(spy.messages, [.fetchCityNames]) }
         )
     }
 }

@@ -51,7 +51,7 @@ public extension FlightSearchViewModel {
     
     func loadCityNames() -> Task<Void, Never> {
         Task { [weak self] in
-            guard let self, !Task.isCancelled else { 
+            guard let self else {
                 return
             }
             
@@ -60,10 +60,16 @@ public extension FlightSearchViewModel {
             resetErrorMessageIfNeeded()
             
             do {
-                cityNames = try await cityNamesService.fetchCityNames(searchType: searchType)
+                let cityNames = try await cityNamesService.fetchCityNames(searchType: searchType)
+                
+                guard !Task.isCancelled else { return }
+                
+                self.cityNames = cityNames
+                
                 if cityNames.isEmpty {
                     errorMessage = "No cities found"
                 }
+            } catch is CancellationError {
             } catch {
                 errorMessage = "An error happened when loading \(error.localizedDescription)"
             }
