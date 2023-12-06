@@ -15,13 +15,48 @@ final class CityNamesServiceTests: XCTestCase {
         XCTAssertTrue(spy.messages.isEmpty)
     }
     
-    func test_fetchCityNames_emptyOnEmptyMock() async throws {
+    func test_fetchCityNames_emptyOnEmptyResult() async throws {
         let (sut, spy) = makeSUT()
         
         let names = try await sut.fetchCityNames(searchType: .departure)
         
         XCTAssertEqual(spy.messages, [.fetchConnections])
         XCTAssertTrue(names.isEmpty)
+    }
+    
+    func test_fetchCityNames_succeedsOnValidResponseForDepartureSearchType() async throws {
+        let flightConnections = [aFligthConnection(), anotherFlightConnection()]
+        
+        let (sut, spy) = makeSUT(mockResult: .success(flightConnections))
+        
+        let names = try await sut.fetchCityNames(searchType: .departure)
+        
+        let expectedNames = flightConnections.map(\.from).sorted()
+        XCTAssertEqual(spy.messages, [.fetchConnections])
+        XCTAssertEqual(names, expectedNames)
+    }
+    
+    func test_fetchCityNames_succeedsOnValidResponseForDestinationSearchType() async throws {
+        let flightConnections = [aFligthConnection(), anotherFlightConnection()]
+        let (sut, spy) = makeSUT(mockResult: .success(flightConnections))
+        
+        let names = try await sut.fetchCityNames(searchType: .destination)
+        
+        let expectedNames = flightConnections.map(\.to).sorted()
+        XCTAssertEqual(spy.messages, [.fetchConnections])
+        XCTAssertEqual(names, expectedNames)
+    }
+    
+    func test_fetchCityNames_failsOnResponseError() async {
+        let anError = anyNSError()
+        let (sut, spy) = makeSUT(mockResult: .failure(anError))
+        
+        do {
+            _ = try await sut.fetchCityNames(searchType: .destination)
+            XCTFail("Should have failed with error")
+        } catch {}
+        
+        XCTAssertEqual(spy.messages, [.fetchConnections])
     }
 }
 
