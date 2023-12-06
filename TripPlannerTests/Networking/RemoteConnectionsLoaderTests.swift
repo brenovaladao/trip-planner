@@ -19,13 +19,9 @@ final class RemoteConnectionsLoaderTests: XCTestCase {
             [makeDictionaryRepresentation(flightConnection)]
         )
         
-        MockURLProtocol.requestHandler = { request in
-            let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
-            return (response, data)
-        }
+        setURLProtocolRequestHandler(data: data)
         
         let connections = try await sut.fetchConnections()
-        
         XCTAssertEqual(connections, [flightConnection])
     }
     
@@ -35,13 +31,9 @@ final class RemoteConnectionsLoaderTests: XCTestCase {
         
         let data = makeConnectionsJSON([])
         
-        MockURLProtocol.requestHandler = { request in
-            let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
-            return (response, data)
-        }
+        setURLProtocolRequestHandler(data: data)
         
         let connections = try await sut.fetchConnections()
-        
         XCTAssertTrue(connections.isEmpty)
     }
     
@@ -51,10 +43,21 @@ final class RemoteConnectionsLoaderTests: XCTestCase {
         
         let data = invalidJSON()
         
-        MockURLProtocol.requestHandler = { request in
-            let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
-            return (response, data)
+        setURLProtocolRequestHandler(data: data)
+        
+        do {
+            _ = try await sut.fetchConnections()
+            XCTFail("Should fail with invalid data error")
+        } catch {
+            XCTAssertEqual((error as? FlightConnectionsMapper.Error), .invalidData)
         }
+    }
+    
+    func test_fetchConnections_errorOnInvalidStatusCode() async {
+        let sut = makeSUT()
+        let data = makeConnectionsJSON([])
+        
+        setURLProtocolRequestHandler(statusCode: 401, data: data)
         
         do {
             _ = try await sut.fetchConnections()
@@ -66,7 +69,7 @@ final class RemoteConnectionsLoaderTests: XCTestCase {
 }
 
 private extension RemoteConnectionsLoaderTests {
-    func makeSUT(url: URL) -> RemoteConnectionsLoader {
+    func makeSUT(url: URL = anyURL()) -> RemoteConnectionsLoader {
         let configuration = URLSessionConfiguration.default
         configuration.protocolClasses = [MockURLProtocol.self]
         let urlSession = URLSession(configuration: configuration)
@@ -77,5 +80,12 @@ private extension RemoteConnectionsLoaderTests {
         )
         
         return sut
+    }
+    
+    func setURLProtocolRequestHandler(url: URL = anyURL(), statusCode: Int = 200, data: Data) {
+        MockURLProtocol.requestHandler = { request in
+            let response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: nil)!
+            return (response, data)
+        }
     }
 }
