@@ -58,6 +58,17 @@ final class CityNamesServiceTests: XCTestCase {
         
         XCTAssertEqual(spy.messages, [.fetchConnections])
     }
+    
+    func test_fetchCityNames_succeedsWithoutDuplicatedCityNames() async throws {
+        let flightConnections = [aFligthConnection(), aFligthConnection(), anotherFlightConnection()]
+        let (sut, spy) = makeSUT(mockResult: .success(flightConnections))
+        
+        let names = try await sut.fetchCityNames(searchType: .departure)
+        
+        let expectedNames = ["Cape Town", "London"]
+        XCTAssertEqual(spy.messages, [.fetchConnections])
+        XCTAssertEqual(names, expectedNames)
+    }
 }
 
 private extension CityNamesServiceTests {

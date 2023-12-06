@@ -24,6 +24,6 @@ public extension CityNamesService {
         case .destination:
             flightConnections.map(\.to)
         }
-        return cityNames.sorted()
+        return Set(cityNames).sorted()
     }
 }
