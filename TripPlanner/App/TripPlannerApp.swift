@@ -22,6 +22,7 @@ struct TripPlannerApp: App {
                         citySelectionPublisher: citySelectionSubject
                     )
                 )
+                .navigationTitle("Trip Planner")
                 .navigationDestination(for: SearchType.self) {
                     FlightSearchView(
                         viewModel: Dependencies.makeFlightSearchViewModel(
@@ -33,6 +34,7 @@ struct TripPlannerApp: App {
                         navigationPath = .init()
                     }
                     .navigationTitle($0.displayRepresentation)
+                    .navigationBarTitleDisplayMode(.inline)
                 }
             }
         }

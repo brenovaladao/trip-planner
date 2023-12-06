@@ -8,39 +8,36 @@
 import SwiftUI
 
 public struct FlightConnectionsListView<ViewModel: FlightConnectionsListViewModeling>: View {
-    @ObservedObject private var viewModel: ViewModel
+    @StateObject private var viewModel: ViewModel
     
     public init(viewModel: ViewModel) {
-        self.viewModel = viewModel
+        self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
     public var body: some View {
-        NavigationView {
-            VStack(alignment: .leading, spacing: 8) {
-                Group {
-                    Button(action: {
-                        viewModel.selectDepartureTapped()
-                    }, label: {
-                        Text("Departure: \(viewModel.departure ?? "")")
-                            .frame(maxWidth: .infinity)
-                    })
-                    
-                    Button(action: {
-                        viewModel.selectDestinationTapped()
-                    }, label: {
-                        Text("Destination: \(viewModel.destination ?? "")")
-                            .frame(maxWidth: .infinity)
-                    })
-                }
-                .buttonStyle(.bordered)
-                .padding(.horizontal, 16)
-                .frame(minHeight: 44)
-
-                Spacer()
+        VStack(alignment: .leading, spacing: 8) {
+            Group {
+                Button(action: {
+                    viewModel.selectDepartureTapped()
+                }, label: {
+                    Text("Departure: \(viewModel.departure ?? "")")
+                        .frame(maxWidth: .infinity)
+                })
+                
+                Button(action: {
+                    viewModel.selectDestinationTapped()
+                }, label: {
+                    Text("Destination: \(viewModel.destination ?? "")")
+                        .frame(maxWidth: .infinity)
+                })
             }
-            .padding(.vertical, 16)
-            .navigationTitle("Trip Planner")
+            .buttonStyle(.bordered)
+            .padding(.horizontal, 16)
+            .frame(minHeight: 44)
+
+            Spacer()
         }
+        .padding(.vertical, 16)
     }
 }
 

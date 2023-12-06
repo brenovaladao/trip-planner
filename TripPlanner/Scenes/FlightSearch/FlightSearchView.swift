@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
-    @ObservedObject private var viewModel: ViewModel
+    @StateObject private var viewModel: ViewModel
     
     public init(viewModel: ViewModel) {
-        self.viewModel = viewModel
+        self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
     var body: some View {
