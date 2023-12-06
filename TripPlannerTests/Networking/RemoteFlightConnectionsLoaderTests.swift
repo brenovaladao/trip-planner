@@ -60,7 +60,7 @@ final class RemoteFlightConnectionsLoaderTests: XCTestCase {
 }
 
 private extension RemoteFlightConnectionsLoaderTests {
-    func makeSUT() -> RemoteFlightConnectionsLoader {
+    func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> RemoteFlightConnectionsLoader {
         let configuration = URLSessionConfiguration.default
         configuration.protocolClasses = [MockURLProtocol.self]
         let urlSession = URLSession(configuration: configuration)
@@ -69,6 +69,8 @@ private extension RemoteFlightConnectionsLoaderTests {
             urlSession: urlSession,
             endpoint: anyURL()
         )
+        
+        trackForMemoryLeaks(sut, file: file, line: line)
         
         return sut
     }

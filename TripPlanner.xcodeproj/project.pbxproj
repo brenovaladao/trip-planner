@@ -21,6 +21,7 @@
 		40F689222B208C620021E50D /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F689212B208C620021E50D /* HTTPURLResponse.swift */; };
 		40F689242B20910A0021E50D /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F689232B20910A0021E50D /* MockURLProtocol.swift */; };
 		40F689262B2093190021E50D /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F689252B2093190021E50D /* Helpers.swift */; };
+		40F6892B2B20A24D0021E50D /* XCTestCase+MemoryLeaksTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F6892A2B20A24D0021E50D /* XCTestCase+MemoryLeaksTracker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		40F689212B208C620021E50D /* HTTPURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponse.swift; sourceTree = "<group>"; };
 		40F689232B20910A0021E50D /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		40F689252B2093190021E50D /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		40F6892A2B20A24D0021E50D /* XCTestCase+MemoryLeaksTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeaksTracker.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				40F689252B2093190021E50D /* Helpers.swift */,
+				40F6892A2B20A24D0021E50D /* XCTestCase+MemoryLeaksTracker.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				40F6891D2B2088F10021E50D /* RemoteFlightConnectionsLoaderTests.swift in Sources */,
+				40F6892B2B20A24D0021E50D /* XCTestCase+MemoryLeaksTracker.swift in Sources */,
 				40F689262B2093190021E50D /* Helpers.swift in Sources */,
 				40F689242B20910A0021E50D /* MockURLProtocol.swift in Sources */,
 			);
