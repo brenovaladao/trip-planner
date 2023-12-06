@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Coordinate: Sendable {
+public struct Coordinate: Sendable, Equatable {
     public let lat: Double
     public let long: Double
     

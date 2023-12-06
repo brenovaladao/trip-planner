@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct FlightConnection: Sendable {
+public struct FlightConnection: Sendable, Equatable {
     public let from: String
     public let to: String
     public let price: Double
