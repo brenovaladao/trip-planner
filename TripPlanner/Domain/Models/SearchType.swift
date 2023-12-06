@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SearchType: Hashable {
+public enum SearchType: Sendable, Hashable {
     case departure
     case destination
 }

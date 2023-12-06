@@ -15,14 +15,29 @@ struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text("Hello, World!")
+        content
+            .onAppear { viewModel.loadCityNames() }
+    }
+    
+    @ViewBuilder
+    private var content: some View {
+        if let errorMessage = viewModel.errorMessage {
+            Text(errorMessage)
+                .padding()
+        } else {
+            if viewModel.isLoading {
+                ProgressView()
+                    .padding()
+            }
             
-            Button(action: {
-                viewModel.citySelected("test")
-            }, label: {
-                Text("navigate back")
-            })
+            LazyVStack(alignment: .leading, spacing: 0) {
+                ForEach(viewModel.cityNames, id: \.self) { name in
+                    HStack(alignment: .center, spacing: 0) {
+                        Text(name)
+                    }
+                    .padding()
+                }
+            }
         }
     }
 }

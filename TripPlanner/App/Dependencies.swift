@@ -38,7 +38,8 @@ enum Dependencies {
     ) -> FlightSearchViewModel {
         FlightSearchViewModel(
             searchType: searchType,
-            citySelectionSubject: citySelectionSubject
+            citySelectionSubject: citySelectionSubject, 
+            cityNamesService: cityNamesService
         )
     }
 }
