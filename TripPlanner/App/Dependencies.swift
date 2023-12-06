@@ -17,4 +17,8 @@ enum Dependencies {
     static func makeFlightConnectionsListViewModel() -> FlightConnectionsListViewModel {
         FlightConnectionsListViewModel()
     }
+    
+    static func makeFlightSearchViewModel() -> FlightSearchViewModel {
+        FlightSearchViewModel()
+    }
 }

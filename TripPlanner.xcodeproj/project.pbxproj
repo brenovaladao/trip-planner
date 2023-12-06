@@ -25,6 +25,9 @@
 		40F689302B20A3BA0021E50D /* FlightConnectionsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F6892F2B20A3BA0021E50D /* FlightConnectionsListViewModel.swift */; };
 		40F689322B20A99B0021E50D /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F689312B20A99B0021E50D /* Dependencies.swift */; };
 		40F689352B20AB8C0021E50D /* MockFlightConnectionsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F689342B20AB8C0021E50D /* MockFlightConnectionsListViewModel.swift */; };
+		40F689382B20B0F20021E50D /* FlightSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F689372B20B0F20021E50D /* FlightSearchView.swift */; };
+		40F6893A2B20B0F90021E50D /* FlightSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F689392B20B0F90021E50D /* FlightSearchViewModel.swift */; };
+		40F6893C2B20B1420021E50D /* MockFlightSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F6893B2B20B1410021E50D /* MockFlightSearchViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +63,9 @@
 		40F6892F2B20A3BA0021E50D /* FlightConnectionsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightConnectionsListViewModel.swift; sourceTree = "<group>"; };
 		40F689312B20A99B0021E50D /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 		40F689342B20AB8C0021E50D /* MockFlightConnectionsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlightConnectionsListViewModel.swift; sourceTree = "<group>"; };
+		40F689372B20B0F20021E50D /* FlightSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightSearchView.swift; sourceTree = "<group>"; };
+		40F689392B20B0F90021E50D /* FlightSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightSearchViewModel.swift; sourceTree = "<group>"; };
+		40F6893B2B20B1410021E50D /* MockFlightSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlightSearchViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				40F689342B20AB8C0021E50D /* MockFlightConnectionsListViewModel.swift */,
+				40F6893B2B20B1410021E50D /* MockFlightSearchViewModel.swift */,
 			);
 			path = MockViewModels;
 			sourceTree = "<group>";
@@ -248,6 +255,8 @@
 		40F689362B20B0BF0021E50D /* FlightSearch */ = {
 			isa = PBXGroup;
 			children = (
+				40F689372B20B0F20021E50D /* FlightSearchView.swift */,
+				40F689392B20B0F90021E50D /* FlightSearchViewModel.swift */,
 			);
 			path = FlightSearch;
 			sourceTree = "<group>";
@@ -355,6 +364,8 @@
 			files = (
 				40F689192B2086A30021E50D /* Coordinate.swift in Sources */,
 				40F689102B2084A60021E50D /* FlightConnectionsFetching.swift in Sources */,
+				40F6893A2B20B0F90021E50D /* FlightSearchViewModel.swift in Sources */,
+				40F689382B20B0F20021E50D /* FlightSearchView.swift in Sources */,
 				40F689352B20AB8C0021E50D /* MockFlightConnectionsListViewModel.swift in Sources */,
 				40F689152B20856F0021E50D /* FlightConnection.swift in Sources */,
 				40F689122B20853D0021E50D /* RemoteFlightConnectionsLoader.swift in Sources */,
@@ -362,6 +373,7 @@
 				40F689222B208C620021E50D /* HTTPURLResponse.swift in Sources */,
 				40F689322B20A99B0021E50D /* Dependencies.swift in Sources */,
 				40F6892D2B20A2DC0021E50D /* FlightConnectionsListView.swift in Sources */,
+				40F6893C2B20B1420021E50D /* MockFlightSearchViewModel.swift in Sources */,
 				40F688DD2B207C5E0021E50D /* TripPlannerApp.swift in Sources */,
 				40F6891F2B2089F00021E50D /* FlightConnectionsMapper.swift in Sources */,
 				40F689172B20869E0021E50D /* CoordinatesInfo.swift in Sources */,
