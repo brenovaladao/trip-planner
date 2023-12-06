@@ -12,7 +12,7 @@ import SwiftUI
 enum Dependencies {
     static let remoteFlightConnectionsLoader: FlightConnectionsFetching = FlightConnectionsService(
         urlSession: URLSession(configuration: .ephemeral),
-        endpoint: URL(string: "some-url")!
+        endpoint: Configuration.default.apiURL
     )
     
     static let cityNamesService: CityNamesFetching = CityNamesService(
