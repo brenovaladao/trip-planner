@@ -1,5 +1,5 @@
 //
-//  RemoteConnectionsLoaderTests.swift
+//  RemoteFlightConnectionsLoaderTests.swift
 //  TripPlannerTests
 //
 //  Created by Breno Valadão on 06/12/23.
@@ -8,7 +8,7 @@
 import XCTest
 import TripPlanner
 
-final class RemoteConnectionsLoaderTests: XCTestCase {
+final class RemoteFlightConnectionsLoaderTests: XCTestCase {
     func test_fetchConnections_successOnValidData() async throws {
         let flightConnection = aFligthConnection()
         let sut = makeSUT()
@@ -59,13 +59,13 @@ final class RemoteConnectionsLoaderTests: XCTestCase {
     }
 }
 
-private extension RemoteConnectionsLoaderTests {
-    func makeSUT() -> RemoteConnectionsLoader {
+private extension RemoteFlightConnectionsLoaderTests {
+    func makeSUT() -> RemoteFlightConnectionsLoader {
         let configuration = URLSessionConfiguration.default
         configuration.protocolClasses = [MockURLProtocol.self]
         let urlSession = URLSession(configuration: configuration)
         
-        let sut = RemoteConnectionsLoader(
+        let sut = RemoteFlightConnectionsLoader(
             urlSession: urlSession,
             endpoint: anyURL()
         )
