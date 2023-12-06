@@ -45,7 +45,7 @@ struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
                         makeCityRow(name: name)
                             .onTapGesture {
                                 viewModel.citySelected(name)
-                            }
+                            }                        
                     }
                 }
             }
@@ -55,7 +55,10 @@ struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
     private func makeCityRow(name: String) -> some View {
         HStack(alignment: .center, spacing: 0) {
             Text(name)
+            
+            Spacer()
         }
+        .frame(maxWidth: .infinity)
         .padding()
         .contentShape(.rect)
     }
@@ -66,7 +69,5 @@ struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
         FlightSearchView(
             viewModel: MockFlightSearchViewModel(cityNames: ["Porto", "London"])
         )
-        .navigationTitle("Preview Title")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
