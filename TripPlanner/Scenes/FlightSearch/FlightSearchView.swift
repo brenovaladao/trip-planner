@@ -42,14 +42,22 @@ struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 0) {
                     ForEach(viewModel.cityNames, id: \.self) { name in
-                        HStack(alignment: .center, spacing: 0) {
-                            Text(name)
-                        }
-                        .padding()
+                        makeCityRow(name: name)
+                            .onTapGesture {
+                                viewModel.citySelected(name)
+                            }
                     }
                 }
             }
         }
+    }
+    
+    private func makeCityRow(name: String) -> some View {
+        HStack(alignment: .center, spacing: 0) {
+            Text(name)
+        }
+        .padding()
+        .contentShape(.rect)
     }
 }
 
