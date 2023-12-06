@@ -28,6 +28,41 @@ final class RemoteConnectionsLoaderTests: XCTestCase {
         
         XCTAssertEqual(connections, [flightConnection])
     }
+    
+    func test_fetchConnections_successOnEmptyData() async throws {
+        let url = anyURL()
+        let sut = makeSUT(url: url)
+        
+        let data = makeConnectionsJSON([])
+        
+        MockURLProtocol.requestHandler = { request in
+            let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            return (response, data)
+        }
+        
+        let connections = try await sut.fetchConnections()
+        
+        XCTAssertTrue(connections.isEmpty)
+    }
+    
+    func test_fetchConnections_errorOnInvalidData() async {
+        let url = anyURL()
+        let sut = makeSUT(url: url)
+        
+        let data = invalidJSON()
+        
+        MockURLProtocol.requestHandler = { request in
+            let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            return (response, data)
+        }
+        
+        do {
+            _ = try await sut.fetchConnections()
+            XCTFail("Should fail with invalid data error")
+        } catch {
+            XCTAssertEqual((error as? FlightConnectionsMapper.Error), .invalidData)
+        }
+    }
 }
 
 private extension RemoteConnectionsLoaderTests {

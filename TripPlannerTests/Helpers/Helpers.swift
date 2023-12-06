@@ -16,6 +16,10 @@ func anyNSError() -> NSError {
     NSError(domain: "any error", code: 0)
 }
 
+func invalidJSON() -> Data {
+    Data("invalid json".utf8)
+}
+
 func aFligthConnection() -> FlightConnection {
     makeFlightConnection()
 }
