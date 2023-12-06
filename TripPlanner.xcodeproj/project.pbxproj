@@ -244,18 +244,18 @@
 			children = (
 				40F689482B20C4910021E50D /* CityNames */,
 				40F689202B208C560021E50D /* Helpers */,
-				40F689292B20A1830021E50D /* RemoteFlightConnections */,
+				40F689292B20A1830021E50D /* FlightConnections */,
 			);
 			path = Services;
 			sourceTree = "<group>";
 		};
-		40F689292B20A1830021E50D /* RemoteFlightConnections */ = {
+		40F689292B20A1830021E50D /* FlightConnections */ = {
 			isa = PBXGroup;
 			children = (
 				40F6891E2B2089F00021E50D /* FlightConnectionsMapper.swift */,
 				40F6894F2B20C7E10021E50D /* FlightConnectionsService.swift */,
 			);
-			path = RemoteFlightConnections;
+			path = FlightConnections;
 			sourceTree = "<group>";
 		};
 		40F6892E2B20A3340021E50D /* FlightConnectionsList */ = {
