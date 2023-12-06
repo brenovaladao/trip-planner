@@ -18,7 +18,7 @@ public protocol FlightConnectionsListViewModeling: ObservableObject {
     func selectDestinationTapped()
 }
 
-final public class FlightConnectionsListViewModel: FlightConnectionsListViewModeling {
+public final class FlightConnectionsListViewModel: FlightConnectionsListViewModeling {
     @Published private(set) public var departure: String?
     @Published private(set) public var destination: String?
     

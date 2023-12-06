@@ -10,9 +10,13 @@ import Foundation
 import SwiftUI
 
 enum Dependencies {
-    static let remoteFlightConnectionsLoader: FlightConnectionsFetching = RemoteFlightConnectionsService(
+    static let remoteFlightConnectionsLoader: FlightConnectionsFetching = FlightConnectionsService(
         urlSession: URLSession(configuration: .ephemeral),
         endpoint: URL(string: "some-url")!
+    )
+    
+    static let cityNamesService: CityNamesFetching = CityNamesService(
+        flightsLoader: remoteFlightConnectionsLoader
     )
     
     // MARK: - ViewModels

@@ -14,7 +14,7 @@ public protocol FlightSearchViewModeling: ObservableObject {
     func citySelected(_ name: String)
 }
 
-final public class FlightSearchViewModel: FlightSearchViewModeling {
+public final class FlightSearchViewModel: FlightSearchViewModeling {
     private let searchType: SearchType
     private let citySelectionSubject: PassthroughSubject<CitySelection, Never>
     

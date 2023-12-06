@@ -1,5 +1,5 @@
 //
-//  RemoteFlightConnectionsServiceTests.swift
+//  FlightConnectionsServiceTests.swift
 //  TripPlannerTests
 //
 //  Created by Breno Valadão on 06/12/23.
@@ -8,7 +8,7 @@
 import XCTest
 import TripPlanner
 
-final class RemoteFlightConnectionsServiceTests: XCTestCase {
+final class FlightConnectionsServiceTests: XCTestCase {
     func test_fetchConnections_successOnValidData() async throws {
         let flightConnection = aFligthConnection()
         let sut = makeSUT()
@@ -59,13 +59,13 @@ final class RemoteFlightConnectionsServiceTests: XCTestCase {
     }
 }
 
-private extension RemoteFlightConnectionsServiceTests {
-    func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> RemoteFlightConnectionsService {
+private extension FlightConnectionsServiceTests {
+    func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> FlightConnectionsService {
         let configuration = URLSessionConfiguration.default
-        configuration.protocolClasses = [MockURLProtocol.self]
+        configuration.protocolClasses = [URLProtocolMock.self]
         let urlSession = URLSession(configuration: configuration)
         
-        let sut = RemoteFlightConnectionsService(
+        let sut = FlightConnectionsService(
             urlSession: urlSession,
             endpoint: anyURL()
         )
@@ -76,7 +76,7 @@ private extension RemoteFlightConnectionsServiceTests {
     }
     
     func setURLProtocolRequestHandler(statusCode: Int = 200, data: Data) {
-        MockURLProtocol.requestHandler = { request in
+        URLProtocolMock.requestHandler = { request in
             let response = HTTPURLResponse(url: anyURL(), statusCode: statusCode, httpVersion: nil, headerFields: nil)!
             return (response, data)
         }

@@ -1,5 +1,5 @@
 //
-//  MockURLProtocol.swift
+//  URLProtocolMock.swift
 //  TripPlannerTests
 //
 //  Created by Breno Valadão on 06/12/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MockURLProtocol: URLProtocol {
+class URLProtocolMock: URLProtocol {
     static var requestHandler: ((URLRequest) throws -> (HTTPURLResponse, Data?))?
 
     override class func canInit(with request: URLRequest) -> Bool { true }
@@ -15,7 +15,7 @@ class MockURLProtocol: URLProtocol {
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
     
     override func startLoading() {
-        guard let handler = MockURLProtocol.requestHandler else {
+        guard let handler = URLProtocolMock.requestHandler else {
             fatalError("Handler is unavailable.")
         }
         
