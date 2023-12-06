@@ -10,7 +10,7 @@ import TripPlanner
 
 @MainActor
 final class CityNamesServiceSpy: CityNamesFetching {
-    let mockResult: Result<[String], Error>
+    var mockResult: Result<[String], Error>
     private(set) var messages = [Messages]()
     
     enum Messages {

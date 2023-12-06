@@ -22,15 +22,9 @@ public protocol FlightSearchViewModeling: ObservableObject {
 }
 
 public final class FlightSearchViewModel: FlightSearchViewModeling {
-    @Published private(set) public var cityNames: [String] = [] {
-        didSet { print("cn: \(cityNames)") }
-    }
-    @Published private(set) public var isLoading: Bool = false {
-        didSet { print("i: \(isLoading)") }
-    }
-    @Published private(set) public var errorMessage: String? {
-        didSet { print("e: \(errorMessage ?? "nil")") }
-    }
+    @Published private(set) public var cityNames: [String] = []
+    @Published private(set) public var isLoading: Bool = false
+    @Published private(set) public var errorMessage: String?
 
     private let searchType: SearchType
     private let citySelectionSubject: PassthroughSubject<CitySelection, Never>
@@ -61,11 +55,9 @@ public extension FlightSearchViewModel {
                 return
             }
             
-            defer {
-                isLoading = false
-            }
-            isLoading = cityNames.isEmpty
-            errorMessage = nil
+            defer { isLoading = false }
+            setLoadingIfNeeded()
+            resetErrorMessageIfNeeded()
             
             do {
                 cityNames = try await cityNamesService.fetchCityNames(searchType: searchType)
@@ -76,5 +68,17 @@ public extension FlightSearchViewModel {
                 errorMessage = "An error happened when loading \(error.localizedDescription)"
             }
         }
+    }
+}
+
+private extension FlightSearchViewModel {
+    func setLoadingIfNeeded() {
+        guard !isLoading, cityNames.isEmpty else { return }
+        isLoading = cityNames.isEmpty
+    }
+    
+    func resetErrorMessageIfNeeded() {
+        guard errorMessage != nil else { return }
+        errorMessage = nil
     }
 }

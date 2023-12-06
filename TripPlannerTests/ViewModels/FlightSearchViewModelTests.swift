@@ -34,6 +34,7 @@ final class FlightSearchViewModelTests: XCTestCase {
     func test_citySelected_emitsValuesOnInjectedPublisher() async {
         let citySelectionSubject = PassthroughSubject<CitySelection, Never>()
         let citySelection = CitySelection(type: .departure, cityName: "a city name")
+       
         let (sut, spy) = makeSUT(citySelectionSubject: citySelectionSubject)
         
         await expect(
@@ -51,13 +52,14 @@ final class FlightSearchViewModelTests: XCTestCase {
     
     func test_loadCityNames_succeedsOnNonEmptyListOfCityNames() async {
         let cityNames = ["Cape Town", "London", "Tokyo"]
+        
         let (sut, spy) = makeSUT(mockResult: .success(cityNames))
         
         await expect(
             sut,
             cityNamesOutputs: [[], cityNames],
             isLoadingOutputs: [false, true, false],
-            errorMessageOutputs: [nil, nil],
+            errorMessageOutputs: [nil],
             actions: {
                 await sut.loadCityNames().value
             },
@@ -65,7 +67,89 @@ final class FlightSearchViewModelTests: XCTestCase {
                 XCTAssertEqual(spy.messages, [.fetchCityNames])
             }
         )
+    }
+    
+    func test_loadCityNames_emptyStateMessageOnEmptyListOfCityNames() async {
+        let emptyMessage = "No cities found"
+        let (sut, spy) = makeSUT(mockResult: .success([]))
         
+        await expect(
+            sut,
+            cityNamesOutputs: [[], []],
+            isLoadingOutputs: [false, true, false],
+            errorMessageOutputs: [nil, emptyMessage],
+            actions: { await sut.loadCityNames().value },
+            asserting: { XCTAssertEqual(spy.messages, [.fetchCityNames]) }
+        )
+    }
+    
+    func test_loadCityNames_errorMessageOnServiceError() async {
+        let anError = anyNSError()
+        let errorMessage = "An error happened when loading \(anError.localizedDescription)"
+        
+        let (sut, spy) = makeSUT(mockResult: .failure(anError))
+        
+        await expect(
+            sut,
+            cityNamesOutputs: [[]],
+            isLoadingOutputs: [false, true, false],
+            errorMessageOutputs: [nil, errorMessage],
+            actions: { await sut.loadCityNames().value },
+            asserting: { XCTAssertEqual(spy.messages, [.fetchCityNames]) }
+        )
+    }
+    
+    func test_loadCityNames_errorMessageOnServiceErrorThenSucceedsOnRetry() async {
+        let anError = anyNSError()
+        let cityNames = ["Cape Town", "London", "Tokyo"]
+        let errorMessage = "An error happened when loading \(anError.localizedDescription)"
+
+        let (sut, spy) = makeSUT(mockResult: .failure(anError))
+        
+        await expect(
+            sut,
+            cityNamesOutputs: [[], cityNames],
+            isLoadingOutputs: [false, true, false, true, false],
+            errorMessageOutputs: [nil, errorMessage, nil],
+            actions: {
+                await sut.loadCityNames().value
+                spy.mockResult = .success(cityNames)
+                await sut.loadCityNames().value
+            },
+            asserting: { XCTAssertEqual(spy.messages, [.fetchCityNames, .fetchCityNames]) }
+        )
+    }
+    
+    func test_loadCityNames_reloadOnNonEmptyList() async {
+        let cityNames = ["Cape Town", "London", "Tokyo"]
+        
+        let (sut, spy) = makeSUT(mockResult: .success(cityNames))
+        
+        await expect(
+            sut,
+            cityNamesOutputs: [[], cityNames, cityNames],
+            isLoadingOutputs: [false, true, false, false],
+            errorMessageOutputs: [nil],
+            actions: {
+                await sut.loadCityNames().value
+                await sut.loadCityNames().value
+            },
+            asserting: { XCTAssertEqual(spy.messages, [.fetchCityNames, .fetchCityNames]) }
+        )
+    }
+    
+    func test_loadCityNames_taskIsCancelledBeforeItExecutes() async {
+        let (sut, spy) = makeSUT()
+
+        await expect(
+            sut,
+            actions: {
+                let task = sut.loadCityNames()
+                task.cancel()
+                await task.value
+            },
+            asserting: { XCTAssertEqual(spy.messages, []) }
+        )
     }
 }
 
@@ -120,7 +204,7 @@ private extension FlightSearchViewModelTests {
         
         await fulfillment(
             of: [cityNamesExp, isLoadingExp, errorMessageExp, citySelectionExp],
-            timeout: 1.0
+            timeout: 0.1
         )
         
         asserting()
