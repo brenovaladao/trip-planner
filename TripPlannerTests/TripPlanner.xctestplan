@@ -1,19 +1,14 @@
 {
   "configurations" : [
     {
-      "id" : "1E50EDB7-8AD7-4941-92D0-5CFE15186FBE",
-      "name" : "Test Scheme Action",
+      "id" : "01637F43-F837-4AF5-81A6-C4F0562780AD",
+      "name" : "Configuration",
       "options" : {
 
       }
     }
   ],
   "defaultOptions" : {
-    "targetForVariableExpansion" : {
-      "containerPath" : "container:TripPlanner.xcodeproj",
-      "identifier" : "40F688D82B207C5E0021E50D",
-      "name" : "TripPlanner"
-    },
     "testExecutionOrdering" : "random",
     "testTimeoutsEnabled" : true
   },
