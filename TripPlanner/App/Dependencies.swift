@@ -14,11 +14,13 @@ enum Dependencies {
     )
     
     // MARK: - ViewModels
+    @MainActor
     static func makeFlightConnectionsListViewModel() -> FlightConnectionsListViewModel {
         FlightConnectionsListViewModel()
     }
     
-    static func makeFlightSearchViewModel() -> FlightSearchViewModel {
-        FlightSearchViewModel()
+    @MainActor
+    static func makeFlightSearchViewModel(searchType: SearchType) -> FlightSearchViewModel {
+        FlightSearchViewModel(searchType: searchType)
     }
 }

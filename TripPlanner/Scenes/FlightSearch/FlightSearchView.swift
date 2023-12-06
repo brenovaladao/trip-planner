@@ -15,7 +15,12 @@ struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
     }
     
     var body: some View {
-        Text("Hello, World!")
+        NavigationView {
+            VStack(alignment: .leading, spacing: 0) {
+                Text("Hello, World!")
+            }
+            .navigationTitle(viewModel.title)
+        }
     }
 }
 

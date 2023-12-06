@@ -7,8 +7,21 @@
 
 import Foundation
 
-public protocol FlightSearchViewModeling: ObservableObject {}
+@MainActor
+public protocol FlightSearchViewModeling: ObservableObject {
+    var title: String { get }
+}
 
 final public class FlightSearchViewModel: FlightSearchViewModeling {
-    public init() {}
+    private let searchType: SearchType
+    
+    public init(searchType: SearchType) {
+        self.searchType = searchType
+    }
+}
+
+public extension FlightSearchViewModel {
+    var title: String {
+        searchType.screenTitle
+    }
 }

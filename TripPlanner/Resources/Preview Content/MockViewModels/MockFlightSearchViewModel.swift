@@ -9,4 +9,8 @@ import Foundation
 
 final class MockFlightSearchViewModel: FlightSearchViewModeling {
     init() {}
+    
+    var title: String {
+        "Departures"
+    }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 public protocol FlightConnectionsListViewModeling: ObservableObject {}
 
 final public class FlightConnectionsListViewModel: FlightConnectionsListViewModeling {
