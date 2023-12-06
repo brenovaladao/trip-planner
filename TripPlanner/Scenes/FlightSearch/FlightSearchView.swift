@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
+public struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
     @StateObject private var viewModel: ViewModel
     
     public init(viewModel: ViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
-    var body: some View {
+    public var body: some View {
         content
             .onAppear { viewModel.loadCityNames() }
             .toolbar {
