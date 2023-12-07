@@ -10,6 +10,8 @@ import Foundation
 public final class RouteSelectionService {
     private let flightConnectionsFetcher: FlightConnectionsFetching
     
+    public struct RouteNotPossibleError: Error {}
+
     public init(flightConnectionsFetcher: FlightConnectionsFetching) {
         self.flightConnectionsFetcher = flightConnectionsFetcher
     }
@@ -28,10 +30,40 @@ extension RouteSelectionService: RouteSelectionCalculating {
             throw RouteNotPossibleError()
         }
         
+        if let singleConnection = checkIfFlighConnectionIsNeeded(
+            from: connections,
+            departure: departureCity,
+            destination: destinationCity
+        ) {
+            return (singleConnection.price, [singleConnection])
+        }
+        
+        let route = checkChepeastConnections(
+            from: connections,
+            departureCity: departureCity
+        )
+        
+        let totalPrice = route.reduce(0) { $0 + $1.price }
+        return (totalPrice, route)
+    }
+    
+    private func checkIfFlighConnectionIsNeeded(
+        from connections: [FlightConnection],
+        departure: String,
+        destination: String
+    ) -> FlightConnection? {
+        connections.first(where: {
+            $0.from == departure && $0.to == destination
+        })
+    }
+
+    private func checkChepeastConnections(
+        from connections: [FlightConnection],
+        departureCity: String
+    ) -> [FlightConnection] {
         var availableCities = Set(connections.flatMap { [$0.from, $0.to] })
         var currentCity = departureCity
         availableCities.remove(currentCity)
-        
         var route = [FlightConnection]()
         
         while !availableCities.isEmpty {
@@ -47,10 +79,7 @@ extension RouteSelectionService: RouteSelectionCalculating {
             route.append(cheapestConnection)
             currentCity = cheapestConnection.to
         }
-        
-        let totalPrice = route.reduce(0) { $0 + $1.price }
-        return (route.reduce(0) { $0 + $1.price }, route)
+
+        return route
     }
-    
-    public struct RouteNotPossibleError: Error {}
 }
