@@ -34,16 +34,18 @@ final class RouteSelectionServiceTests: XCTestCase {
             aFligthConnection(),
             anotherFlightConnection()
         ]
-        let (sut, spy) = makeSUT(mockResult: .success(connections))
-        let from = connections[0].from
-        let to = connections[1].to
-
-        let route = try await sut.calculateRoute(from: from, to: to)
         
-        let expectedPrice = connections.reduce(0) { $0 + $1.price }        
-        XCTAssertEqual(route.0, expectedPrice)
-        XCTAssertEqual(route.1, connections)
-        XCTAssertEqual(spy.messages, [.fetchConnections])
+        let expectedRoute = Route(
+            price: connections.reduce(0) { $0 + $1.price },
+            connections: connections
+        )
+        
+        try await expect(
+            connections: connections,
+            departure: connections[0].from,
+            destination: connections[1].to,
+            with: expectedRoute
+        )
     }
     
     func test_calculateRoute_cheapestWithoutConnection() async throws {
@@ -51,17 +53,18 @@ final class RouteSelectionServiceTests: XCTestCase {
             aFligthConnection(),
             anotherFlightConnection()
         ]
-        let (sut, spy) = makeSUT(mockResult: .success(connections))
-        let from = connections[0].from
-        let to = connections[0].to
-
         
-        let route = try await sut.calculateRoute(from: from, to: to)
+        let expectedRoute = Route(
+            price: connections[0].price,
+            connections: [connections[0]]
+        )
         
-        let expectedPrice = connections[0].price
-        XCTAssertEqual(route.0, expectedPrice)
-        XCTAssertEqual(route.1, [connections[0]])
-        XCTAssertEqual(spy.messages, [.fetchConnections])
+        try await expect(
+            connections: connections,
+            departure: connections[0].from,
+            destination: connections[0].to,
+            with: expectedRoute
+        )
     }
 }
 
@@ -78,5 +81,21 @@ private extension RouteSelectionServiceTests {
         trackForMemoryLeaks(sut, file: file, line: line)
         
         return (sut, spy)
+    }
+    
+    func expect(
+        connections: [FlightConnection],
+        departure from: String,
+        destination to: String,
+        with cheapestRoute: Route,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) async throws {
+        let (sut, spy) = makeSUT(mockResult: .success(connections))
+        
+        let route = try await sut.calculateRoute(from: from, to: to)
+        
+        XCTAssertEqual(route, cheapestRoute, file: file, line: line)
+        XCTAssertEqual(spy.messages, [.fetchConnections], file: file, line: line)
     }
 }

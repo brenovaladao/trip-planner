@@ -21,7 +21,7 @@ extension RouteSelectionService: RouteSelectionCalculating {
     public func calculateRoute(
         from departureCity: String,
         to destinationCity: String
-    ) async throws -> (Decimal, [FlightConnection]) {
+    ) async throws -> Route {
         let connections = try await flightConnectionsFetcher.fetchConnections()
         
         guard connections.contains(
@@ -35,7 +35,7 @@ extension RouteSelectionService: RouteSelectionCalculating {
             departure: departureCity,
             destination: destinationCity
         ) {
-            return (singleConnection.price, [singleConnection])
+            return Route(price: singleConnection.price, connections: [singleConnection])
         }
         
         let route = checkChepeastConnections(
@@ -44,7 +44,7 @@ extension RouteSelectionService: RouteSelectionCalculating {
         )
         
         let totalPrice = route.reduce(0) { $0 + $1.price }
-        return (totalPrice, route)
+        return Route(price: totalPrice, connections: route)
     }
     
     private func checkIfFlighConnectionIsNeeded(
