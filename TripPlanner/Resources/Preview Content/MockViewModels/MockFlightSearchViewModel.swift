@@ -8,7 +8,7 @@
 import Foundation
 
 final class MockFlightSearchViewModel: FlightSearchViewModeling {    
-    @Published var cityNames: [String] = []
+    @Published var cityNames: [String]
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     
@@ -19,9 +19,5 @@ final class MockFlightSearchViewModel: FlightSearchViewModeling {
     }
     
     func citySelected(_ name: String) {}
-    func loadCityNames() -> Task<Void, Never> {
-        Task {
-            self.cityNames = cityNames
-        }
-    }
+    func loadCityNames() async {}
 }

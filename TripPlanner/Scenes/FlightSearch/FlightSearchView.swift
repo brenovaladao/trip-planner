@@ -16,11 +16,11 @@ public struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
     
     public var body: some View {
         content
-            .onAppear { viewModel.loadCityNames() }
+            .task { await viewModel.loadCityNames() }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(
-                        action: { viewModel.loadCityNames() },
+                        action: { Task { await viewModel.loadCityNames() } },
                         label: { Image(systemName: "arrow.clockwise") }
                     )
                 }

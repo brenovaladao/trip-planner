@@ -61,7 +61,7 @@ final class FlightSearchViewModelTests: XCTestCase {
             isLoadingOutputs: [false, true, false],
             errorMessageOutputs: [nil],
             actions: {
-                await sut.loadCityNames().value
+                await sut.loadCityNames()
             },
             asserting: {
                 XCTAssertEqual(spy.messages, [.fetchCityNames])
@@ -78,7 +78,7 @@ final class FlightSearchViewModelTests: XCTestCase {
             cityNamesOutputs: [[], []],
             isLoadingOutputs: [false, true, false],
             errorMessageOutputs: [nil, emptyMessage],
-            actions: { await sut.loadCityNames().value },
+            actions: { await sut.loadCityNames() },
             asserting: { XCTAssertEqual(spy.messages, [.fetchCityNames]) }
         )
     }
@@ -94,7 +94,7 @@ final class FlightSearchViewModelTests: XCTestCase {
             cityNamesOutputs: [[]],
             isLoadingOutputs: [false, true, false],
             errorMessageOutputs: [nil, errorMessage],
-            actions: { await sut.loadCityNames().value },
+            actions: { await sut.loadCityNames() },
             asserting: { XCTAssertEqual(spy.messages, [.fetchCityNames]) }
         )
     }
@@ -112,9 +112,9 @@ final class FlightSearchViewModelTests: XCTestCase {
             isLoadingOutputs: [false, true, false, true, false],
             errorMessageOutputs: [nil, errorMessage, nil],
             actions: {
-                await sut.loadCityNames().value
+                await sut.loadCityNames()
                 spy.mockResult = .success(cityNames)
-                await sut.loadCityNames().value
+                await sut.loadCityNames()
             },
             asserting: { XCTAssertEqual(spy.messages, [.fetchCityNames, .fetchCityNames]) }
         )
@@ -131,8 +131,8 @@ final class FlightSearchViewModelTests: XCTestCase {
             isLoadingOutputs: [false, true, false, false],
             errorMessageOutputs: [nil],
             actions: {
-                await sut.loadCityNames().value
-                await sut.loadCityNames().value
+                await sut.loadCityNames()
+                await sut.loadCityNames()
             },
             asserting: { XCTAssertEqual(spy.messages, [.fetchCityNames, .fetchCityNames]) }
         )
@@ -145,7 +145,7 @@ final class FlightSearchViewModelTests: XCTestCase {
             sut,
             isLoadingOutputs: [false, true, false],
             actions: {
-                let task = sut.loadCityNames()
+                let task = Task { await sut.loadCityNames() }
                 task.cancel()
                 await task.value
             },

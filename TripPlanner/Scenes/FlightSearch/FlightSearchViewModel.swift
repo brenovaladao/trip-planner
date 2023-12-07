@@ -17,8 +17,7 @@ public protocol FlightSearchViewModeling: ObservableObject {
 
     func citySelected(_ name: String)
     
-    @discardableResult
-    func loadCityNames() -> Task<Void, Never>
+    func loadCityNames() async
 }
 
 public final class FlightSearchViewModel: FlightSearchViewModeling {
@@ -49,30 +48,21 @@ public extension FlightSearchViewModel {
         )
     }
     
-    func loadCityNames() -> Task<Void, Never> {
-        Task { [weak self] in
-            guard let self else {
-                return
+    func loadCityNames() async {
+        defer { isLoading = false }
+        setLoadingIfNeeded()
+        resetErrorMessageIfNeeded()
+        
+        do {
+            let cityNames = try await cityNamesService.fetchCityNames(searchType: searchType)
+            guard !Task.isCancelled else { return }
+            self.cityNames = cityNames
+            if cityNames.isEmpty {
+                errorMessage = "No cities found"
             }
-            
-            defer { isLoading = false }
-            setLoadingIfNeeded()
-            resetErrorMessageIfNeeded()
-            
-            do {
-                let cityNames = try await cityNamesService.fetchCityNames(searchType: searchType)
-                
-                guard !Task.isCancelled else { return }
-                
-                self.cityNames = cityNames
-                
-                if cityNames.isEmpty {
-                    errorMessage = "No cities found"
-                }
-            } catch is CancellationError {
-            } catch {
-                errorMessage = "An error happened when loading \(error.localizedDescription)"
-            }
+        } catch is CancellationError {
+        } catch {
+            errorMessage = "An error happened when loading \(error.localizedDescription)"
         }
     }
 }
