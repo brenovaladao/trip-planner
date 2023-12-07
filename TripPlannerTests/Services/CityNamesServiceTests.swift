@@ -78,7 +78,7 @@ private extension CityNamesServiceTests {
         line: UInt = #line
     ) -> (CityNamesService, FlightConnectionsServiceSpy) {
         let spy = FlightConnectionsServiceSpy(mockResult)
-        let sut = CityNamesService(flightsLoader: spy)
+        let sut = CityNamesService(flightConnectionsFetcher: spy)
         
         trackForMemoryLeaks(sut, file: file, line: line)
         trackForMemoryLeaks(spy, file: file, line: line)
