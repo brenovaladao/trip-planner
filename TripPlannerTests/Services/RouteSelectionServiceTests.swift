@@ -15,11 +15,11 @@ final class RouteSelectionServiceTests: XCTestCase {
         XCTAssertTrue(spy.messages.isEmpty)
     }
     
-    func test_calculateRoute_errorOnInvalidRoute() async {
+    func test_calculateRoute_errorOnEmptyConnections() async {
         let (sut, spy) = makeSUT(mockResult: .success([]))
         
         do {
-            _ = try await sut.calculateRoute(from: "", to: "")
+            _ = try await sut.calculateRoute(from: "Porto", to: "London")
             XCTFail("Should have failed with error")
         } catch is RouteSelectionService.RouteNotPossibleError {
         } catch {

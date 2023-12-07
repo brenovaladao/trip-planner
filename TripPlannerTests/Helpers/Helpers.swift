@@ -27,7 +27,7 @@ func aFligthConnection() -> FlightConnection {
 func anotherFlightConnection() -> FlightConnection {
     makeFlightConnection(
         from: "Cape Town",
-        to: "London",
+        to: "Porto",
         price: 700,
         fromLat: -33.9,
         fromLong: 18.4,
@@ -38,8 +38,8 @@ func anotherFlightConnection() -> FlightConnection {
 
 func makeFlightConnection(
     from: String = "London",
-    to: String = "Tokyo",
-    price: Double = 200,
+    to: String = "Cape Town",
+    price: Decimal = 200,
     fromLat: Double = 51.5,
     fromLong: Double = -0.2,
     toLat: Double = 35.6,

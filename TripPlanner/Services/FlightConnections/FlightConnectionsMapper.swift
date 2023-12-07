@@ -14,7 +14,7 @@ public struct FlightConnectionsMapper {
         private struct RemoteFlightConnection: Decodable {
             let from: String
             let to: String
-            let price: Double
+            let price: Decimal
             let coordinates: RemoteCoordinatesInfo
         }
         

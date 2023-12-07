@@ -10,10 +10,10 @@ import Foundation
 public struct FlightConnection: Sendable, Equatable {
     public let from: String
     public let to: String
-    public let price: Double
+    public let price: Decimal
     public let coordinates: CoordinatesInfo
     
-    public init(from: String, to: String, price: Double, coordinates: CoordinatesInfo) {
+    public init(from: String, to: String, price: Decimal, coordinates: CoordinatesInfo) {
         self.from = from
         self.to = to
         self.price = price
