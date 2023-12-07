@@ -24,9 +24,9 @@ extension RouteSelectionService: RouteSelectionCalculating {
     ) async throws -> Route {
         let connections = try await flightConnectionsFetcher.fetchConnections()
         
-        guard connections.contains(
-            where: { $0.from == departureCity || $0.to == destinationCity }
-        ) else {
+        guard connections.contains(where: { $0.from == departureCity }),
+              connections.contains(where: { $0.to == destinationCity })
+        else {
             throw RouteNotPossibleError()
         }
         

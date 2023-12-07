@@ -16,10 +16,12 @@ final class RouteSelectionServiceTests: XCTestCase {
     }
     
     func test_calculateRoute_errorOnEmptyConnections() async {
-        let (sut, spy) = makeSUT(mockResult: .success([]))
+        let (sut, spy) = makeSUT(mockResult: .success([
+            makeFlightConnection(from: "London", to: "Porto", price: 2)
+        ]))
         
         do {
-            _ = try await sut.calculateRoute(from: "Porto", to: "London")
+            _ = try await sut.calculateRoute(from: "Lodon", to: "Lisbon")
             XCTFail("Should have failed with error")
         } catch is RouteSelectionService.RouteNotPossibleError {
         } catch {
@@ -27,6 +29,25 @@ final class RouteSelectionServiceTests: XCTestCase {
         }
         
         XCTAssertEqual(spy.messages, [.fetchConnections])
+    }
+    
+    func test_calculateRoute_cheapestWithoutConnection() async throws {
+        let connections = [
+            aFligthConnection(),
+            anotherFlightConnection()
+        ]
+        
+        let expectedRoute = Route(
+            price: connections[0].price,
+            connections: [connections[0]]
+        )
+        
+        try await expect(
+            connections: connections,
+            departure: connections[0].from,
+            destination: connections[0].to,
+            with: expectedRoute
+        )
     }
     
     func test_calculateRoute_cheapestRouteFromTwoConnections() async throws {
@@ -48,21 +69,24 @@ final class RouteSelectionServiceTests: XCTestCase {
         )
     }
     
-    func test_calculateRoute_cheapestWithoutConnection() async throws {
+    func test_calculateRoute_cheapestRouteFromMultipleAvailableCities() async throws {
         let connections = [
-            aFligthConnection(),
-            anotherFlightConnection()
+            makeFlightConnection(from: "London", to: "Porto", price: 2),
+            makeFlightConnection(from: "London", to: "Lisbon", price: 1),
+            makeFlightConnection(from: "Lisbon", to: "Berlin", price: 1),
+            makeFlightConnection(from: "Lisbon", to: "Porto", price: 3),
+            makeFlightConnection(from: "Porto", to: "Berlin", price: 3)
         ]
         
         let expectedRoute = Route(
-            price: connections[0].price,
-            connections: [connections[0]]
+            price: 2,
+            connections: [connections[1], connections[2]]
         )
         
         try await expect(
             connections: connections,
-            departure: connections[0].from,
-            destination: connections[0].to,
+            departure: "London",
+            destination: "Berlin",
             with: expectedRoute
         )
     }
