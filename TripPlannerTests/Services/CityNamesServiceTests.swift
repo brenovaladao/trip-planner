@@ -10,7 +10,7 @@ import XCTest
 
 @MainActor
 final class CityNamesServiceTests: XCTestCase {
-    func test_fetchCityNames_noSideEffectsOnInitialization() {
+    func test_init_noSideEffectsOnInitialization() {
         let (_, spy) = makeSUT(mockResult: .success([]))
         XCTAssertTrue(spy.messages.isEmpty)
     }

@@ -24,5 +24,5 @@ extension RouteSelectionService: RouteSelectionCalculating {
         throw RouteNotPossibleError()
     }
     
-    struct RouteNotPossibleError: Error {}
+    public struct RouteNotPossibleError: Error {}
 }
