@@ -14,6 +14,10 @@ public protocol FlightConnectionsListViewModeling: ObservableObject {
     var departure: String? { get }
     var destination: String? { get }
 
+    var routeInfo: String? { get }
+    var isLoading: Bool { get }
+    var errorMessage: String? { get }
+
     func selectDepartureTapped()
     func selectDestinationTapped()
 }
@@ -21,17 +25,26 @@ public protocol FlightConnectionsListViewModeling: ObservableObject {
 public final class FlightConnectionsListViewModel: FlightConnectionsListViewModeling {
     @Published private(set) public var departure: String?
     @Published private(set) public var destination: String?
-    
+
+    @Published private(set) public var routeInfo: String?
+    @Published private(set) public var isLoading: Bool = false
+    @Published private(set) public var errorMessage: String?
+
+    private let routeSelector: RouteSelectionCalculating
     private let citySelectionPublisher: any Publisher<CitySelection, Never>
+
     @Binding private var navigationPath: NavigationPath
     private var cancellables = Set<AnyCancellable>()
+    private(set) var routeTask: Task<Void, Never>?
     
     public init(
-        navigationPath: Binding<NavigationPath>,
-        citySelectionPublisher: any Publisher<CitySelection, Never>
+        routeSelector: RouteSelectionCalculating,
+        citySelectionPublisher: any Publisher<CitySelection, Never>,
+        navigationPath: Binding<NavigationPath>
     ) {
-        _navigationPath = navigationPath
+        self.routeSelector = routeSelector
         self.citySelectionPublisher = citySelectionPublisher
+        _navigationPath = navigationPath
         bindPublishers()
     }
 }
@@ -61,9 +74,53 @@ private extension FlightConnectionsListViewModel {
     func handleCitySelection(_ citySelection: CitySelection) {
         switch citySelection.type {
         case .departure:
+            if destination == citySelection.cityName {
+                destination = nil
+            }
             departure = citySelection.cityName
         case .destination:
+            if departure == citySelection.cityName {
+                departure = nil
+            }
             destination = citySelection.cityName
         }
+        
+        verifyInputCompletion()
+    }
+    
+    func verifyInputCompletion() {
+        guard let departure, let destination else {
+            resetInfoView()
+            return
+        }
+        findCheapestFlight(for: departure, destination: destination)
+    }
+    
+    func findCheapestFlight(for departure: String, destination: String) {
+        routeTask = Task { [weak self] in
+            guard let self else { return }
+            
+            defer { isLoading = false }
+            isLoading = true
+            resetInfoView()
+            
+            do {
+                let route = try await routeSelector.calculateRoute(from: departure, to: destination)
+                guard !Task.isCancelled else { return }
+                
+                let cities = route.connections.map { "\($0.from) - \($0.to)" }
+                routeInfo = """
+                    Price: \(route.price)
+                    Route: \n\t> \(cities.joined(separator: "\n\t> "))
+                """
+            } catch {
+                errorMessage = error.localizedDescription
+            }
+        }
+    }
+    
+    func resetInfoView() {
+        routeInfo = nil
+        errorMessage = nil
     }
 }

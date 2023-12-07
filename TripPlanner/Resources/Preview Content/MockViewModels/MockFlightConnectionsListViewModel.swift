@@ -8,10 +8,13 @@
 import Foundation
 
 final class MockFlightConnectionsListViewModel: FlightConnectionsListViewModeling {
-    init() {}
-
     var departure: String? = "Tokyo"
     var destination: String? = "Porto"
+    var routeInfo: String?
+    var isLoading: Bool = false
+    var errorMessage: String?
+    
+    init() {}
 
     func selectDepartureTapped() {}
     

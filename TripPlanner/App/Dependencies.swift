@@ -10,13 +10,17 @@ import Foundation
 import SwiftUI
 
 enum Dependencies {
-    static let remoteFlightConnectionsLoader: FlightConnectionsFetching = FlightConnectionsService(
+    static let flightConnectionsService: FlightConnectionsFetching = FlightConnectionsService(
         urlSession: URLSession(configuration: .ephemeral),
         endpoint: Configuration.default.apiURL
     )
     
     static let cityNamesService: CityNamesFetching = CityNamesService(
-        flightsLoader: remoteFlightConnectionsLoader
+        flightConnectionsFetcher: flightConnectionsService
+    )
+    
+    static let routeSelectionService: RouteSelectionCalculating = RouteSelectionService(
+        flightConnectionsFetcher: flightConnectionsService
     )
     
     // MARK: - ViewModels
@@ -26,8 +30,9 @@ enum Dependencies {
         citySelectionPublisher: any Publisher<CitySelection, Never>
     ) -> FlightConnectionsListViewModel {
         FlightConnectionsListViewModel(
-            navigationPath: navigationPath,
-            citySelectionPublisher: citySelectionPublisher
+            routeSelector: routeSelectionService,
+            citySelectionPublisher: citySelectionPublisher,
+            navigationPath: navigationPath
         )
     }
     

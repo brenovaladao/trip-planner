@@ -11,6 +11,7 @@
 		407D227E2B22172D002022EE /* RouteSelectionCalculating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D227D2B22172D002022EE /* RouteSelectionCalculating.swift */; };
 		407D22822B221A07002022EE /* RouteSelectionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D22812B221A07002022EE /* RouteSelectionServiceTests.swift */; };
 		407D22842B223C3A002022EE /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D22832B223C3A002022EE /* Route.swift */; };
+		407D228A2B225FF2002022EE /* FlightConnectionsListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D22892B225FF2002022EE /* FlightConnectionsListViewModelTests.swift */; };
 		40F688DD2B207C5E0021E50D /* TripPlannerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F688DC2B207C5E0021E50D /* TripPlannerApp.swift */; };
 		40F688E12B207C600021E50D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40F688E02B207C600021E50D /* Assets.xcassets */; };
 		40F688E52B207C600021E50D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40F688E42B207C600021E50D /* Preview Assets.xcassets */; };
@@ -59,6 +60,7 @@
 		407D227D2B22172D002022EE /* RouteSelectionCalculating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSelectionCalculating.swift; sourceTree = "<group>"; };
 		407D22812B221A07002022EE /* RouteSelectionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSelectionServiceTests.swift; sourceTree = "<group>"; };
 		407D22832B223C3A002022EE /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		407D22892B225FF2002022EE /* FlightConnectionsListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightConnectionsListViewModelTests.swift; sourceTree = "<group>"; };
 		40F688D92B207C5E0021E50D /* TripPlanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripPlanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40F688DC2B207C5E0021E50D /* TripPlannerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripPlannerApp.swift; sourceTree = "<group>"; };
 		40F688E02B207C600021E50D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 			isa = PBXGroup;
 			children = (
 				40F689582B20DB9A0021E50D /* FlightSearchViewModelTests.swift */,
+				407D22892B225FF2002022EE /* FlightConnectionsListViewModelTests.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 				40F6895F2B20DF020021E50D /* XCTestCase+CombineConvenience.swift in Sources */,
 				40F689592B20DB9A0021E50D /* FlightSearchViewModelTests.swift in Sources */,
 				40F6895B2B20DCC50021E50D /* CityNamesServiceSpy.swift in Sources */,
+				407D228A2B225FF2002022EE /* FlightConnectionsListViewModelTests.swift in Sources */,
 				40F689242B20910A0021E50D /* URLProtocolMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -626,7 +630,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TripPlanner/Resources/Preview Content\"";
@@ -666,7 +669,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TripPlanner/Resources/Preview Content\"";

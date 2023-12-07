@@ -8,16 +8,16 @@
 import Foundation
 
 public final class CityNamesService: CityNamesFetching {
-    private let flightsLoader: FlightConnectionsFetching
+    private let flightConnectionsFetcher: FlightConnectionsFetching
     
-    public init(flightsLoader: FlightConnectionsFetching) {
-        self.flightsLoader = flightsLoader
+    public init(flightConnectionsFetcher: FlightConnectionsFetching) {
+        self.flightConnectionsFetcher = flightConnectionsFetcher
     }
 }
 
 public extension CityNamesService {
     func fetchCityNames(searchType: SearchType) async throws -> [String] {
-        let flightConnections = try await flightsLoader.fetchConnections()
+        let flightConnections = try await flightConnectionsFetcher.fetchConnections()
         let cityNames = switch searchType {
         case .departure:
             flightConnections.map(\.from)
