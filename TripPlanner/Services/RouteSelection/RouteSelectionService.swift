@@ -29,51 +29,38 @@ extension RouteSelectionService: RouteSelectionCalculating {
         else {
             throw RouteNotPossibleError()
         }
-        
-        if let singleConnection = checkIfFlighConnectionIsNeeded(
-            from: connections,
-            departure: departureCity,
-            destination: destinationCity
-        ) {
-            return Route(price: singleConnection.price, connections: [singleConnection])
-        }
-        
+
         let route = checkChepeastConnections(
             from: connections,
-            departureCity: departureCity
+            departureCity: departureCity,
+            destinationCity: destinationCity
         )
         
         let totalPrice = route.reduce(0) { $0 + $1.price }
         return Route(price: totalPrice, connections: route)
     }
-    
-    private func checkIfFlighConnectionIsNeeded(
-        from connections: [FlightConnection],
-        departure: String,
-        destination: String
-    ) -> FlightConnection? {
-        connections.first(where: {
-            $0.from == departure && $0.to == destination
-        })
-    }
 
     private func checkChepeastConnections(
         from connections: [FlightConnection],
-        departureCity: String
+        departureCity: String,
+        destinationCity: String
     ) -> [FlightConnection] {
         var availableCities = Set(connections.flatMap { [$0.from, $0.to] })
         var currentCity = departureCity
         availableCities.remove(currentCity)
         var route = [FlightConnection]()
         
-        while !availableCities.isEmpty {
+        while currentCity != destinationCity {
             let possibleFlights = connections.filter {
                 $0.from == currentCity && availableCities.contains($0.to)
             }
             
             guard let cheapestConnection = possibleFlights.min(
                 by: { $0.price < $1.price }
-            ) else { break }
+            ) else {
+                // TODO
+                break
+            }
             
             availableCities.remove(cheapestConnection.to)
             route.append(cheapestConnection)

@@ -15,6 +15,9 @@
   "testTargets" : [
     {
       "parallelizable" : true,
+      "skippedTests" : [
+        "RouteSelectionServiceTests\/test_calculateRoute_cheapestRoute()"
+      ],
       "target" : {
         "containerPath" : "container:TripPlanner.xcodeproj",
         "identifier" : "40F688E92B207C600021E50D",
