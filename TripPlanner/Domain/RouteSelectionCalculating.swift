@@ -8,5 +8,8 @@
 import Foundation
 
 public protocol RouteSelectionCalculating: Sendable {
-    func calculateRoute(from departureCity: String, to destinationCityName: String) async throws -> Route
+    func calculateRoute(
+        from departureCity: String,
+        to destinationCity: String
+    ) async throws -> (Decimal, [FlightConnection])
 }

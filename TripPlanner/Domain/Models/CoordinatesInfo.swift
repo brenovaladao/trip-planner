@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CoordinatesInfo: Sendable, Equatable {
+public struct CoordinatesInfo: Sendable, Hashable, Equatable {
     public let from: Coordinate
     public let to: Coordinate
     

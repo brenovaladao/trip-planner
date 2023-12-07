@@ -28,6 +28,24 @@ final class RouteSelectionServiceTests: XCTestCase {
         
         XCTAssertEqual(spy.messages, [.fetchConnections])
     }
+    
+    func test_calculateRoute_cheapestRouteFromTwoConnections() async throws {
+        let connections = [
+            aFligthConnection(),
+            anotherFlightConnection()
+        ]
+        let from = connections[0].from
+        let to = connections[1].to
+        let (sut, spy) = makeSUT(mockResult: .success(connections))
+
+        let route = try await sut.calculateRoute(from: from, to: to)
+        
+        let expectedPrice = connections.reduce(0) { $0 + $1.price }
+        
+        XCTAssertEqual(route.0, expectedPrice)
+        XCTAssertEqual(route.1, connections)
+        XCTAssertEqual(spy.messages, [.fetchConnections])
+    }
 }
 
 private extension RouteSelectionServiceTests {
