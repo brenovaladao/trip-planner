@@ -55,32 +55,59 @@ final class FlightConnectionsListViewModelTests: XCTestCase {
         )
     }
     
-//    func test_citySelectionPublisher_publishesNewValueForDepartureCity() {
-//        let publisher = PassthroughSubject<CitySelection, Never>()
-//        let citySelection = CitySelection(type: .departure, cityName: "London")
-//        let (_, spy) = makeSUT(
-//            citySelectionPublisher: publisher,
-//            eventHandler: unnavailableEventCall
-//        )
-//
-//        let departureExp = expectation(description: "departure expectations")
-//        let destinationExp = expectation(description: "destination expectations")
-//        let routeInfoExp = expectation(description: "routeInfo expectations")
-//        let isLoadingExp = expectation(description: "isLoadingExp")
-//        let errorMessageExp = expectation(description: "errorMessage expectations")
-//        let annotationsExp = expectation(description: "annotations expectations")
-//        let citySelectionExp = expectation(description: "citySelection expectation")
-//
-//        cancellables = [
-//            publisher
-//                .assertOutput(matches: [citySelection], expectation: citySelectionExp)
-//        ]
-//        
-//        publisher.send(citySelection)
-//        
-//        wait(for: [citySelectionExp])
-//        XCTAssertTrue(spy.messages.isEmpty)
-//    }
+    func test_citySelectionPublisher_publishesNewValueForDepartureWhileDestinationIsNil() async {
+        let publisher = PassthroughSubject<CitySelection, Never>()
+        let citySelection = CitySelection(type: .departure, cityName: "London")
+        let (sut, spy) = makeSUT(
+            citySelectionPublisher: publisher,
+            eventHandler: unnavailableEventCall
+        )
+        
+        await expect(
+            sut,
+            departureOutputs: [nil, citySelection.cityName],
+            citySelectionOutputs: [citySelection],
+            citySelectionSubject: publisher,
+            actions: { publisher.send(citySelection) },
+            asserting: { XCTAssertTrue(spy.messages.isEmpty) }
+        )
+    }
+    
+    func test_citySelectionPublisher_publishesNewValueForDestinationWhileDepartureIsNil() async {
+        let publisher = PassthroughSubject<CitySelection, Never>()
+        let citySelection = CitySelection(type: .destination, cityName: "London")
+        let (sut, spy) = makeSUT(
+            citySelectionPublisher: publisher,
+            eventHandler: unnavailableEventCall
+        )
+        
+        await expect(
+            sut,
+            destinationOutputs: [nil, citySelection.cityName],
+            citySelectionOutputs: [citySelection],
+            citySelectionSubject: publisher,
+            actions: { publisher.send(citySelection) },
+            asserting: { XCTAssertTrue(spy.messages.isEmpty) }
+        )
+    }
+    
+    func test_citySelectionPublisher_publishesNewValueForDestinationWhileDepartureIsNotNil() async {
+        let publisher = PassthroughSubject<CitySelection, Never>()
+        let citySelection = CitySelection(type: .destination, cityName: "London")
+        let (sut, spy) = makeSUT(
+            citySelectionPublisher: publisher,
+            eventHandler: unnavailableEventCall
+        )
+        
+        await expect(
+            sut,
+            destinationOutputs: [nil, citySelection.cityName],
+            citySelectionOutputs: [citySelection],
+            citySelectionSubject: publisher,
+            actions: { publisher.send(citySelection) },
+            asserting: { XCTAssertTrue(spy.messages.isEmpty) }
+        )
+    }
     
 //    var departure: String? { get }
 //    var destination: String? { get }
@@ -95,6 +122,8 @@ final class FlightConnectionsListViewModelTests: XCTestCase {
 
 extension FlightConnectionsListViewModelTests {
     func makeSUT(
+        destination: String? = nil,
+        departure: String? = nil,
         mockResult: Result<Route, Error> = .success(emptyRoute()),
         citySelectionPublisher: PassthroughSubject<CitySelection, Never> = .init(),
         eventHandler: @escaping FlightConnectionsListViewEventHandling,
@@ -103,6 +132,8 @@ extension FlightConnectionsListViewModelTests {
     ) -> (FlightConnectionsListViewModel, RouteSelectionServiceSpy) {
         let spy = RouteSelectionServiceSpy(mockResult)
         let sut = FlightConnectionsListViewModel(
+            departure: departure,
+            destination: destination,
             routeSelector: spy,
             citySelectionPublisher: citySelectionPublisher,
             eventHandler: eventHandler

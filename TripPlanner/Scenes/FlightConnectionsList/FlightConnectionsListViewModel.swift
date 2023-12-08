@@ -41,10 +41,14 @@ public final class FlightConnectionsListViewModel: FlightConnectionsListViewMode
     private(set) var routeTask: Task<Void, Never>?
     
     public init(
+        departure: String? = nil,
+        destination: String? = nil,
         routeSelector: RouteSelectionCalculating,
         citySelectionPublisher: any Publisher<CitySelection, Never>,
         eventHandler: @escaping FlightConnectionsListViewEventHandling
     ) {
+        self.departure = departure
+        self.destination = destination
         self.routeSelector = routeSelector
         self.citySelectionPublisher = citySelectionPublisher
         self.eventHandler = eventHandler
@@ -128,7 +132,11 @@ private extension FlightConnectionsListViewModel {
     }
     
     func resetInfoView() {
-        routeInfo = nil
-        errorMessage = nil
+        if routeInfo != nil {
+            routeInfo = nil
+        }
+        if errorMessage != nil {
+            errorMessage = nil
+        }
     }
 }
