@@ -115,10 +115,8 @@ private extension FlightConnectionsListViewModel {
                 let route = try await routeSelector.calculateRoute(from: departure, to: destination)
                 guard !Task.isCancelled else { return }
                 
-                routeInfo = """
-                Price: \(route.price)
-                > \(route.cities.map { $0.name }.joined(separator: " > "))
-                """
+                routeInfo = route.displayValue
+                
                 annotations = route.cities.map {
                     CityAnnotation(
                         name: $0.name,

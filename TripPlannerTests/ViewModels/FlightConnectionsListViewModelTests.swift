@@ -53,8 +53,8 @@ final class FlightConnectionsListViewModelTests: XCTestCase {
     }
     
     func test_citySelectionPublisher_publishesNewValueForDepartureWhileDestinationIsNil() async {
-        let publisher = PassthroughSubject<CitySelection, Never>()
         let citySelection = CitySelection(type: .departure, cityName: "London")
+        let publisher = PassthroughSubject<CitySelection, Never>()
         let (sut, spy) = makeSUT(
             citySelectionPublisher: publisher,
             eventHandler: unnavailableEventCall
@@ -70,8 +70,8 @@ final class FlightConnectionsListViewModelTests: XCTestCase {
     }
     
     func test_citySelectionPublisher_publishesNewValueForDestinationWhileDepartureIsNil() async {
-        let publisher = PassthroughSubject<CitySelection, Never>()
         let citySelection = CitySelection(type: .destination, cityName: "London")
+        let publisher = PassthroughSubject<CitySelection, Never>()
         let (sut, spy) = makeSUT(
             citySelectionPublisher: publisher,
             eventHandler: unnavailableEventCall
@@ -87,8 +87,8 @@ final class FlightConnectionsListViewModelTests: XCTestCase {
     }
     
     func test_citySelectionPublisher_publishesNewValueForDestinationWhileDepartureIsNotNil() async {
-        let publisher = PassthroughSubject<CitySelection, Never>()
         let citySelection = CitySelection(type: .destination, cityName: "London")
+        let publisher = PassthroughSubject<CitySelection, Never>()
         let (sut, spy) = makeSUT(
             citySelectionPublisher: publisher,
             eventHandler: unnavailableEventCall
@@ -105,8 +105,8 @@ final class FlightConnectionsListViewModelTests: XCTestCase {
     
     func test_citySelectionPublisher_publishesNewValueForDestinationWhileDepartureHasTheSameCity() async {
         let cityName = "London"
-        let publisher = PassthroughSubject<CitySelection, Never>()
         let citySelection = CitySelection(type: .destination, cityName: cityName)
+        let publisher = PassthroughSubject<CitySelection, Never>()
         let (sut, spy) = makeSUT(
             departure: cityName,
             citySelectionPublisher: publisher,
@@ -125,8 +125,8 @@ final class FlightConnectionsListViewModelTests: XCTestCase {
     
     func test_citySelectionPublisher_publishesNewValueForDepartureWhileDestinationHasTheSameCity() async {
         let cityName = "London"
-        let publisher = PassthroughSubject<CitySelection, Never>()
         let citySelection = CitySelection(type: .departure, cityName: cityName)
+        let publisher = PassthroughSubject<CitySelection, Never>()
         let (sut, spy) = makeSUT(
             destination: cityName,
             citySelectionPublisher: publisher,
@@ -143,15 +143,64 @@ final class FlightConnectionsListViewModelTests: XCTestCase {
         )
     }
     
-//    var departure: String? { get }
-//    var destination: String? { get }
-//    
-//    var routeInfo: String? { get }
-//    var isLoading: Bool { get }
-//    var errorMessage: String? { get }
-//    
-//    var annotations: [CityAnnotation] { get }
+    func test_citySelectionPublisher_calculatesRouteInfoWhenDepartureAndDestinationAreFilledIn() async {
+        let flight = aFligthConnection()
+        let departureCity = flight.toDepartureCity()
+        let destinationCity = flight.toDestinationCity()
+        let destinationSelection = CitySelection(type: .destination, cityName: destinationCity.name)
+        let route = Route(price: flight.price, cities: [departureCity, destinationCity])
+        let publisher = PassthroughSubject<CitySelection, Never>()
+        let (sut, spy) = makeSUT(
+            departure: departureCity.name,
+            mockResult: .success(route),
+            citySelectionPublisher: publisher,
+            eventHandler: unnavailableEventCall
+        )
 
+        await expect(
+            sut,
+            departureOutputs: [departureCity.name],
+            destinationOutputs: [nil, destinationCity.name],
+            routeInfoOutputs: [nil, route.displayValue],
+            isLoadingOutputs: [false, true, false],
+            annotationsOutputs: [[], route.cityAnnotations],
+            citySelectionOutputs: [destinationSelection],
+            citySelectionSubject: publisher,
+            actions: { publisher.send(destinationSelection) },
+            asserting: { XCTAssertEqual(spy.messages, [.calculateRoute]) }
+        )
+        
+    }
+    
+    func test_citySelectionPublisher_calculatesRouteFailureOnRouteCalculation() async {
+        let flight = aFligthConnection()
+        let departureCity = flight.toDepartureCity()
+        let destinationCity = flight.toDestinationCity()
+        let destinationSelection = CitySelection(type: .destination, cityName: destinationCity.name)
+        let route = Route(price: flight.price, cities: [departureCity, destinationCity])
+        let publisher = PassthroughSubject<CitySelection, Never>()
+        let error = anyNSError()
+        
+        let (sut, spy) = makeSUT(
+            departure: departureCity.name,
+            mockResult: .failure(error),
+            citySelectionPublisher: publisher,
+            eventHandler: unnavailableEventCall
+        )
+        
+        await expect(
+            sut,
+            departureOutputs: [departureCity.name],
+            destinationOutputs: [nil, destinationCity.name],
+            isLoadingOutputs: [false, true, false],
+            errorMessageOutputs: [nil, error.localizedDescription],
+            citySelectionOutputs: [destinationSelection],
+            citySelectionSubject: publisher,
+            actions: { publisher.send(destinationSelection) },
+            asserting: { XCTAssertEqual(spy.messages, [.calculateRoute]) }
+        )
+        
+    }
 }
 
 extension FlightConnectionsListViewModelTests {
