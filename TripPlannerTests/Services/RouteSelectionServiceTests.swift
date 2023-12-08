@@ -82,7 +82,8 @@ final class RouteSelectionServiceTests: XCTestCase {
             makeFlightConnection(from: "London", to: "Lisbon", price: 1),
             makeFlightConnection(from: "Lisbon", to: "Berlin", price: 1),
             makeFlightConnection(from: "Lisbon", to: "Porto", price: 3),
-            makeFlightConnection(from: "Porto", to: "Berlin", price: 3)
+            makeFlightConnection(from: "Porto", to: "Berlin", price: 3),
+            makeFlightConnection(from: "London", to: "Berlin", price: 20)
         ]
         
         let expectedRoute = Route(
@@ -102,7 +103,7 @@ final class RouteSelectionServiceTests: XCTestCase {
         )
     }
     
-    func test_calculateRoute_cheapestRoute() async throws {
+    func test_calculateRoute_cheapestRouteWithDuplicatedDepartures() async throws {
         let connections = [
             makeFlightConnection(from: "London", to: "Porto", price: 1),
             makeFlightConnection(from: "London", to: "Berlin", price: 10),
