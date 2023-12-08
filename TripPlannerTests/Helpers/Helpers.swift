@@ -20,6 +20,10 @@ func invalidJSON() -> Data {
     Data("invalid json".utf8)
 }
 
+func emptyRoute() -> Route {
+    Route(price: 0, cities: [])
+}
+
 func aFligthConnection() -> FlightConnection {
     makeFlightConnection()
 }
