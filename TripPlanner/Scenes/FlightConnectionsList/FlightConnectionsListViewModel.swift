@@ -7,7 +7,6 @@
 
 import Combine
 import Foundation
-import SwiftUI
 
 @MainActor
 public protocol FlightConnectionsListViewModeling: ObservableObject {
@@ -37,29 +36,29 @@ public final class FlightConnectionsListViewModel: FlightConnectionsListViewMode
     private let routeSelector: RouteSelectionCalculating
     private let citySelectionPublisher: any Publisher<CitySelection, Never>
 
-    @Binding private var navigationPath: NavigationPath
+    private let eventHandler: FlightConnectionsListViewEventHandling
     private var cancellables = Set<AnyCancellable>()
     private(set) var routeTask: Task<Void, Never>?
     
     public init(
         routeSelector: RouteSelectionCalculating,
         citySelectionPublisher: any Publisher<CitySelection, Never>,
-        navigationPath: Binding<NavigationPath>
+        eventHandler: @escaping FlightConnectionsListViewEventHandling
     ) {
         self.routeSelector = routeSelector
         self.citySelectionPublisher = citySelectionPublisher
-        _navigationPath = navigationPath
+        self.eventHandler = eventHandler
         bindPublishers()
     }
 }
 
 public extension FlightConnectionsListViewModel {
     func selectDepartureTapped() {
-        navigationPath.append(ConnectionType.departure)
+        eventHandler(.departure)
     }
     
     func selectDestinationTapped() {
-        navigationPath.append(ConnectionType.destination)
+        eventHandler(.destination)
     }
 }
 
@@ -88,7 +87,7 @@ private extension FlightConnectionsListViewModel {
             }
             destination = citySelection.cityName
         }
-        
+
         verifyInputCompletion()
     }
     
@@ -116,13 +115,12 @@ private extension FlightConnectionsListViewModel {
                 Price: \(route.price)
                 > \(route.cities.map { $0.name }.joined(separator: " > "))
                 """
-                annotations = route.cities.map { 
+                annotations = route.cities.map {
                     CityAnnotation(
                         name: $0.name,
                         coordinates: $0.coordinates.asCCLocationCoordinate2D
                     )
                 }
-                
             } catch {
                 errorMessage = error.localizedDescription
             }

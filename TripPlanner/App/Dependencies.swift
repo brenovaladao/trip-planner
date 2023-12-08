@@ -26,13 +26,13 @@ enum Dependencies {
     // MARK: - ViewModels
     @MainActor
     static func makeFlightConnectionsListViewModel(
-        navigationPath: Binding<NavigationPath>,
+        eventHandler: @escaping FlightConnectionsListViewEventHandling,
         citySelectionPublisher: any Publisher<CitySelection, Never>
     ) -> FlightConnectionsListViewModel {
         FlightConnectionsListViewModel(
             routeSelector: routeSelectionService,
             citySelectionPublisher: citySelectionPublisher,
-            navigationPath: navigationPath
+            eventHandler: eventHandler
         )
     }
     

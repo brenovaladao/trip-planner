@@ -18,7 +18,7 @@ struct TripPlannerApp: App {
             NavigationStack(path: $navigationPath) {
                 FlightConnectionsListView(
                     viewModel: Dependencies.makeFlightConnectionsListViewModel(
-                        navigationPath: $navigationPath,
+                        eventHandler: handleFlightConnectionsEvent,
                         citySelectionPublisher: citySelectionSubject
                     )
                 )
@@ -38,5 +38,9 @@ struct TripPlannerApp: App {
                 }
             }
         }
+    }
+    
+    func handleFlightConnectionsEvent(_ type: ConnectionType) {
+        navigationPath.append(type)
     }
 }
