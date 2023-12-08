@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol CityNamesFetching: Sendable {
-    func fetchCityNames(searchType: SearchType) async throws -> [String]
+    func fetchCityNames(searchType: ConnectionType) async throws -> [String]
 }

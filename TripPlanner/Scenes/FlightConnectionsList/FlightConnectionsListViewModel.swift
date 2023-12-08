@@ -51,11 +51,11 @@ public final class FlightConnectionsListViewModel: FlightConnectionsListViewMode
 
 public extension FlightConnectionsListViewModel {
     func selectDepartureTapped() {
-        navigationPath.append(SearchType.departure)
+        navigationPath.append(ConnectionType.departure)
     }
     
     func selectDestinationTapped() {
-        navigationPath.append(SearchType.destination)
+        navigationPath.append(ConnectionType.destination)
     }
 }
 
@@ -108,10 +108,9 @@ private extension FlightConnectionsListViewModel {
                 let route = try await routeSelector.calculateRoute(from: departure, to: destination)
                 guard !Task.isCancelled else { return }
                 
-                let cities = route.connections.map { "\($0.from) - \($0.to)" }
                 routeInfo = """
                     Price: \(route.price)
-                    Route: \n\t> \(cities.joined(separator: "\n\t> "))
+                    Route: \(route.cities.map { $0.name }.joined(separator: " > "))
                 """
             } catch {
                 errorMessage = error.localizedDescription

@@ -157,7 +157,7 @@ final class FlightSearchViewModelTests: XCTestCase {
 private extension FlightSearchViewModelTests {
     func makeSUT(
         mockResult: Result<[String], Error> = .success([]),
-        searchType: SearchType = .departure,
+        searchType: ConnectionType = .departure,
         citySelectionSubject: PassthroughSubject<CitySelection, Never> = .init(),
         file: StaticString = #filePath,
         line: UInt = #line

@@ -25,12 +25,12 @@ public final class FlightSearchViewModel: FlightSearchViewModeling {
     @Published private(set) public var isLoading: Bool = false
     @Published private(set) public var errorMessage: String?
 
-    private let searchType: SearchType
+    private let searchType: ConnectionType
     private let citySelectionSubject: PassthroughSubject<CitySelection, Never>
     private let cityNamesService: CityNamesFetching
     
     public init(
-        searchType: SearchType,
+        searchType: ConnectionType,
         citySelectionSubject: PassthroughSubject<CitySelection, Never>,
         cityNamesService: CityNamesFetching
     ) {

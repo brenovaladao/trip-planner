@@ -12,7 +12,7 @@ final class FlightConnectionsServiceTests: XCTestCase {
     func test_fetchConnections_successOnValidData() async throws {
         let flightConnection = aFligthConnection()
         let sut = makeSUT()
-        let data = makeConnectionsJSON(
+        let data = makeFlightConnectionsJSON(
             [makeDictionaryRepresentation(flightConnection)]
         )
         setURLProtocolRequestHandler(data: data)
@@ -24,7 +24,7 @@ final class FlightConnectionsServiceTests: XCTestCase {
     
     func test_fetchConnections_successOnEmptyData() async throws {
         let sut = makeSUT()
-        let data = makeConnectionsJSON([])
+        let data = makeFlightConnectionsJSON([])
         setURLProtocolRequestHandler(data: data)
         
         let connections = try await sut.fetchConnections()
@@ -47,7 +47,7 @@ final class FlightConnectionsServiceTests: XCTestCase {
     
     func test_fetchConnections_errorOnInvalidStatusCode() async {
         let sut = makeSUT()
-        let data = makeConnectionsJSON([])
+        let data = makeFlightConnectionsJSON([])
         setURLProtocolRequestHandler(statusCode: 401, data: data)
         
         do {

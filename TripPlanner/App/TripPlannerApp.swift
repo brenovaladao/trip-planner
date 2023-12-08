@@ -23,7 +23,7 @@ struct TripPlannerApp: App {
                     )
                 )
                 .navigationTitle("Trip Planner")
-                .navigationDestination(for: SearchType.self) {
+                .navigationDestination(for: ConnectionType.self) {
                     FlightSearchView(
                         viewModel: Dependencies.makeFlightSearchViewModel(
                             searchType: $0,

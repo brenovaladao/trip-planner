@@ -39,7 +39,10 @@ final class RouteSelectionServiceTests: XCTestCase {
         
         let expectedRoute = Route(
             price: connections[0].price,
-            connections: [connections[0]]
+            cities: [
+                connections[0].toDepartureCity(),
+                connections[0].toDestinationCity()
+            ]
         )
         
         try await expect(
@@ -58,7 +61,11 @@ final class RouteSelectionServiceTests: XCTestCase {
         
         let expectedRoute = Route(
             price: connections.reduce(0) { $0 + $1.price },
-            connections: connections
+            cities: [
+                connections[0].toDepartureCity(),
+                connections[0].toDestinationCity(),
+                connections[1].toDestinationCity()
+            ]
         )
         
         try await expect(
@@ -80,7 +87,11 @@ final class RouteSelectionServiceTests: XCTestCase {
         
         let expectedRoute = Route(
             price: 2,
-            connections: [connections[1], connections[2]]
+            cities: [
+                connections[1].toDepartureCity(),
+                connections[1].toDestinationCity(),
+                connections[2].toDestinationCity()
+            ]
         )
         
         try await expect(
@@ -91,26 +102,28 @@ final class RouteSelectionServiceTests: XCTestCase {
         )
     }
     
-    // TODO
-//    func test_calculateRoute_cheapestRoute() async throws {
-//        let connections = [
-//            makeFlightConnection(from: "London", to: "Porto", price: 1),
-//            makeFlightConnection(from: "London", to: "Berlin", price: 10),
-//            makeFlightConnection(from: "Porto", to: "Lisbon", price: 1),
-//        ]
-//        
-//        let expectedRoute = Route(
-//            price: 10,
-//            connections: [connections[1], connections[2]]
-//        )
-//        
-//        try await expect(
-//            connections: connections,
-//            departure: "London",
-//            destination: "Berlin",
-//            with: expectedRoute
-//        )
-//    }
+    func test_calculateRoute_cheapestRoute() async throws {
+        let connections = [
+            makeFlightConnection(from: "London", to: "Porto", price: 1),
+            makeFlightConnection(from: "London", to: "Berlin", price: 10),
+            makeFlightConnection(from: "Porto", to: "Lisbon", price: 1)
+        ]
+        
+        let expectedRoute = Route(
+            price: 10,
+            cities: [
+                connections[1].toDepartureCity(),
+                connections[1].toDestinationCity()
+            ]
+        )
+        
+        try await expect(
+            connections: connections,
+            departure: "London",
+            destination: "Berlin",
+            with: expectedRoute
+        )
+    }
 }
 
 private extension RouteSelectionServiceTests {

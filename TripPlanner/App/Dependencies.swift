@@ -38,7 +38,7 @@ enum Dependencies {
     
     @MainActor
     static func makeFlightSearchViewModel(
-        searchType: SearchType,
+        searchType: ConnectionType,
         citySelectionSubject: PassthroughSubject<CitySelection, Never>
     ) -> FlightSearchViewModel {
         FlightSearchViewModel(

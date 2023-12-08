@@ -80,7 +80,17 @@ func makeDictionaryRepresentation(_ flightConnection: FlightConnection) -> [Stri
     ]
 }
 
-func makeConnectionsJSON(_ items: [[String: Any]]) -> Data {
+func makeFlightConnectionsJSON(_ items: [[String: Any]]) -> Data {
     let json = ["connections": items]
     return try! JSONSerialization.data(withJSONObject: json)
+}
+
+extension FlightConnection {
+    func toDepartureCity() -> City {
+        City(flightConnection: self, type: .departure)
+    }
+    
+    func toDestinationCity() -> City {
+        City(flightConnection: self, type: .destination)
+    }
 }

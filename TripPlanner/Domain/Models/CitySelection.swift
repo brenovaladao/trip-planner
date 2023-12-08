@@ -8,10 +8,10 @@
 import Foundation
 
 public struct CitySelection: Sendable, Equatable {
-    public let type: SearchType
+    public let type: ConnectionType
     public let cityName: String
     
-    public init(type: SearchType, cityName: String) {
+    public init(type: ConnectionType, cityName: String) {
         self.type = type
         self.cityName = cityName
     }

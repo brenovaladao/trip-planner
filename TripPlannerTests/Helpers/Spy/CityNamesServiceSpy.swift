@@ -21,7 +21,7 @@ final class CityNamesServiceSpy: CityNamesFetching {
         self.mockResult = mockResult
     }
     
-    func fetchCityNames(searchType: SearchType) async throws -> [String] {
+    func fetchCityNames(searchType: ConnectionType) async throws -> [String] {
         messages.append(.fetchCityNames)
         return try mockResult.get()
     }

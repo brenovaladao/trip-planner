@@ -16,7 +16,7 @@ public final class CityNamesService: CityNamesFetching {
 }
 
 public extension CityNamesService {
-    func fetchCityNames(searchType: SearchType) async throws -> [String] {
+    func fetchCityNames(searchType: ConnectionType) async throws -> [String] {
         let flightConnections = try await flightConnectionsFetcher.fetchConnections()
         let cityNames = switch searchType {
         case .departure:

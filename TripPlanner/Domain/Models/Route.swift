@@ -9,10 +9,10 @@ import Foundation
 
 public struct Route: Sendable, Equatable, Hashable {
     public let price: Decimal
-    public let connections: [FlightConnection]
+    public let cities: [City]
     
-    public init(price: Decimal, connections: [FlightConnection]) {
+    public init(price: Decimal, cities: [City]) {
         self.price = price
-        self.connections = connections
+        self.cities = cities
     }
 }

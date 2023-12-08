@@ -29,44 +29,56 @@ extension RouteSelectionService: RouteSelectionCalculating {
         else {
             throw RouteNotPossibleError()
         }
-
-        let route = checkChepeastConnections(
-            from: connections,
-            departureCity: departureCity,
-            destinationCity: destinationCity
-        )
         
-        let totalPrice = route.reduce(0) { $0 + $1.price }
-        return Route(price: totalPrice, connections: route)
-    }
-
-    private func checkChepeastConnections(
-        from connections: [FlightConnection],
-        departureCity: String,
-        destinationCity: String
-    ) -> [FlightConnection] {
-        var availableCities = Set(connections.flatMap { [$0.from, $0.to] })
-        var currentCity = departureCity
-        availableCities.remove(currentCity)
-        var route = [FlightConnection]()
+        let nodes = Set(connections.flatMap { [$0.from, $0.to] })
+            .map { FlightNode(city: $0) }
         
-        while currentCity != destinationCity {
-            let possibleFlights = connections.filter {
-                $0.from == currentCity && availableCities.contains($0.to)
-            }
+        connections.forEach { flightConnection in
+            guard let fromNode = nodes.first(where: { $0.city ==  flightConnection.from }),
+                  let toNode = nodes.first(where: { $0.city ==  flightConnection.to })
+            else { return }
             
-            guard let cheapestConnection = possibleFlights.min(
-                by: { $0.price < $1.price }
-            ) else {
-                // TODO
-                break
-            }
-            
-            availableCities.remove(cheapestConnection.to)
-            route.append(cheapestConnection)
-            currentCity = cheapestConnection.to
+            fromNode.neighbors.append(
+                Neighbor(to: toNode, price: flightConnection.price)
+            )
         }
+        
+        guard let departureNode = nodes.first(where: { $0.city ==  departureCity }),
+              let destinationNode = nodes.first(where: { $0.city ==  destinationCity }),
+              let path = Dijkstra.shortestPath(departure: departureNode, destination: destinationNode)
+        else { throw RouteNotPossibleError() }
+        
+        let cityNames: [String] = path.lightPath
+            .compactMap { $0 as? FlightNode }
+            .map { $0.city }
+        
+        return Route(
+            price: path.cumulativePrice,
+            cities: map(cityNames: cityNames, in: connections)
+        )
+    }
+}
 
-        return route
+private extension RouteSelectionService {
+    func map(cityNames: [String], in connections: [FlightConnection]) -> [City] {
+        cityNames.compactMap { name -> City? in
+            let type: ConnectionType = name == cityNames.first ? .departure : .destination
+            return getCityInfo(for: name, in: connections, as: type)
+        }
+    }
+    
+    func getCityInfo(
+        for cityName: String,
+        in connections: [FlightConnection],
+        as connectionType: ConnectionType
+    ) -> City? {
+        connections
+            .first(where: {
+                switch connectionType {
+                case .departure: $0.from == cityName
+                case .destination: $0.to == cityName
+                }
+            })
+            .map { City(flightConnection: $0, type: connectionType) }
     }
 }

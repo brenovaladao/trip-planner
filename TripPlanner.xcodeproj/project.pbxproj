@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		400EF0672B2325EE00B59068 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400EF0662B2325EE00B59068 /* City.swift */; };
+		400EF06B2B232E4800B59068 /* Dijkstra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400EF06A2B232E4800B59068 /* Dijkstra.swift */; };
+		400EF06E2B232F1100B59068 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400EF06D2B232F1100B59068 /* Node.swift */; };
+		400EF0702B232F2900B59068 /* Neighbor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400EF06F2B232F2900B59068 /* Neighbor.swift */; };
+		400EF0722B232F4800B59068 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400EF0712B232F4800B59068 /* Path.swift */; };
+		400EF0742B23308C00B59068 /* FlightNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400EF0732B23308C00B59068 /* FlightNode.swift */; };
 		407D227C2B22170A002022EE /* RouteSelectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D227B2B22170A002022EE /* RouteSelectionService.swift */; };
 		407D227E2B22172D002022EE /* RouteSelectionCalculating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D227D2B22172D002022EE /* RouteSelectionCalculating.swift */; };
 		407D22822B221A07002022EE /* RouteSelectionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D22812B221A07002022EE /* RouteSelectionServiceTests.swift */; };
@@ -32,7 +38,7 @@
 		40F689382B20B0F20021E50D /* FlightSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F689372B20B0F20021E50D /* FlightSearchView.swift */; };
 		40F6893A2B20B0F90021E50D /* FlightSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F689392B20B0F90021E50D /* FlightSearchViewModel.swift */; };
 		40F6893C2B20B1420021E50D /* MockFlightSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F6893B2B20B1410021E50D /* MockFlightSearchViewModel.swift */; };
-		40F6893E2B20B2650021E50D /* SearchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F6893D2B20B2650021E50D /* SearchType.swift */; };
+		40F6893E2B20B2650021E50D /* ConnectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F6893D2B20B2650021E50D /* ConnectionType.swift */; };
 		40F689452B20BEAA0021E50D /* CitySelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F689442B20BEAA0021E50D /* CitySelection.swift */; };
 		40F689472B20C3D20021E50D /* CityNamesFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F689462B20C3D20021E50D /* CityNamesFetching.swift */; };
 		40F6894A2B20C4BA0021E50D /* CityNamesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F689492B20C4BA0021E50D /* CityNamesService.swift */; };
@@ -56,6 +62,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		400EF0662B2325EE00B59068 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		400EF06A2B232E4800B59068 /* Dijkstra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dijkstra.swift; sourceTree = "<group>"; };
+		400EF06D2B232F1100B59068 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		400EF06F2B232F2900B59068 /* Neighbor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neighbor.swift; sourceTree = "<group>"; };
+		400EF0712B232F4800B59068 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
+		400EF0732B23308C00B59068 /* FlightNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightNode.swift; sourceTree = "<group>"; };
 		407D227B2B22170A002022EE /* RouteSelectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSelectionService.swift; sourceTree = "<group>"; };
 		407D227D2B22172D002022EE /* RouteSelectionCalculating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSelectionCalculating.swift; sourceTree = "<group>"; };
 		407D22812B221A07002022EE /* RouteSelectionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSelectionServiceTests.swift; sourceTree = "<group>"; };
@@ -83,7 +95,7 @@
 		40F689372B20B0F20021E50D /* FlightSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightSearchView.swift; sourceTree = "<group>"; };
 		40F689392B20B0F90021E50D /* FlightSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightSearchViewModel.swift; sourceTree = "<group>"; };
 		40F6893B2B20B1410021E50D /* MockFlightSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlightSearchViewModel.swift; sourceTree = "<group>"; };
-		40F6893D2B20B2650021E50D /* SearchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchType.swift; sourceTree = "<group>"; };
+		40F6893D2B20B2650021E50D /* ConnectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionType.swift; sourceTree = "<group>"; };
 		40F689442B20BEAA0021E50D /* CitySelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySelection.swift; sourceTree = "<group>"; };
 		40F689462B20C3D20021E50D /* CityNamesFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityNamesFetching.swift; sourceTree = "<group>"; };
 		40F689492B20C4BA0021E50D /* CityNamesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityNamesService.swift; sourceTree = "<group>"; };
@@ -118,10 +130,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		400EF0682B232E1500B59068 /* Infrastructure */ = {
+			isa = PBXGroup;
+			children = (
+				400EF0692B232E2000B59068 /* Algorithms */,
+			);
+			path = Infrastructure;
+			sourceTree = "<group>";
+		};
+		400EF0692B232E2000B59068 /* Algorithms */ = {
+			isa = PBXGroup;
+			children = (
+				400EF06C2B232F0500B59068 /* Dijkstra */,
+			);
+			path = Algorithms;
+			sourceTree = "<group>";
+		};
+		400EF06C2B232F0500B59068 /* Dijkstra */ = {
+			isa = PBXGroup;
+			children = (
+				400EF06F2B232F2900B59068 /* Neighbor.swift */,
+				400EF06A2B232E4800B59068 /* Dijkstra.swift */,
+				400EF06D2B232F1100B59068 /* Node.swift */,
+				400EF0712B232F4800B59068 /* Path.swift */,
+			);
+			path = Dijkstra;
+			sourceTree = "<group>";
+		};
+		400EF0752B23309500B59068 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				400EF0732B23308C00B59068 /* FlightNode.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		407D227A2B2216E9002022EE /* RouteSelection */ = {
 			isa = PBXGroup;
 			children = (
 				407D227B2B22170A002022EE /* RouteSelectionService.swift */,
+				400EF0752B23309500B59068 /* Helpers */,
 			);
 			path = RouteSelection;
 			sourceTree = "<group>";
@@ -150,6 +198,7 @@
 			children = (
 				40F689072B207D030021E50D /* App */,
 				40F6890D2B2084700021E50D /* Domain */,
+				400EF0682B232E1500B59068 /* Infrastructure */,
 				40F689082B207D0B0021E50D /* Resources */,
 				40F689092B207D280021E50D /* Scenes */,
 				40F689282B20A16A0021E50D /* Services */,
@@ -220,11 +269,12 @@
 		40F689132B2085660021E50D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				400EF0662B2325EE00B59068 /* City.swift */,
 				40F689442B20BEAA0021E50D /* CitySelection.swift */,
+				40F6893D2B20B2650021E50D /* ConnectionType.swift */,
 				40F689182B2086A30021E50D /* Coordinate.swift */,
 				40F689162B20869E0021E50D /* CoordinatesInfo.swift */,
 				40F689142B20856F0021E50D /* FlightConnection.swift */,
-				40F6893D2B20B2650021E50D /* SearchType.swift */,
 				407D22832B223C3A002022EE /* Route.swift */,
 			);
 			path = Models;
@@ -454,21 +504,27 @@
 				40F689192B2086A30021E50D /* Coordinate.swift in Sources */,
 				40F689102B2084A60021E50D /* FlightConnectionsFetching.swift in Sources */,
 				40F6893A2B20B0F90021E50D /* FlightSearchViewModel.swift in Sources */,
-				40F6893E2B20B2650021E50D /* SearchType.swift in Sources */,
+				40F6893E2B20B2650021E50D /* ConnectionType.swift in Sources */,
+				400EF06B2B232E4800B59068 /* Dijkstra.swift in Sources */,
+				400EF06E2B232F1100B59068 /* Node.swift in Sources */,
 				40F6894A2B20C4BA0021E50D /* CityNamesService.swift in Sources */,
 				40F689382B20B0F20021E50D /* FlightSearchView.swift in Sources */,
 				40F689552B20D65E0021E50D /* Configuration.swift in Sources */,
 				40F689352B20AB8C0021E50D /* MockFlightConnectionsListViewModel.swift in Sources */,
 				40F689152B20856F0021E50D /* FlightConnection.swift in Sources */,
+				400EF0742B23308C00B59068 /* FlightNode.swift in Sources */,
 				407D22842B223C3A002022EE /* Route.swift in Sources */,
 				40F689302B20A3BA0021E50D /* FlightConnectionsListViewModel.swift in Sources */,
 				407D227C2B22170A002022EE /* RouteSelectionService.swift in Sources */,
 				40F689222B208C620021E50D /* HTTPURLResponse.swift in Sources */,
 				40F689322B20A99B0021E50D /* Dependencies.swift in Sources */,
+				400EF0672B2325EE00B59068 /* City.swift in Sources */,
 				40F6892D2B20A2DC0021E50D /* FlightConnectionsListView.swift in Sources */,
 				407D227E2B22172D002022EE /* RouteSelectionCalculating.swift in Sources */,
+				400EF0702B232F2900B59068 /* Neighbor.swift in Sources */,
 				40F6893C2B20B1420021E50D /* MockFlightSearchViewModel.swift in Sources */,
 				40F688DD2B207C5E0021E50D /* TripPlannerApp.swift in Sources */,
+				400EF0722B232F4800B59068 /* Path.swift in Sources */,
 				40F6891F2B2089F00021E50D /* FlightConnectionsMapper.swift in Sources */,
 				40F689472B20C3D20021E50D /* CityNamesFetching.swift in Sources */,
 				40F689502B20C7E10021E50D /* FlightConnectionsService.swift in Sources */,
