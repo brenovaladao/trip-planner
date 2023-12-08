@@ -38,7 +38,6 @@ public final class FlightConnectionsListViewModel: FlightConnectionsListViewMode
 
     private let eventHandler: FlightConnectionsListViewEventHandling
     private var cancellables = Set<AnyCancellable>()
-    private(set) var routeTask: Task<Void, Never>?
     
     public init(
         departure: String? = nil,
@@ -100,32 +99,31 @@ private extension FlightConnectionsListViewModel {
             resetInfoView()
             return
         }
-        findCheapestFlight(for: departure, destination: destination)
+        Task { [weak self] in
+            guard let self else { return }
+            await findCheapestFlight(for: departure, destination: destination)
+        }
     }
     
-    func findCheapestFlight(for departure: String, destination: String) {
-        routeTask = Task { [weak self] in
-            guard let self else { return }
+    func findCheapestFlight(for departure: String, destination: String) async {
+        defer { isLoading = false }
+        isLoading = true
+        resetInfoView()
+        
+        do {
+            let route = try await routeSelector.calculateRoute(from: departure, to: destination)
+            guard !Task.isCancelled else { return }
             
-            defer { isLoading = false }
-            isLoading = true
-            resetInfoView()
+            routeInfo = route.displayValue
             
-            do {
-                let route = try await routeSelector.calculateRoute(from: departure, to: destination)
-                guard !Task.isCancelled else { return }
-                
-                routeInfo = route.displayValue
-                
-                annotations = route.cities.map {
-                    CityAnnotation(
-                        name: $0.name,
-                        coordinates: $0.coordinates.asCCLocationCoordinate2D
-                    )
-                }
-            } catch {
-                errorMessage = error.localizedDescription
+            annotations = route.cities.map {
+                CityAnnotation(
+                    name: $0.name,
+                    coordinates: $0.coordinates.asCCLocationCoordinate2D
+                )
             }
+        } catch {
+            errorMessage = error.localizedDescription
         }
     }
     
