@@ -5,6 +5,7 @@
 //  Created by Breno Valadão on 06/12/23.
 //
 
+import MapKit
 import SwiftUI
 
 public struct FlightConnectionsListView<ViewModel: FlightConnectionsListViewModeling>: View {
@@ -20,7 +21,7 @@ public struct FlightConnectionsListView<ViewModel: FlightConnectionsListViewMode
     
     private var content: some View {
         ScrollView {
-            LazyVStack(alignment: .leading, spacing: 0, pinnedViews: [.sectionHeaders]) {
+            LazyVStack(alignment: .center, spacing: 0, pinnedViews: [.sectionHeaders]) {
                 Section(
                     content: {
                         // TODO: Move to different getters / views
@@ -36,7 +37,10 @@ public struct FlightConnectionsListView<ViewModel: FlightConnectionsListViewMode
                                 Text(routeInfo)
                                     .bold()
                                     .padding()
-                                // TODO: Map view
+                                
+                                if !viewModel.annotations.isEmpty {
+                                    mapView(annotations: viewModel.annotations)
+                                }
                             }
                         } else {
                             EmptyView()
@@ -72,6 +76,22 @@ public struct FlightConnectionsListView<ViewModel: FlightConnectionsListViewMode
         .buttonStyle(.bordered)
         .padding(.horizontal, 16)
         .frame(minHeight: 44)
+    }
+    
+    func mapView(annotations: [CityAnnotation]) -> some View {
+        let initialCoordinate = MKCoordinateRegion(
+            center: annotations.first?.coordinates ?? CLLocationCoordinate2D(latitude: 0, longitude: 0),
+            span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
+        )
+        return Map(
+            coordinateRegion: .constant(initialCoordinate),
+            annotationItems: viewModel.annotations
+        ) { annotation in
+            MapMarker(coordinate: annotation.coordinates)
+        }
+        .frame(height: 400)
+        .frame(maxWidth: .infinity)
+        .padding(16)
     }
 }
 

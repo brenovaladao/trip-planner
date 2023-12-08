@@ -13,6 +13,8 @@
 		400EF0702B232F2900B59068 /* Neighbor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400EF06F2B232F2900B59068 /* Neighbor.swift */; };
 		400EF0722B232F4800B59068 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400EF0712B232F4800B59068 /* Path.swift */; };
 		400EF0742B23308C00B59068 /* FlightNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400EF0732B23308C00B59068 /* FlightNode.swift */; };
+		400EF0792B23395F00B59068 /* Coordinate+CLLocationCoordinate2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400EF0782B23395F00B59068 /* Coordinate+CLLocationCoordinate2D.swift */; };
+		400EF07B2B233ADB00B59068 /* CityAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400EF07A2B233ADB00B59068 /* CityAnnotation.swift */; };
 		407D227C2B22170A002022EE /* RouteSelectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D227B2B22170A002022EE /* RouteSelectionService.swift */; };
 		407D227E2B22172D002022EE /* RouteSelectionCalculating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D227D2B22172D002022EE /* RouteSelectionCalculating.swift */; };
 		407D22822B221A07002022EE /* RouteSelectionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D22812B221A07002022EE /* RouteSelectionServiceTests.swift */; };
@@ -68,6 +70,8 @@
 		400EF06F2B232F2900B59068 /* Neighbor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neighbor.swift; sourceTree = "<group>"; };
 		400EF0712B232F4800B59068 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		400EF0732B23308C00B59068 /* FlightNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightNode.swift; sourceTree = "<group>"; };
+		400EF0782B23395F00B59068 /* Coordinate+CLLocationCoordinate2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coordinate+CLLocationCoordinate2D.swift"; sourceTree = "<group>"; };
+		400EF07A2B233ADB00B59068 /* CityAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityAnnotation.swift; sourceTree = "<group>"; };
 		407D227B2B22170A002022EE /* RouteSelectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSelectionService.swift; sourceTree = "<group>"; };
 		407D227D2B22172D002022EE /* RouteSelectionCalculating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSelectionCalculating.swift; sourceTree = "<group>"; };
 		407D22812B221A07002022EE /* RouteSelectionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSelectionServiceTests.swift; sourceTree = "<group>"; };
@@ -163,6 +167,15 @@
 				400EF0732B23308C00B59068 /* FlightNode.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		400EF0772B23394B00B59068 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				400EF07A2B233ADB00B59068 /* CityAnnotation.swift */,
+				400EF0782B23395F00B59068 /* Coordinate+CLLocationCoordinate2D.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		407D227A2B2216E9002022EE /* RouteSelection */ = {
@@ -335,6 +348,7 @@
 			children = (
 				40F6892C2B20A2DC0021E50D /* FlightConnectionsListView.swift */,
 				40F6892F2B20A3BA0021E50D /* FlightConnectionsListViewModel.swift */,
+				400EF0772B23394B00B59068 /* Models */,
 			);
 			path = FlightConnectionsList;
 			sourceTree = "<group>";
@@ -501,6 +515,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				400EF07B2B233ADB00B59068 /* CityAnnotation.swift in Sources */,
 				40F689192B2086A30021E50D /* Coordinate.swift in Sources */,
 				40F689102B2084A60021E50D /* FlightConnectionsFetching.swift in Sources */,
 				40F6893A2B20B0F90021E50D /* FlightSearchViewModel.swift in Sources */,
@@ -520,6 +535,7 @@
 				40F689322B20A99B0021E50D /* Dependencies.swift in Sources */,
 				400EF0672B2325EE00B59068 /* City.swift in Sources */,
 				40F6892D2B20A2DC0021E50D /* FlightConnectionsListView.swift in Sources */,
+				400EF0792B23395F00B59068 /* Coordinate+CLLocationCoordinate2D.swift in Sources */,
 				407D227E2B22172D002022EE /* RouteSelectionCalculating.swift in Sources */,
 				400EF0702B232F2900B59068 /* Neighbor.swift in Sources */,
 				40F6893C2B20B1420021E50D /* MockFlightSearchViewModel.swift in Sources */,

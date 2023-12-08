@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import MapKit
 import SwiftUI
 
 @MainActor
@@ -17,6 +18,8 @@ public protocol FlightConnectionsListViewModeling: ObservableObject {
     var routeInfo: String? { get }
     var isLoading: Bool { get }
     var errorMessage: String? { get }
+    
+    var annotations: [CityAnnotation] { get }
 
     func selectDepartureTapped()
     func selectDestinationTapped()
@@ -29,6 +32,8 @@ public final class FlightConnectionsListViewModel: FlightConnectionsListViewMode
     @Published private(set) public var routeInfo: String?
     @Published private(set) public var isLoading: Bool = false
     @Published private(set) public var errorMessage: String?
+
+    @Published private(set) public var annotations: [CityAnnotation] = []
 
     private let routeSelector: RouteSelectionCalculating
     private let citySelectionPublisher: any Publisher<CitySelection, Never>
@@ -112,6 +117,13 @@ private extension FlightConnectionsListViewModel {
                     Price: \(route.price)
                     Route: \(route.cities.map { $0.name }.joined(separator: " > "))
                 """
+                annotations = route.cities.map { 
+                    CityAnnotation(
+                        name: $0.name,
+                        coordinates: $0.coordinates.asCCLocationCoordinate2D
+                    )
+                }
+                
             } catch {
                 errorMessage = error.localizedDescription
             }
