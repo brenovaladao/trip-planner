@@ -20,6 +20,7 @@ struct AnnotationsMapView: UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
+        mapView.visibleMapRect = .world
         return mapView
     }
     
@@ -42,6 +43,7 @@ private extension AnnotationsMapView {
         let annotations = items.map {
             let annotation = MKPointAnnotation()
             annotation.coordinate = $0.coordinates
+            annotation.title = $0.name
             return annotation
         }
         
@@ -56,16 +58,8 @@ private extension AnnotationsMapView {
         mapView.addOverlay(polyline)
         
         if let coordinate = coordinates.first {
-            centerInLocation(coordinate, in: mapView)
+            mapView.setCenter(coordinate, animated: true)
         }
-    }
-    
-    func centerInLocation(_ coordinate: CLLocationCoordinate2D, in mapView: MKMapView) {
-        let region = MKCoordinateRegion(
-            center: coordinate,
-            span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
-        )
-        mapView.setRegion(region, animated: true)
     }
 }
 
