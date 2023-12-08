@@ -17,19 +17,32 @@ final class FlightConnectionsListViewModelTests: XCTestCase {
         let publisher = PassthroughSubject<CitySelection, Never>()
         let (_, spy) = makeSUT(
             citySelectionPublisher: publisher,
-            eventHandler: { _ in
-                XCTFail("Shouldn't be called on initialization")
+            eventHandler: {
+                XCTFail("Shouldn't be called on initialization - failed with \($0)")
             }
         )
         
         let citySelectionExp = expectation(description: "citySelection expectation")
         cancellables = [
-            publisher
-                .assertOutput(matches: [], expectation: citySelectionExp)
+            publisher.assertOutput(matches: [], expectation: citySelectionExp)
         ]
         
         wait(for: [citySelectionExp])
         XCTAssertTrue(spy.messages.isEmpty)
+    }
+    
+    func test_selectDepartureTapped_callsClosureWithCorrectType() {
+        var receivedValues = [ConnectionType]()
+        let (sut, _) = makeSUT(eventHandler: { receivedValues.append($0) })
+        sut.selectDepartureTapped()
+        XCTAssertEqual(receivedValues, [.departure])
+    }
+    
+    func test_selectDestinationTapped_callsClosureWithCorrectType() {
+        var receivedValues = [ConnectionType]()
+        let (sut, _) = makeSUT(eventHandler: { receivedValues.append($0) })
+        sut.selectDestinationTapped()
+        XCTAssertEqual(receivedValues, [.destination])
     }
     
 //    var departure: String? { get }
@@ -40,10 +53,7 @@ final class FlightConnectionsListViewModelTests: XCTestCase {
 //    var errorMessage: String? { get }
 //    
 //    var annotations: [CityAnnotation] { get }
-//    
-//    func selectDepartureTapped()
-//    func selectDestinationTapped()
-    
+
 }
 
 extension FlightConnectionsListViewModelTests {
