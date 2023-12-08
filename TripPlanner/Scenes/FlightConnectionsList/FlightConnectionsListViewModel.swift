@@ -114,7 +114,7 @@ private extension FlightConnectionsListViewModel {
                 
                 routeInfo = """
                 Price: \(route.price)
-                Route: \(route.cities.map { $0.name }.joined(separator: " > "))
+                > \(route.cities.map { $0.name }.joined(separator: " > "))
                 """
                 annotations = route.cities.map { 
                     CityAnnotation(

@@ -37,7 +37,6 @@ struct AnnotationsMapView: UIViewRepresentable {
     }
 }
 
-@MainActor
 private extension AnnotationsMapView {
     func addAnnotations(in mapView: MKMapView, items: [CityAnnotation]) {
         let annotations = items.map {

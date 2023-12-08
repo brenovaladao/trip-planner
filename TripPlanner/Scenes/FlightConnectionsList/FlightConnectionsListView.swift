@@ -59,10 +59,10 @@ public struct FlightConnectionsListView<ViewModel: FlightConnectionsListViewMode
     }
     
     private func routeInfoView(_ routeInfo: String) -> some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .center, spacing: 0) {
             Text(routeInfo)
                 .bold()
-                .multilineTextAlignment(.leading)
+                .multilineTextAlignment(.center)
         }
     }
     
