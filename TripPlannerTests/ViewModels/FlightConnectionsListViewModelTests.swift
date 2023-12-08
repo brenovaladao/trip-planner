@@ -19,7 +19,6 @@ final class FlightConnectionsListViewModelTests: XCTestCase {
             citySelectionPublisher: publisher,
             eventHandler: unnavailableEventCall
         )
-        
         await expect(
             sut,
             actions: {},
@@ -30,7 +29,6 @@ final class FlightConnectionsListViewModelTests: XCTestCase {
     func test_selectDepartureTapped_callsClosureWithCorrectType() async {
         var receivedValues = [ConnectionType]()
         let (sut, spy) = makeSUT(eventHandler: { receivedValues.append($0) })
-        
         await expect(
             sut,
             actions: { sut.selectDepartureTapped() },
@@ -44,7 +42,6 @@ final class FlightConnectionsListViewModelTests: XCTestCase {
     func test_selectDestinationTapped_callsClosureWithCorrectType() async {
         var receivedValues = [ConnectionType]()
         let (sut, spy) = makeSUT(eventHandler: { receivedValues.append($0) })
-        
         await expect(
             sut,
             actions: { sut.selectDestinationTapped() },
@@ -62,7 +59,6 @@ final class FlightConnectionsListViewModelTests: XCTestCase {
             citySelectionPublisher: publisher,
             eventHandler: unnavailableEventCall
         )
-        
         await expect(
             sut,
             departureOutputs: [nil, citySelection.cityName],
@@ -80,7 +76,6 @@ final class FlightConnectionsListViewModelTests: XCTestCase {
             citySelectionPublisher: publisher,
             eventHandler: unnavailableEventCall
         )
-        
         await expect(
             sut,
             destinationOutputs: [nil, citySelection.cityName],
@@ -98,10 +93,49 @@ final class FlightConnectionsListViewModelTests: XCTestCase {
             citySelectionPublisher: publisher,
             eventHandler: unnavailableEventCall
         )
-        
         await expect(
             sut,
             destinationOutputs: [nil, citySelection.cityName],
+            citySelectionOutputs: [citySelection],
+            citySelectionSubject: publisher,
+            actions: { publisher.send(citySelection) },
+            asserting: { XCTAssertTrue(spy.messages.isEmpty) }
+        )
+    }
+    
+    func test_citySelectionPublisher_publishesNewValueForDestinationWhileDepartureHasTheSameCity() async {
+        let cityName = "London"
+        let publisher = PassthroughSubject<CitySelection, Never>()
+        let citySelection = CitySelection(type: .destination, cityName: cityName)
+        let (sut, spy) = makeSUT(
+            departure: cityName,
+            citySelectionPublisher: publisher,
+            eventHandler: unnavailableEventCall
+        )
+        await expect(
+            sut,
+            departureOutputs: [cityName, nil],
+            destinationOutputs: [nil, citySelection.cityName],
+            citySelectionOutputs: [citySelection],
+            citySelectionSubject: publisher,
+            actions: { publisher.send(citySelection) },
+            asserting: { XCTAssertTrue(spy.messages.isEmpty) }
+        )
+    }
+    
+    func test_citySelectionPublisher_publishesNewValueForDepartureWhileDestinationHasTheSameCity() async {
+        let cityName = "London"
+        let publisher = PassthroughSubject<CitySelection, Never>()
+        let citySelection = CitySelection(type: .departure, cityName: cityName)
+        let (sut, spy) = makeSUT(
+            destination: cityName,
+            citySelectionPublisher: publisher,
+            eventHandler: unnavailableEventCall
+        )
+        await expect(
+            sut,
+            departureOutputs: [nil, citySelection.cityName],
+            destinationOutputs: [cityName, nil],
             citySelectionOutputs: [citySelection],
             citySelectionSubject: publisher,
             actions: { publisher.send(citySelection) },
