@@ -315,7 +315,6 @@
 			children = (
 				40F689482B20C4910021E50D /* CityNames */,
 				40F689292B20A1830021E50D /* FlightConnections */,
-				40F689202B208C560021E50D /* Helpers */,
 				407D227A2B2216E9002022EE /* RouteSelection */,
 			);
 			path = Services;
@@ -324,6 +323,7 @@
 		40F689292B20A1830021E50D /* FlightConnections */ = {
 			isa = PBXGroup;
 			children = (
+				40F689202B208C560021E50D /* Helpers */,
 				40F6891E2B2089F00021E50D /* FlightConnectionsMapper.swift */,
 				40F6894F2B20C7E10021E50D /* FlightConnectionsService.swift */,
 			);
