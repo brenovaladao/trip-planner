@@ -5,7 +5,7 @@
 //  Created by Breno Valadão on 06/12/23.
 //
 
-import MapKit
+import Foundation
 
 final class MockFlightConnectionsListViewModel: FlightConnectionsListViewModeling {
     var departure: String? = "Tokyo"

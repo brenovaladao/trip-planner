@@ -5,7 +5,6 @@
 //  Created by Breno Valadão on 06/12/23.
 //
 
-import MapKit
 import SwiftUI
 
 public struct FlightConnectionsListView<ViewModel: FlightConnectionsListViewModeling>: View {
@@ -30,6 +29,11 @@ public struct FlightConnectionsListView<ViewModel: FlightConnectionsListViewMode
                             SpinnerView()
                         } else if let routeInfo = viewModel.routeInfo {
                             routeInfoView(routeInfo)
+                            
+                            AnnotationsMapView(items: viewModel.annotations)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 300)
+                                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                         } else {
                             EmptyView()
                         }
