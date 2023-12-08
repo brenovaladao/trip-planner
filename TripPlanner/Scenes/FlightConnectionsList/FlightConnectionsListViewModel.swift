@@ -114,8 +114,8 @@ private extension FlightConnectionsListViewModel {
                 guard !Task.isCancelled else { return }
                 
                 routeInfo = """
-                    Price: \(route.price)
-                    Route: \(route.cities.map { $0.name }.joined(separator: " > "))
+                Price: \(route.price)
+                Route: \(route.cities.map { $0.name }.joined(separator: " > "))
                 """
                 annotations = route.cities.map { 
                     CityAnnotation(

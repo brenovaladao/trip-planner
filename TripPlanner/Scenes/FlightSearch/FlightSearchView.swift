@@ -30,13 +30,10 @@ public struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
     @ViewBuilder
     private var content: some View {
         if let errorMessage = viewModel.errorMessage {
-            Text(errorMessage)
-                .multilineTextAlignment(.center)
-                .padding()
+            ErrorView(errorMessage)
         } else {
             if viewModel.isLoading {
-                ProgressView()
-                    .padding()
+                SpinnerView()
             }
             
             ScrollView {

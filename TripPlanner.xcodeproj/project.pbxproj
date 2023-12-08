@@ -15,6 +15,8 @@
 		400EF0742B23308C00B59068 /* FlightNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400EF0732B23308C00B59068 /* FlightNode.swift */; };
 		400EF0792B23395F00B59068 /* Coordinate+CLLocationCoordinate2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400EF0782B23395F00B59068 /* Coordinate+CLLocationCoordinate2D.swift */; };
 		400EF07B2B233ADB00B59068 /* CityAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400EF07A2B233ADB00B59068 /* CityAnnotation.swift */; };
+		400EF07E2B234FB900B59068 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400EF07D2B234FB900B59068 /* SpinnerView.swift */; };
+		400EF0802B23500100B59068 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400EF07F2B23500100B59068 /* ErrorView.swift */; };
 		407D227C2B22170A002022EE /* RouteSelectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D227B2B22170A002022EE /* RouteSelectionService.swift */; };
 		407D227E2B22172D002022EE /* RouteSelectionCalculating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D227D2B22172D002022EE /* RouteSelectionCalculating.swift */; };
 		407D22822B221A07002022EE /* RouteSelectionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D22812B221A07002022EE /* RouteSelectionServiceTests.swift */; };
@@ -72,6 +74,8 @@
 		400EF0732B23308C00B59068 /* FlightNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightNode.swift; sourceTree = "<group>"; };
 		400EF0782B23395F00B59068 /* Coordinate+CLLocationCoordinate2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coordinate+CLLocationCoordinate2D.swift"; sourceTree = "<group>"; };
 		400EF07A2B233ADB00B59068 /* CityAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityAnnotation.swift; sourceTree = "<group>"; };
+		400EF07D2B234FB900B59068 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
+		400EF07F2B23500100B59068 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		407D227B2B22170A002022EE /* RouteSelectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSelectionService.swift; sourceTree = "<group>"; };
 		407D227D2B22172D002022EE /* RouteSelectionCalculating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSelectionCalculating.swift; sourceTree = "<group>"; };
 		407D22812B221A07002022EE /* RouteSelectionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSelectionServiceTests.swift; sourceTree = "<group>"; };
@@ -178,6 +182,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		400EF07C2B234FA600B59068 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				400EF07D2B234FB900B59068 /* SpinnerView.swift */,
+				400EF07F2B23500100B59068 /* ErrorView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		407D227A2B2216E9002022EE /* RouteSelection */ = {
 			isa = PBXGroup;
 			children = (
@@ -262,6 +275,7 @@
 		40F689092B207D280021E50D /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				400EF07C2B234FA600B59068 /* Views */,
 				40F6892E2B20A3340021E50D /* FlightConnectionsList */,
 				40F689362B20B0BF0021E50D /* FlightSearch */,
 			);
@@ -521,9 +535,11 @@
 				40F6893A2B20B0F90021E50D /* FlightSearchViewModel.swift in Sources */,
 				40F6893E2B20B2650021E50D /* ConnectionType.swift in Sources */,
 				400EF06B2B232E4800B59068 /* Dijkstra.swift in Sources */,
+				400EF07E2B234FB900B59068 /* SpinnerView.swift in Sources */,
 				400EF06E2B232F1100B59068 /* Node.swift in Sources */,
 				40F6894A2B20C4BA0021E50D /* CityNamesService.swift in Sources */,
 				40F689382B20B0F20021E50D /* FlightSearchView.swift in Sources */,
+				400EF0802B23500100B59068 /* ErrorView.swift in Sources */,
 				40F689552B20D65E0021E50D /* Configuration.swift in Sources */,
 				40F689352B20AB8C0021E50D /* MockFlightConnectionsListViewModel.swift in Sources */,
 				40F689152B20856F0021E50D /* FlightConnection.swift in Sources */,
