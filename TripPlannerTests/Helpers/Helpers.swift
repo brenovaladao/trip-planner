@@ -50,35 +50,37 @@ func makeFlightConnection(
     toLong: Double = 139.8
 ) -> FlightConnection {
     FlightConnection(
-        from: from,
-        to: to,
-        price: price,
-        coordinates: CoordinatesInfo(
-            from: Coordinate(
+        from: City(
+            name: from,
+            coordinates: Coordinate(
                 lat: fromLat,
                 long: fromLong
-            ),
-            to: Coordinate(
+            )
+        ),
+        to: City(
+            name: to, 
+            coordinates: Coordinate(
                 lat: toLat,
                 long: toLong
             )
-        )
+        ),
+        price: price
     )
 }
 
 func makeDictionaryRepresentation(_ flightConnection: FlightConnection) -> [String: Any] {
     [
-        "from": flightConnection.from,
-        "to": flightConnection.to,
+        "from": flightConnection.from.name,
+        "to": flightConnection.to.name,
         "price": flightConnection.price,
         "coordinates": [
             "from": [
-                "lat": flightConnection.coordinates.from.lat,
-                "long": flightConnection.coordinates.from.long
+                "lat": flightConnection.from.coordinates.lat,
+                "long": flightConnection.from.coordinates.long
             ],
             "to": [
-                "lat": flightConnection.coordinates.to.lat,
-                "long": flightConnection.coordinates.to.long
+                "lat": flightConnection.to.coordinates.lat,
+                "long": flightConnection.to.coordinates.long
             ]
         ]
     ]
@@ -87,14 +89,4 @@ func makeDictionaryRepresentation(_ flightConnection: FlightConnection) -> [Stri
 func makeFlightConnectionsJSON(_ items: [[String: Any]]) -> Data {
     let json = ["connections": items]
     return try! JSONSerialization.data(withJSONObject: json)
-}
-
-extension FlightConnection {
-    func toDepartureCity() -> City {
-        City(flightConnection: self, type: .departure)
-    }
-    
-    func toDestinationCity() -> City {
-        City(flightConnection: self, type: .destination)
-    }
 }

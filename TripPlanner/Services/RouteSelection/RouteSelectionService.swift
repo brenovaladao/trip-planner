@@ -24,18 +24,18 @@ extension RouteSelectionService: RouteSelectionCalculating {
     ) async throws -> Route {
         let connections = try await flightConnectionsFetcher.fetchConnections()
         
-        guard connections.contains(where: { $0.from == departureCity }),
-              connections.contains(where: { $0.to == destinationCity })
+        guard connections.contains(where: { $0.from.name == departureCity }),
+              connections.contains(where: { $0.to.name == destinationCity })
         else {
             throw RouteNotPossibleError()
         }
         
-        let nodes = Set(connections.flatMap { [$0.from, $0.to] })
+        let nodes = Set(connections.flatMap { [$0.from.name, $0.to.name] })
             .map { FlightNode(city: $0) }
         
         connections.forEach { flightConnection in
-            guard let fromNode = nodes.first(where: { $0.city ==  flightConnection.from }),
-                  let toNode = nodes.first(where: { $0.city ==  flightConnection.to })
+            guard let fromNode = nodes.first(where: { $0.city ==  flightConnection.from.name }),
+                  let toNode = nodes.first(where: { $0.city ==  flightConnection.to.name })
             else { return }
             
             fromNode.neighbors.append(
@@ -73,12 +73,15 @@ private extension RouteSelectionService {
         as connectionType: ConnectionType
     ) -> City? {
         connections
-            .first(where: {
+            .compactMap {
                 switch connectionType {
-                case .departure: $0.from == cityName
-                case .destination: $0.to == cityName
+                case .departure where $0.from.name == cityName:
+                    $0.from
+                case .destination where $0.to.name == cityName:
+                    $0.to
+                default:
+                    nil
                 }
-            })
-            .map { City(flightConnection: $0, type: connectionType) }
+            }.first
     }
 }

@@ -145,8 +145,8 @@ final class FlightConnectionsListViewModelTests: XCTestCase {
     
     func test_citySelectionPublisher_calculatesRouteInfoWhenDepartureAndDestinationAreFilledIn() async {
         let flight = aFligthConnection()
-        let departureCity = flight.toDepartureCity()
-        let destinationCity = flight.toDestinationCity()
+        let departureCity = flight.to
+        let destinationCity = flight.from
         let destinationSelection = CitySelection(type: .destination, cityName: destinationCity.name)
         let route = Route(price: flight.price, cities: [departureCity, destinationCity])
         let publisher = PassthroughSubject<CitySelection, Never>()
@@ -277,10 +277,10 @@ extension FlightConnectionsListViewModelTests {
     }
     
     var departureCity: City {
-        aFligthConnection().toDepartureCity()
+        aFligthConnection().from
     }
     
     var destinationCity: City {
-        aFligthConnection().toDestinationCity()
+        aFligthConnection().to
     }
 }

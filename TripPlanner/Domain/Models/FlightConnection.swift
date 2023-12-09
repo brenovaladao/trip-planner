@@ -8,15 +8,13 @@
 import Foundation
 
 public struct FlightConnection: Sendable, Equatable, Hashable {
-    public let from: String
-    public let to: String
+    public let from: City
+    public let to: City
     public let price: Decimal
-    public let coordinates: CoordinatesInfo
     
-    public init(from: String, to: String, price: Decimal, coordinates: CoordinatesInfo) {
+    public init(from: City, to: City, price: Decimal) {
         self.from = from
         self.to = to
         self.price = price
-        self.coordinates = coordinates
     }
 }

@@ -31,7 +31,7 @@ final class CityNamesServiceTests: XCTestCase {
         
         let names = try await sut.fetchCityNames(searchType: .departure)
         
-        let expectedNames = flightConnections.map(\.from).sorted()
+        let expectedNames = flightConnections.map(\.from.name).sorted()
         XCTAssertEqual(spy.messages, [.fetchConnections])
         XCTAssertEqual(names, expectedNames)
     }
@@ -42,7 +42,7 @@ final class CityNamesServiceTests: XCTestCase {
         
         let names = try await sut.fetchCityNames(searchType: .destination)
         
-        let expectedNames = flightConnections.map(\.to).sorted()
+        let expectedNames = flightConnections.map(\.to.name).sorted()
         XCTAssertEqual(spy.messages, [.fetchConnections])
         XCTAssertEqual(names, expectedNames)
     }

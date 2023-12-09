@@ -41,12 +41,12 @@ extension [FlightConnection] {
     }
     
     var departureCityNames: [String] {
-        Set(map(\.from))
+        Set(map(\.from.name))
             .sorted()
     }
     
     var destinationCityNames: [String] {
-        Set(map(\.to))
+        Set(map(\.to.name))
             .sorted()
     }
 }

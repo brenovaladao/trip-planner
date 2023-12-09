@@ -31,19 +31,21 @@ public struct FlightConnectionsMapper {
         var flightConnections: [FlightConnection] {
             connections.map {
                 FlightConnection(
-                    from: $0.from,
-                    to: $0.to,
-                    price: $0.price,
-                    coordinates: CoordinatesInfo(
-                        from: Coordinate(
+                    from: City(
+                        name: $0.from,
+                        coordinates: Coordinate(
                             lat: $0.coordinates.from.lat,
                             long: $0.coordinates.from.long
-                        ),
-                        to: Coordinate(
-                            lat: $0.coordinates.to.lat, 
+                        )
+                    ),
+                    to: City(
+                        name: $0.to,
+                        coordinates: Coordinate(
+                            lat: $0.coordinates.to.lat,
                             long: $0.coordinates.to.long
                         )
-                    )
+                    ),
+                    price: $0.price
                 )
             }
         }

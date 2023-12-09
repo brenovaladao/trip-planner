@@ -33,7 +33,6 @@
 		40F688E52B207C600021E50D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40F688E42B207C600021E50D /* Preview Assets.xcassets */; };
 		40F689102B2084A60021E50D /* FlightConnectionsFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F6890F2B2084A60021E50D /* FlightConnectionsFetching.swift */; };
 		40F689152B20856F0021E50D /* FlightConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F689142B20856F0021E50D /* FlightConnection.swift */; };
-		40F689172B20869E0021E50D /* CoordinatesInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F689162B20869E0021E50D /* CoordinatesInfo.swift */; };
 		40F689192B2086A30021E50D /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F689182B2086A30021E50D /* Coordinate.swift */; };
 		40F6891D2B2088F10021E50D /* FlightConnectionsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F6891C2B2088F10021E50D /* FlightConnectionsServiceTests.swift */; };
 		40F6891F2B2089F00021E50D /* FlightConnectionsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F6891E2B2089F00021E50D /* FlightConnectionsMapper.swift */; };
@@ -100,7 +99,6 @@
 		40F688EA2B207C600021E50D /* TripPlannerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripPlannerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		40F6890F2B2084A60021E50D /* FlightConnectionsFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightConnectionsFetching.swift; sourceTree = "<group>"; };
 		40F689142B20856F0021E50D /* FlightConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightConnection.swift; sourceTree = "<group>"; };
-		40F689162B20869E0021E50D /* CoordinatesInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatesInfo.swift; sourceTree = "<group>"; };
 		40F689182B2086A30021E50D /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		40F6891C2B2088F10021E50D /* FlightConnectionsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightConnectionsServiceTests.swift; sourceTree = "<group>"; };
 		40F6891E2B2089F00021E50D /* FlightConnectionsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightConnectionsMapper.swift; sourceTree = "<group>"; };
@@ -332,7 +330,6 @@
 				40F689442B20BEAA0021E50D /* CitySelection.swift */,
 				40F6893D2B20B2650021E50D /* ConnectionType.swift */,
 				40F689182B2086A30021E50D /* Coordinate.swift */,
-				40F689162B20869E0021E50D /* CoordinatesInfo.swift */,
 				40F689142B20856F0021E50D /* FlightConnection.swift */,
 				407D22832B223C3A002022EE /* Route.swift */,
 			);
@@ -599,7 +596,6 @@
 				40F6891F2B2089F00021E50D /* FlightConnectionsMapper.swift in Sources */,
 				40F689472B20C3D20021E50D /* CityNamesFetching.swift in Sources */,
 				40F689502B20C7E10021E50D /* FlightConnectionsService.swift in Sources */,
-				40F689172B20869E0021E50D /* CoordinatesInfo.swift in Sources */,
 				40F689452B20BEAA0021E50D /* CitySelection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

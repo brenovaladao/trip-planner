@@ -40,15 +40,15 @@ final class RouteSelectionServiceTests: XCTestCase {
         let expectedRoute = Route(
             price: connections[0].price,
             cities: [
-                connections[0].toDepartureCity(),
-                connections[0].toDestinationCity()
+                connections[0].from,
+                connections[0].to
             ]
         )
         
         try await expect(
             connections: connections,
-            departure: connections[0].from,
-            destination: connections[0].to,
+            departure: connections[0].from.name,
+            destination: connections[0].to.name,
             with: expectedRoute
         )
     }
@@ -62,16 +62,16 @@ final class RouteSelectionServiceTests: XCTestCase {
         let expectedRoute = Route(
             price: connections.reduce(0) { $0 + $1.price },
             cities: [
-                connections[0].toDepartureCity(),
-                connections[0].toDestinationCity(),
-                connections[1].toDestinationCity()
+                connections[0].from,
+                connections[0].to,
+                connections[1].to
             ]
         )
         
         try await expect(
             connections: connections,
-            departure: connections[0].from,
-            destination: connections[1].to,
+            departure: connections[0].from.name,
+            destination: connections[1].to.name,
             with: expectedRoute
         )
     }
@@ -89,9 +89,9 @@ final class RouteSelectionServiceTests: XCTestCase {
         let expectedRoute = Route(
             price: 2,
             cities: [
-                connections[1].toDepartureCity(),
-                connections[1].toDestinationCity(),
-                connections[2].toDestinationCity()
+                connections[1].from,
+                connections[1].to,
+                connections[2].to
             ]
         )
         
@@ -113,8 +113,8 @@ final class RouteSelectionServiceTests: XCTestCase {
         let expectedRoute = Route(
             price: 10,
             cities: [
-                connections[1].toDepartureCity(),
-                connections[1].toDestinationCity()
+                connections[1].from,
+                connections[1].to
             ]
         )
         
