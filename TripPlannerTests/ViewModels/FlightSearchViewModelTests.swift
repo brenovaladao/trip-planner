@@ -53,7 +53,7 @@ final class FlightSearchViewModelTests: XCTestCase {
     func test_loadCityNames_succeedsOnNonEmptyListOfCityNames() async {
         let cityNames = ["Cape Town", "London", "Tokyo"]
         
-        let (sut, spy) = makeSUT(mockResult: .success(cityNames))
+        let (sut, spy) = makeSUT(citiesMockResult: .success(cityNames))
         
         await expect(
             sut,
@@ -71,7 +71,7 @@ final class FlightSearchViewModelTests: XCTestCase {
     
     func test_loadCityNames_emptyStateMessageOnEmptyListOfCityNames() async {
         let emptyMessage = "No cities found"
-        let (sut, spy) = makeSUT(mockResult: .success([]))
+        let (sut, spy) = makeSUT(citiesMockResult: .success([]))
         
         await expect(
             sut,
@@ -87,7 +87,7 @@ final class FlightSearchViewModelTests: XCTestCase {
         let anError = anyNSError()
         let errorMessage = "An error happened when loading \(anError.localizedDescription)"
         
-        let (sut, spy) = makeSUT(mockResult: .failure(anError))
+        let (sut, spy) = makeSUT(citiesMockResult: .failure(anError))
         
         await expect(
             sut,
@@ -104,7 +104,7 @@ final class FlightSearchViewModelTests: XCTestCase {
         let cityNames = ["Cape Town", "London", "Tokyo"]
         let errorMessage = "An error happened when loading \(anError.localizedDescription)"
 
-        let (sut, spy) = makeSUT(mockResult: .failure(anError))
+        let (sut, spy) = makeSUT(citiesMockResult: .failure(anError))
         
         await expect(
             sut,
@@ -113,7 +113,7 @@ final class FlightSearchViewModelTests: XCTestCase {
             errorMessageOutputs: [nil, errorMessage, nil],
             actions: {
                 await sut.loadCityNames()
-                spy.mockResult = .success(cityNames)
+                spy.citiesMockResult = .success(cityNames)
                 await sut.loadCityNames()
             },
             asserting: { XCTAssertEqual(spy.messages, [.fetchCityNames, .fetchCityNames]) }
@@ -123,7 +123,7 @@ final class FlightSearchViewModelTests: XCTestCase {
     func test_loadCityNames_reloadOnNonEmptyList() async {
         let cityNames = ["Cape Town", "London", "Tokyo"]
         
-        let (sut, spy) = makeSUT(mockResult: .success(cityNames))
+        let (sut, spy) = makeSUT(citiesMockResult: .success(cityNames))
         
         await expect(
             sut,
@@ -156,17 +156,22 @@ final class FlightSearchViewModelTests: XCTestCase {
 
 private extension FlightSearchViewModelTests {
     func makeSUT(
-        mockResult: Result<[String], Error> = .success([]),
+        citiesMockResult: Result<[String], Error> = .success([]),
+        autoCompleteMockResult: Result<Set<String>, Error> = .success(Set()),
         searchType: ConnectionType = .departure,
         citySelectionSubject: PassthroughSubject<CitySelection, Never> = .init(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (FlightSearchViewModel, CityNamesServiceSpy) {
-        let spy = CityNamesServiceSpy(mockResult)
+        let spy = CityNamesServiceSpy(
+            citiesMockResult: citiesMockResult,
+            autoCompleteMockResult: autoCompleteMockResult
+        )
         let sut = FlightSearchViewModel(
             searchType: searchType,
             citySelectionSubject: citySelectionSubject,
-            cityNamesService: spy
+            cityNamesService: spy, 
+            autoCompleteService: spy
         )
         
         trackForMemoryLeaks(sut, file: file, line: line)
@@ -180,6 +185,7 @@ private extension FlightSearchViewModelTests {
         cityNamesOutputs: [[String]] = [[]],
         isLoadingOutputs: [Bool] = [false],
         errorMessageOutputs: [String?] = [nil],
+        searchQueryOutputs: [String] = [""],
         locationSelectedOutputs: [CitySelection]? = nil,
         citySelectionSubject: PassthroughSubject<CitySelection, Never> = .init(),
         actions: () async  -> Void,
@@ -189,6 +195,7 @@ private extension FlightSearchViewModelTests {
         let isLoadingExp = expectation(description: "isLoading expectation")
         let errorMessageExp = expectation(description: "errorMessage expectation")
         let citySelectionExp = expectation(description: "citySelection expectation")
+        let searchQueryExp = expectation(description: "searchQuery expectation")
 
         cancellables = [
             sut.$cityNames
@@ -197,6 +204,8 @@ private extension FlightSearchViewModelTests {
                 .assertOutput(matches: isLoadingOutputs, expectation: isLoadingExp),
             sut.$errorMessage
                 .assertOutput(matches: errorMessageOutputs, expectation: errorMessageExp),
+            sut.$searchQuery
+                .assertOutput(matches: searchQueryOutputs, expectation: searchQueryExp),
             citySelectionSubject
                 .assertOutput(matches: locationSelectedOutputs, expectation: citySelectionExp)
         ]
@@ -204,7 +213,7 @@ private extension FlightSearchViewModelTests {
         await actions()
         
         await fulfillment(
-            of: [cityNamesExp, isLoadingExp, errorMessageExp, citySelectionExp],
+            of: [cityNamesExp, isLoadingExp, errorMessageExp, citySelectionExp, searchQueryExp],
             timeout: 0.1
         )
         

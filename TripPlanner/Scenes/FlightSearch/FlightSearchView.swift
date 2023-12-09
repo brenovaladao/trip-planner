@@ -29,26 +29,26 @@ public struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
     
     @ViewBuilder
     private var content: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            textField()
-            
-            if let errorMessage = viewModel.errorMessage {
-                ErrorView(errorMessage)
-            } else {
-                if viewModel.isLoading {
-                    SpinnerView()
-                }
-                
-                ScrollView {
-                    LazyVStack(alignment: .leading, spacing: 0) {
-                        ForEach(viewModel.cityNames, id: \.self) { name in
-                            makeCityRow(name: name)
-                                .onTapGesture {
-                                    viewModel.citySelected(name)
-                                }
+        ScrollView {
+            LazyVStack(alignment: .center, spacing: 16, pinnedViews: [.sectionHeaders]) {
+                Section(content: {
+                    if let errorMessage = viewModel.errorMessage {
+                        ErrorView(errorMessage)
+                    } else {
+                        if viewModel.isLoading {
+                            SpinnerView()
+                        }
+                            
+                        VStack(alignment: .leading, spacing: 0) {
+                            ForEach(viewModel.cityNames, id: \.self) { name in
+                                makeCityRow(name: name)
+                                    .onTapGesture {
+                                        viewModel.citySelected(name)
+                                    }
+                            }
                         }
                     }
-                }
+                }, header: textField)
             }
         }
     }
@@ -73,6 +73,7 @@ public struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 8)
+        .background(Color.background)
     }
 }
 

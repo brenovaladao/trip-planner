@@ -21,25 +21,22 @@ public struct FlightConnectionsListView<ViewModel: FlightConnectionsListViewMode
     private var content: some View {
         ScrollView {
             LazyVStack(alignment: .center, spacing: 24, pinnedViews: [.sectionHeaders]) {
-                Section(
-                    content: {
-                        if let errorMessage = viewModel.errorMessage {
-                            ErrorView(errorMessage)
-                        } else if viewModel.isLoading {
-                            SpinnerView()
-                        } else if let routeInfo = viewModel.routeInfo {
-                            routeInfoView(routeInfo)
-                            
-                            AnnotationsMapView(items: viewModel.annotations)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 300)
-                                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                        } else {
-                            EmptyView()
-                        }
-                    },
-                    header: header
-                )
+                Section(content: {
+                    if let errorMessage = viewModel.errorMessage {
+                        ErrorView(errorMessage)
+                    } else if viewModel.isLoading {
+                        SpinnerView()
+                    } else if let routeInfo = viewModel.routeInfo {
+                        routeInfoView(routeInfo)
+                        
+                        AnnotationsMapView(items: viewModel.annotations)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 300)
+                            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    } else {
+                        EmptyView()
+                    }
+                }, header: header)
             }
             .padding(.horizontal, 16)
         }
