@@ -18,18 +18,31 @@ public final class CityNamesService {
 extension CityNamesService: CityNamesFetching {
     public func fetchCityNames(searchType: ConnectionType) async throws -> [String] {
         let flightConnections = try await flightConnectionsFetcher.fetchConnections()
-        let cityNames = switch searchType {
-        case .departure:
-            flightConnections.map(\.from)
-        case .destination:
-            flightConnections.map(\.to)
-        }
-        return Set(cityNames).sorted()
+        return flightConnections.getCityNames(for: searchType)
     }
 }
 
 extension CityNamesService: CityNamesAutoCompleting {
     public func search(for query: String) async -> [String] {
         []
+    }
+}
+
+extension [FlightConnection] {
+    func getCityNames(for type: ConnectionType) -> [String] {
+        switch type {
+        case .departure: departureCityNames
+        case .destination: destinationCityNames
+        }
+    }
+    
+    var departureCityNames: [String] {
+        Set(map(\.from))
+            .sorted()
+    }
+    
+    var destinationCityNames: [String] {
+        Set(map(\.to))
+            .sorted()
     }
 }
