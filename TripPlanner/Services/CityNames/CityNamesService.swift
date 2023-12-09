@@ -23,8 +23,10 @@ extension CityNamesService: CityNamesFetching {
 }
 
 extension CityNamesService: CityNamesAutoCompleting {
-    public func search(for query: String) async -> [String] {
-        []
+    public func search(for query: String, type: ConnectionType) async throws -> [String] {
+        let cityNames = try await fetchCityNames(searchType: type)
+        let sanitezedQuery = query.sanitized()
+        return cityNames.filter { $0.sanitized() == sanitezedQuery }
     }
 }
 
@@ -44,5 +46,13 @@ extension [FlightConnection] {
     var destinationCityNames: [String] {
         Set(map(\.to))
             .sorted()
+    }
+}
+
+extension String {
+    /// Make lowercased and without whitespaces
+    func sanitized() -> String {
+        lowercased()
+            .trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
