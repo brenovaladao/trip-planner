@@ -12,11 +12,9 @@ import Foundation
 public protocol FlightConnectionsListViewModeling: ObservableObject {
     var departure: String? { get }
     var destination: String? { get }
-
     var routeInfo: String? { get }
     var isLoading: Bool { get }
     var errorMessage: String? { get }
-    
     var annotations: [CityAnnotation] { get }
 
     func selectDepartureTapped()
@@ -26,11 +24,9 @@ public protocol FlightConnectionsListViewModeling: ObservableObject {
 public final class FlightConnectionsListViewModel: FlightConnectionsListViewModeling {
     @Published private(set) public var departure: String?
     @Published private(set) public var destination: String?
-
     @Published private(set) public var routeInfo: String?
     @Published private(set) public var isLoading: Bool = false
     @Published private(set) public var errorMessage: String?
-
     @Published private(set) public var annotations: [CityAnnotation] = []
 
     private let routeSelector: RouteSelectionCalculating
@@ -90,7 +86,6 @@ private extension FlightConnectionsListViewModel {
             }
             destination = citySelection.cityName
         }
-
         verifyInputCompletion()
     }
     
@@ -115,7 +110,6 @@ private extension FlightConnectionsListViewModel {
             guard !Task.isCancelled else { return }
             
             routeInfo = route.displayValue
-            
             annotations = route.cities.map {
                 CityAnnotation(
                     name: $0.name,

@@ -27,7 +27,8 @@ extension CityNamesService: CityNamesAutoCompleting {
         guard !query.isEmpty else { return [] }
         let cityNames = try await fetchCityNames(searchType: type)
         let sanitezedQuery = query.sanitized()
-        return Set(cityNames).filter { $0.sanitized().contains(sanitezedQuery) }
+        return Set(cityNames)
+            .filter { $0.sanitized().contains(sanitezedQuery) }
     }
 }
 

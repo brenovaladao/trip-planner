@@ -252,9 +252,9 @@
 		40F688DB2B207C5E0021E50D /* TripPlanner */ = {
 			isa = PBXGroup;
 			children = (
-				40F505282B2484FE000651AE /* Helpers */,
 				40F689072B207D030021E50D /* App */,
 				40F6890D2B2084700021E50D /* Domain */,
+				40F505282B2484FE000651AE /* Helpers */,
 				400EF0682B232E1500B59068 /* Infrastructure */,
 				40F689082B207D0B0021E50D /* Resources */,
 				40F689092B207D280021E50D /* Scenes */,
@@ -382,9 +382,9 @@
 		40F689292B20A1830021E50D /* FlightConnections */ = {
 			isa = PBXGroup;
 			children = (
-				40F689202B208C560021E50D /* Helpers */,
 				40F6891E2B2089F00021E50D /* FlightConnectionsMapper.swift */,
 				40F6894F2B20C7E10021E50D /* FlightConnectionsService.swift */,
+				40F689202B208C560021E50D /* Helpers */,
 			);
 			path = FlightConnections;
 			sourceTree = "<group>";

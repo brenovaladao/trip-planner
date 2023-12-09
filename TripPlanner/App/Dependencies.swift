@@ -9,9 +9,11 @@ import Combine
 import Foundation
 import SwiftUI
 
+/// Centralized place where I create all dependencies, either as static property, to allow reusability whenever we
+/// can reuse the same instance, or as a factory method when I want a new instance (ViewModels).
 enum Dependencies {
     static let flightConnectionsService: FlightConnectionsFetching = FlightConnectionsService(
-        urlSession: URLSession(configuration: .ephemeral),
+        urlSession: URLSession.shared,
         endpoint: Configuration.default.apiURL
     )
     

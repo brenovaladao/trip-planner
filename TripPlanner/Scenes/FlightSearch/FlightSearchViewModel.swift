@@ -16,7 +16,6 @@ public protocol FlightSearchViewModeling: ObservableObject {
     var searchQuery: String { get set }
 
     func citySelected(_ name: String)
-    
     func loadCityNames() async
 }
 

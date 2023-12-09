@@ -31,6 +31,7 @@ struct TripPlannerApp: App {
                         )
                     )
                     .onReceive(citySelectionSubject) { _ in
+                        // In case a city is selected, this will pop to the root view
                         navigationPath = .init()
                     }
                     .navigationTitle($0.displayRepresentation)
@@ -39,8 +40,20 @@ struct TripPlannerApp: App {
             }
         }
     }
-    
+}
+
+// MARK: - Navigation handling
+extension TripPlannerApp {
     func handleFlightConnectionsEvent(_ type: ConnectionType) {
         navigationPath.append(type)
+    }
+}
+
+extension ConnectionType {
+    var displayRepresentation: String {
+        switch self {
+        case .departure: "Departure"
+        case .destination: "Destination"
+        }
     }
 }

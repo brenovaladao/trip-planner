@@ -11,7 +11,7 @@ public struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
     @StateObject private var viewModel: ViewModel
     
     public init(viewModel: ViewModel) {
-        self._viewModel = StateObject(wrappedValue: viewModel)
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
     
     public var body: some View {
@@ -26,9 +26,11 @@ public struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
                 }
             }
     }
-    
+}
+
+private extension FlightSearchView {
     @ViewBuilder
-    private var content: some View {
+    var content: some View {
         ScrollView {
             LazyVStack(alignment: .center, spacing: 16, pinnedViews: [.sectionHeaders]) {
                 Section(content: {
@@ -38,22 +40,26 @@ public struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
                         if viewModel.isLoading {
                             SpinnerView()
                         }
-                            
-                        VStack(alignment: .leading, spacing: 0) {
-                            ForEach(viewModel.cityNames, id: \.self) { name in
-                                makeCityRow(name: name)
-                                    .onTapGesture {
-                                        viewModel.citySelected(name)
-                                    }
-                            }
-                        }
+                        
+                        citiesList()
                     }
                 }, header: textField)
             }
         }
     }
     
-    private func makeCityRow(name: String) -> some View {
+    func citiesList() -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            ForEach(viewModel.cityNames, id: \.self) { name in
+                makeCityRow(name: name)
+                    .onTapGesture {
+                        viewModel.citySelected(name)
+                    }
+            }
+        }
+    }
+    
+    func makeCityRow(name: String) -> some View {
         HStack(alignment: .center, spacing: 0) {
             Text(name)
             
@@ -64,7 +70,7 @@ public struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
         .contentShape(.rect)
     }
     
-    private func textField() -> some View {
+    func textField() -> some View {
         HStack(alignment: .center, spacing: 8) {
             Image(systemName: "magnifyingglass")
             

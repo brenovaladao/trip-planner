@@ -11,14 +11,16 @@ public struct FlightConnectionsListView<ViewModel: FlightConnectionsListViewMode
     @StateObject private var viewModel: ViewModel
     
     public init(viewModel: ViewModel) {
-        self._viewModel = StateObject(wrappedValue: viewModel)
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
     
     public var body: some View {
         content
     }
-    
-    private var content: some View {
+}
+
+private extension FlightConnectionsListView {
+    var content: some View {
         ScrollView {
             LazyVStack(alignment: .center, spacing: 24, pinnedViews: [.sectionHeaders]) {
                 Section(content: {
@@ -42,7 +44,7 @@ public struct FlightConnectionsListView<ViewModel: FlightConnectionsListViewMode
         }
     }
 
-    private func header() -> some View {
+    func header() -> some View {
         VStack(alignment: .leading, spacing: 8) {
             makeButton(title: "Departure: \(viewModel.departure ?? "")") {
                 viewModel.selectDepartureTapped()
@@ -55,7 +57,7 @@ public struct FlightConnectionsListView<ViewModel: FlightConnectionsListViewMode
         .background(Color.background)
     }
     
-    private func routeInfoView(_ routeInfo: String) -> some View {
+    func routeInfoView(_ routeInfo: String) -> some View {
         VStack(alignment: .center, spacing: 0) {
             Text(routeInfo)
                 .bold()
@@ -63,7 +65,7 @@ public struct FlightConnectionsListView<ViewModel: FlightConnectionsListViewMode
         }
     }
     
-    private func makeButton(title: String, action: @escaping () -> Void) -> some View {
+    func makeButton(title: String, action: @escaping () -> Void) -> some View {
         Button(
             action: action,
             label: {
@@ -74,7 +76,6 @@ public struct FlightConnectionsListView<ViewModel: FlightConnectionsListViewMode
         .buttonStyle(.bordered)
         .frame(minHeight: 44)
     }
-
 }
 
 #Preview {
