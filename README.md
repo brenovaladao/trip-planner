@@ -21,12 +21,12 @@
 There is no extra `setup` step to be done, just be sure you have the correct Xcode version (Xcode 15+) installed.
 
 The App downloads information from this base [url](https://raw.githubusercontent.com/TuiMobilityHub/ios-code-challenge/master/connections.json). If you want to use a different base URL, it can be done by updating the `API_URL` variable, defined at `Debug.xcconfig` (_TripPlanner/Configurations/Debug.xcconfig_). 
->  Note that we need the `/$()/` for escaping the `//`.
+>  Important: Note that we need the `/$()/` for escaping the `//`.
 
 ## Technical decisions:
 - The App goal is to find the cheapest route between two cities (`Departure` and `Destination`) based on its accumulated price. To achieve such a result the `Dijkstra` algorithm was chosen.
 
-- The App was almost fully built with `SwiftUI`, the only exception was the `AnnotationsMapView` components, which is a `UIViewRepresentable` that wraps an `MKMapView` for building the map UI. This decision was made given the limitation that `SwiftUI.Map` still has.
+- The App was almost fully built with `SwiftUI`, the only exception was the `AnnotationsMapView` component, which is a `UIViewRepresentable` that wraps an `MKMapView` for building the map UI. This decision was made given the limitation that `SwiftUI.Map` still has.
 
 - In the current version of the App, I'm injecting the `URLSession` instance into the `FlightConnectionsService` directly. Ideally, I would create another component that is the interface of the `URLSession` in a more reusable way (`HTTPClient` generic component or similar), but given this app has only one single request to one endpoint, I decided that is fair to have it in this way. Later if a new endpoint comes it'll be time to refactor to a more reusable way.
 
