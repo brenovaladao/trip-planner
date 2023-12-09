@@ -69,17 +69,6 @@ final class CityNamesServiceTests: XCTestCase {
         XCTAssertEqual(spy.messages, [.fetchConnections])
         XCTAssertEqual(names, expectedNames)
     }
-    
-    func test_search_emptyOnEmptyQuery() async throws {
-        let flightConnections = [aFligthConnection(), aFligthConnection(), anotherFlightConnection()]
-        let (sut, spy) = makeSUT(mockResult: .success(flightConnections))
-        
-        let names = try await sut.search(for: "", type: .departure)
-        
-        let expectedNames = [String]()
-        XCTAssertEqual(spy.messages, [])
-        XCTAssertEqual(names, expectedNames)
-    }
 
     func test_search_emptyOnServiceErrorWithEmptySearchQuery() async throws {
         let aError = anyNSError()
@@ -87,7 +76,7 @@ final class CityNamesServiceTests: XCTestCase {
 
         let names = try await sut.search(for: "", type: .departure)
         
-        let expectedNames = [String]()
+        let expectedNames = Set<String>()
         XCTAssertEqual(spy.messages, [])
         XCTAssertEqual(names, expectedNames)
     }
@@ -104,9 +93,28 @@ final class CityNamesServiceTests: XCTestCase {
         XCTAssertEqual(spy.messages, [.fetchConnections])
     }
     
-    // succeeds
-    // failure
-
+    func test_search_autocompletesWithMatchingSearchQuery() async throws {
+        let flightConnections = [
+            makeFlightConnection(from: "Porto"),
+            makeFlightConnection(from: "London"),
+            makeFlightConnection(from: "Lisbon"),
+            makeFlightConnection(from: "Prague"),
+            makeFlightConnection(from: "Madrid")
+        ]
+        let (sut, _) = makeSUT(mockResult: .success(flightConnections))
+        
+        let samples: [(query: String, result: Set<String>)] = [
+            ("p", Set(["Porto", "Prague"])),
+            ("ON", Set(["London", "Lisbon"])),
+            ("", Set([])),
+            ("  mad   ", Set(["Madrid"])),
+        ]
+        
+        try await samples.asyncForEach { (query, expectedNames) in
+            let names = try await sut.search(for: query, type: .departure)
+            XCTAssertEqual(names, expectedNames, "Expected: \(expectedNames), received: \(names)")
+        }
+    }
 }
 
 private extension CityNamesServiceTests {

@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol CityNamesAutoCompleting: Sendable {
-    func search(for query: String, type: ConnectionType) async throws -> [String]
+    func search(for query: String, type: ConnectionType) async throws -> Set<String>
 }
