@@ -19,6 +19,10 @@ enum Dependencies {
         flightConnectionsFetcher: flightConnectionsService
     )
     
+    static let cityNamesAutoCompleteService: CityNamesAutoCompleting = CityNamesService(
+        flightConnectionsFetcher: flightConnectionsService
+    )
+    
     static let routeSelectionService: RouteSelectionCalculating = RouteSelectionService(
         flightConnectionsFetcher: flightConnectionsService
     )
@@ -44,7 +48,8 @@ enum Dependencies {
         FlightSearchViewModel(
             searchType: searchType,
             citySelectionSubject: citySelectionSubject, 
-            cityNamesService: cityNamesService
+            cityNamesService: cityNamesService, 
+            autoCompleteService: cityNamesAutoCompleteService
         )
     }
 }

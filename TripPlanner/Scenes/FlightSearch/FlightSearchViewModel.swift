@@ -7,7 +7,6 @@
 
 import Combine
 import Foundation
-import SwiftUI
 
 @MainActor
 public protocol FlightSearchViewModeling: ObservableObject {
@@ -28,15 +27,18 @@ public final class FlightSearchViewModel: FlightSearchViewModeling {
     private let searchType: ConnectionType
     private let citySelectionSubject: PassthroughSubject<CitySelection, Never>
     private let cityNamesService: CityNamesFetching
-    
+    private let autoCompleteService: CityNamesAutoCompleting
+
     public init(
         searchType: ConnectionType,
         citySelectionSubject: PassthroughSubject<CitySelection, Never>,
-        cityNamesService: CityNamesFetching
+        cityNamesService: CityNamesFetching,
+        autoCompleteService: CityNamesAutoCompleting
     ) {
         self.searchType = searchType
         self.citySelectionSubject = citySelectionSubject
         self.cityNamesService = cityNamesService
+        self.autoCompleteService = autoCompleteService
     }
 }
 
