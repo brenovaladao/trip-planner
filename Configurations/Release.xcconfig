@@ -3,4 +3,6 @@
 
 // We could have a different API endpoint/base URL for different environemnts.
 // For now I'll be keeping the same as in Debug.
+
+// We need to keep the `$()` in order to scape the double slashes
 API_URL = https:/$()/raw.githubusercontent.com/TuiMobilityHub/ios-code-challenge/master/connections.json
