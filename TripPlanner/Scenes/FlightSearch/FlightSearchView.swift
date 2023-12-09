@@ -29,20 +29,24 @@ public struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
     
     @ViewBuilder
     private var content: some View {
-        if let errorMessage = viewModel.errorMessage {
-            ErrorView(errorMessage)
-        } else {
-            if viewModel.isLoading {
-                SpinnerView()
-            }
+        VStack(alignment: .leading, spacing: 16) {
+            textField()
             
-            ScrollView {
-                LazyVStack(alignment: .leading, spacing: 0) {
-                    ForEach(viewModel.cityNames, id: \.self) { name in
-                        makeCityRow(name: name)
-                            .onTapGesture {
-                                viewModel.citySelected(name)
-                            }                        
+            if let errorMessage = viewModel.errorMessage {
+                ErrorView(errorMessage)
+            } else {
+                if viewModel.isLoading {
+                    SpinnerView()
+                }
+                
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 0) {
+                        ForEach(viewModel.cityNames, id: \.self) { name in
+                            makeCityRow(name: name)
+                                .onTapGesture {
+                                    viewModel.citySelected(name)
+                                }
+                        }
                     }
                 }
             }
@@ -58,6 +62,17 @@ public struct FlightSearchView<ViewModel: FlightSearchViewModeling>: View {
         .frame(maxWidth: .infinity)
         .padding()
         .contentShape(.rect)
+    }
+    
+    private func textField() -> some View {
+        HStack(alignment: .center, spacing: 8) {
+            Image(systemName: "magnifyingglass")
+            
+            TextField("Search for a city name...", text: $viewModel.searchQuery)
+                .textFieldStyle(.plain)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
     }
 }
 

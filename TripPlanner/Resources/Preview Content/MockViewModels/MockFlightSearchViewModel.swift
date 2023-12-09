@@ -7,10 +7,11 @@
 
 import Foundation
 
-final class MockFlightSearchViewModel: FlightSearchViewModeling {    
+final class MockFlightSearchViewModel: FlightSearchViewModeling {
     @Published var cityNames: [String]
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
+    @Published var searchQuery: String = ""
     
     init(cityNames: [String], isLoading: Bool = false, errorMessage: String? = nil) {
         self.cityNames = cityNames

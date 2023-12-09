@@ -13,6 +13,7 @@ public protocol FlightSearchViewModeling: ObservableObject {
     var cityNames: [String] { get }
     var isLoading: Bool { get }
     var errorMessage: String? { get }
+    var searchQuery: String { get set }
 
     func citySelected(_ name: String)
     
@@ -23,7 +24,8 @@ public final class FlightSearchViewModel: FlightSearchViewModeling {
     @Published private(set) public var cityNames: [String] = []
     @Published private(set) public var isLoading: Bool = false
     @Published private(set) public var errorMessage: String?
-
+    @Published public var searchQuery: String = ""
+    
     private let searchType: ConnectionType
     private let citySelectionSubject: PassthroughSubject<CitySelection, Never>
     private let cityNamesService: CityNamesFetching
