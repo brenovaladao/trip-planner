@@ -20,10 +20,11 @@
 
 There is no extra `setup` step to be done, just be sure you have the correct Xcode version (Xcode 15+) installed.
 
-The App downloads information from this base [url](https://raw.githubusercontent.com/TuiMobilityHub/ios-code-challenge/master/connections.json). If you want to use a different base URL, it can be done by updating the `API_URL` variable, defined at `Debug.xcconfig` (_TripPlanner/Configurations/Debug.xcconfig_). 
+The App downloads information from this base [url](https://raw.githubusercontent.com/TuiMobilityHub/ios-code-challenge/master/connections.json). If you want to use a different base URL, it can be done by updating the `API_URL` variable defined at `Debug.xcconfig` file. (Located at: _TripPlanner/Configurations/Debug.xcconfig_). 
 >  Important: Note that we need the `/$()/` for escaping the `//`.
 
 ## Technical decisions:
+
 - The App goal is to find the cheapest route between two cities (`Departure` and `Destination`) based on its accumulated price. To achieve such a result the `Dijkstra` algorithm was chosen.
 
 - The App was almost fully built with `SwiftUI`, the only exception was the `AnnotationsMapView` component, which is a `UIViewRepresentable` that wraps an `MKMapView` for building the map UI. This decision was made given the limitation that `SwiftUI.Map` still has.
@@ -39,5 +40,3 @@ The App downloads information from this base [url](https://raw.githubusercontent
 - Move Strings to a `.strings` file for handling localization properly.
 
 - Define better styles for all UI components.
-
-- Create an HTTPClient generic component for being the interface on top of `URLSession`.
