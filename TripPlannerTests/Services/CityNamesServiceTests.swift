@@ -69,6 +69,44 @@ final class CityNamesServiceTests: XCTestCase {
         XCTAssertEqual(spy.messages, [.fetchConnections])
         XCTAssertEqual(names, expectedNames)
     }
+    
+    func test_search_emptyOnEmptyQuery() async throws {
+        let flightConnections = [aFligthConnection(), aFligthConnection(), anotherFlightConnection()]
+        let (sut, spy) = makeSUT(mockResult: .success(flightConnections))
+        
+        let names = try await sut.search(for: "", type: .departure)
+        
+        let expectedNames = [String]()
+        XCTAssertEqual(spy.messages, [])
+        XCTAssertEqual(names, expectedNames)
+    }
+
+    func test_search_emptyOnServiceErrorWithEmptySearchQuery() async throws {
+        let aError = anyNSError()
+        let (sut, spy) = makeSUT(mockResult: .failure(aError))
+
+        let names = try await sut.search(for: "", type: .departure)
+        
+        let expectedNames = [String]()
+        XCTAssertEqual(spy.messages, [])
+        XCTAssertEqual(names, expectedNames)
+    }
+    
+    func test_search_failsOnServiceErrorWithValidSearchQuery() async {
+        let aError = anyNSError()
+        let (sut, spy) = makeSUT(mockResult: .failure(aError))
+        
+        do {
+            _ = try await sut.search(for: "a query", type: .departure)
+            XCTFail("Should have failed")
+        } catch {}
+        
+        XCTAssertEqual(spy.messages, [.fetchConnections])
+    }
+    
+    // succeeds
+    // failure
+
 }
 
 private extension CityNamesServiceTests {

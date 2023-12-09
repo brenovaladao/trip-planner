@@ -24,6 +24,7 @@ extension CityNamesService: CityNamesFetching {
 
 extension CityNamesService: CityNamesAutoCompleting {
     public func search(for query: String, type: ConnectionType) async throws -> [String] {
+        guard !query.isEmpty else { return [] }
         let cityNames = try await fetchCityNames(searchType: type)
         let sanitezedQuery = query.sanitized()
         return cityNames.filter { $0.sanitized() == sanitezedQuery }
