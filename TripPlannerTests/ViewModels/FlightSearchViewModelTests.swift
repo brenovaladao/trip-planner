@@ -25,9 +25,7 @@ final class FlightSearchViewModelTests: XCTestCase {
             locationSelectedOutputs: nil,
             citySelectionSubject: citySelectionSubject,
             actions: {},
-            asserting: {
-                XCTAssertEqual(spy.messages, [])
-            }
+            asserting: { XCTAssertEqual(spy.messages, []) }
         )
     }
     
@@ -41,12 +39,8 @@ final class FlightSearchViewModelTests: XCTestCase {
             sut,
             locationSelectedOutputs: [citySelection],
             citySelectionSubject: citySelectionSubject,
-            actions: {
-                sut.citySelected(citySelection.cityName)
-            },
-            asserting: {
-                XCTAssertEqual(spy.messages, [])
-            }
+            actions: { sut.citySelected(citySelection.cityName) },
+            asserting: { XCTAssertEqual(spy.messages, []) }
         )
     }
     
@@ -60,12 +54,8 @@ final class FlightSearchViewModelTests: XCTestCase {
             cityNamesOutputs: [[], cityNames],
             isLoadingOutputs: [false, true, false],
             errorMessageOutputs: [nil],
-            actions: {
-                await sut.loadCityNames()
-            },
-            asserting: {
-                XCTAssertEqual(spy.messages, [.fetchCityNames])
-            }
+            actions: { await sut.loadCityNames() },
+            asserting: { XCTAssertEqual(spy.messages, [.fetchCityNames]) }
         )
     }
     
@@ -171,9 +161,44 @@ final class FlightSearchViewModelTests: XCTestCase {
                 await sut.loadCityNames()
                 sut.searchQuery = query
             },
-            asserting: {
-                XCTAssertEqual(spy.messages, [.fetchCityNames, .autoCompleteSearch])
-            }
+            asserting: { XCTAssertEqual(spy.messages, [.fetchCityNames, .autoCompleteSearch]) }
+        )
+    }
+    
+    func test_search_errorMessageOnInvalidSearchQuery() async {
+        let cityNames = ["Cape Town", "London", "Tokyo"]
+        let query = "invalid-search-query"
+        let (sut, spy) = makeSUT(citiesMockResult: .success(cityNames))
+        
+        await expect(
+            sut,
+            cityNamesOutputs: [[], cityNames],
+            isLoadingOutputs: [false, true, false],
+            errorMessageOutputs: [nil, "City not found"],
+            searchQueryOutputs: ["", query],
+            actions: {
+                await sut.loadCityNames()
+                sut.searchQuery = query
+            },
+            asserting: { XCTAssertEqual(spy.messages, [.fetchCityNames, .autoCompleteSearch]) }
+        )
+    }
+    
+    func test_search_doesNothingWithEmptySearchQuery() async {
+        let cityNames = ["Cape Town", "London", "Tokyo"]
+        let query = ""
+        let (sut, spy) = makeSUT(citiesMockResult: .success(cityNames))
+        
+        await expect(
+            sut,
+            cityNamesOutputs: [[], cityNames, cityNames],
+            isLoadingOutputs: [false, true, false, false],
+            searchQueryOutputs: ["", query],
+            actions: {
+                await sut.loadCityNames()
+                sut.searchQuery = query
+            },
+            asserting: { XCTAssertEqual(spy.messages, [.fetchCityNames, .fetchCityNames]) }
         )
     }
 }
