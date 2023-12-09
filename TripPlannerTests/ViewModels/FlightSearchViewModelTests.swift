@@ -152,6 +152,30 @@ final class FlightSearchViewModelTests: XCTestCase {
             asserting: { XCTAssertEqual(spy.messages, [.fetchCityNames]) }
         )
     }
+    
+    func test_search_replacesPlacesListWithAutoCompleteResult() async {
+        let cityNames = ["Cape Town", "London", "Tokyo"]
+        let autoCompleteResult = ["London"]
+        let query = "lon"
+        let (sut, spy) = makeSUT(
+            citiesMockResult: .success(cityNames),
+            autoCompleteMockResult: .success(Set(autoCompleteResult))
+        )
+        
+        await expect(
+            sut,
+            cityNamesOutputs: [[], cityNames, autoCompleteResult],
+            isLoadingOutputs: [false, true, false],
+            searchQueryOutputs: ["", query],
+            actions: {
+                await sut.loadCityNames()
+                sut.searchQuery = query
+            },
+            asserting: {
+                XCTAssertEqual(spy.messages, [.fetchCityNames, .autoCompleteSearch])
+            }
+        )
+    }
 }
 
 private extension FlightSearchViewModelTests {
@@ -171,7 +195,8 @@ private extension FlightSearchViewModelTests {
             searchType: searchType,
             citySelectionSubject: citySelectionSubject,
             cityNamesService: spy, 
-            autoCompleteService: spy
+            autoCompleteService: spy,
+            debounceInterval: 0
         )
         
         trackForMemoryLeaks(sut, file: file, line: line)
@@ -214,7 +239,7 @@ private extension FlightSearchViewModelTests {
         
         await fulfillment(
             of: [cityNamesExp, isLoadingExp, errorMessageExp, citySelectionExp, searchQueryExp],
-            timeout: 0.1
+            timeout: 1
         )
         
         asserting()

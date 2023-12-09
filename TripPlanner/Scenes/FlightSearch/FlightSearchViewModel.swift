@@ -31,6 +31,7 @@ public final class FlightSearchViewModel: FlightSearchViewModeling {
     private let cityNamesService: CityNamesFetching
     private let autoCompleteService: CityNamesAutoCompleting
     
+    private let debounceInterval: Int
     private var autoCompleteCancellable: AnyCancellable?
     private var autoCompleteTask: Task<Void, Never>?
 
@@ -38,12 +39,14 @@ public final class FlightSearchViewModel: FlightSearchViewModeling {
         searchType: ConnectionType,
         citySelectionSubject: PassthroughSubject<CitySelection, Never>,
         cityNamesService: CityNamesFetching,
-        autoCompleteService: CityNamesAutoCompleting
+        autoCompleteService: CityNamesAutoCompleting,
+        debounceInterval: Int? = nil
     ) {
         self.searchType = searchType
         self.citySelectionSubject = citySelectionSubject
         self.cityNamesService = cityNamesService
         self.autoCompleteService = autoCompleteService
+        self.debounceInterval = debounceInterval ?? FileConstants.debounceInterval
         
         bindPublishers()
     }
@@ -91,7 +94,8 @@ private extension FlightSearchViewModel {
 private extension FlightSearchViewModel {
     func bindPublishers() {
         autoCompleteCancellable = $searchQuery
-            .debounce(for: .milliseconds(FileConstants.debounceInterval), scheduler: DispatchQueue.main)
+            .dropFirst()
+            .debounce(for: .milliseconds(debounceInterval), scheduler: DispatchQueue.main)
             .sink { [weak self] query in
                 guard let self else { return }
                 guard !query.isEmpty else {
