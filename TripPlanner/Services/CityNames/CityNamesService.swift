@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class CityNamesService: CityNamesFetching {
+public final class CityNamesService {
     private let flightConnectionsFetcher: FlightConnectionsFetching
     
     public init(flightConnectionsFetcher: FlightConnectionsFetching) {
@@ -15,8 +15,8 @@ public final class CityNamesService: CityNamesFetching {
     }
 }
 
-public extension CityNamesService {
-    func fetchCityNames(searchType: ConnectionType) async throws -> [String] {
+extension CityNamesService: CityNamesFetching {
+    public func fetchCityNames(searchType: ConnectionType) async throws -> [String] {
         let flightConnections = try await flightConnectionsFetcher.fetchConnections()
         let cityNames = switch searchType {
         case .departure:
@@ -25,5 +25,11 @@ public extension CityNamesService {
             flightConnections.map(\.to)
         }
         return Set(cityNames).sorted()
+    }
+}
+
+extension CityNamesService: CityNamesAutoCompleting {
+    public func search(for query: String) async -> [String] {
+        []
     }
 }
