@@ -76,14 +76,8 @@ private extension FlightConnectionsListViewModel {
     func handleCitySelection(_ citySelection: CitySelection) {
         switch citySelection.type {
         case .departure:
-            if destination == citySelection.cityName {
-                destination = nil
-            }
             departure = citySelection.cityName
         case .destination:
-            if departure == citySelection.cityName {
-                departure = nil
-            }
             destination = citySelection.cityName
         }
         verifyInputCompletion()

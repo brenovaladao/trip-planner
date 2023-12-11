@@ -103,46 +103,6 @@ final class FlightConnectionsListViewModelTests: XCTestCase {
         )
     }
     
-    func test_citySelectionPublisher_publishesNewValueForDestinationWhileDepartureHasTheSameCity() async {
-        let cityName = destinationCity.name
-        let citySelection = CitySelection(type: .destination, cityName: cityName)
-        let publisher = PassthroughSubject<CitySelection, Never>()
-        let (sut, spy) = makeSUT(
-            departure: cityName,
-            citySelectionPublisher: publisher,
-            eventHandler: unnavailableEventCall
-        )
-        await expect(
-            sut,
-            departureOutputs: [cityName, nil],
-            destinationOutputs: [nil, citySelection.cityName],
-            citySelectionOutputs: [citySelection],
-            citySelectionSubject: publisher,
-            actions: { publisher.send(citySelection) },
-            asserting: { XCTAssertTrue(spy.messages.isEmpty) }
-        )
-    }
-    
-    func test_citySelectionPublisher_publishesNewValueForDepartureWhileDestinationHasTheSameCity() async {
-        let cityName = departureCity.name
-        let citySelection = CitySelection(type: .departure, cityName: cityName)
-        let publisher = PassthroughSubject<CitySelection, Never>()
-        let (sut, spy) = makeSUT(
-            destination: cityName,
-            citySelectionPublisher: publisher,
-            eventHandler: unnavailableEventCall
-        )
-        await expect(
-            sut,
-            departureOutputs: [nil, citySelection.cityName],
-            destinationOutputs: [cityName, nil],
-            citySelectionOutputs: [citySelection],
-            citySelectionSubject: publisher,
-            actions: { publisher.send(citySelection) },
-            asserting: { XCTAssertTrue(spy.messages.isEmpty) }
-        )
-    }
-    
     func test_citySelectionPublisher_calculatesRouteInfoWhenDepartureAndDestinationAreFilledIn() async {
         let flight = aFligthConnection()
         let departureCity = flight.to
