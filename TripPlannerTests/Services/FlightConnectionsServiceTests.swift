@@ -57,6 +57,24 @@ final class FlightConnectionsServiceTests: XCTestCase {
             XCTAssertEqual((error as? FlightConnectionsMapper.Error), .invalidData)
         }
     }
+    
+    func test_fetchConnections_errorOnNonHTTPURLResponse() async {
+        let sut = makeSUT()
+        let data = makeFlightConnectionsJSON([])
+        
+        URLProtocolMock.requestHandler = { request in
+            let nonHTTPURLResponse = URLResponse(url: anyURL(), mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
+            return (nonHTTPURLResponse, data)
+        }
+        
+        do {
+            _ = try await sut.fetchConnections()
+            XCTFail("Should fail with invalid data error")
+        } catch is FlightConnectionsService.UnexpectedValuesError {
+        } catch {
+            XCTFail("Should have failed with UnexpectedValuesError error")
+        }
+    }
 }
 
 private extension FlightConnectionsServiceTests {

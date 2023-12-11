@@ -16,7 +16,7 @@ public final class FlightConnectionsService {
         self.endpoint = endpoint
     }
     
-    private struct UnexpectedValuesError: Error {}
+    public struct UnexpectedValuesError: Error {}
 }
 
 extension FlightConnectionsService: FlightConnectionsFetching {
