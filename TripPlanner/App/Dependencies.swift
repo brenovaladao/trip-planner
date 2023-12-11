@@ -25,8 +25,11 @@ enum Dependencies {
         flightConnectionsFetcher: flightConnectionsService
     )
     
+    static let shortestPathFinder: ShortestPathFinding = Dijkstra()
+    
     static let routeSelectionService: RouteSelectionCalculating = RouteSelectionService(
-        flightConnectionsFetcher: flightConnectionsService
+        flightConnectionsFetcher: flightConnectionsService, 
+        shortestPathFinder: shortestPathFinder
     )
     
     // MARK: - ViewModels

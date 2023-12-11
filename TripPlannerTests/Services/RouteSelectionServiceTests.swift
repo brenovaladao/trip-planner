@@ -134,7 +134,10 @@ private extension RouteSelectionServiceTests {
         line: UInt = #line
     ) -> (RouteSelectionService, FlightConnectionsServiceSpy) {
         let spy = FlightConnectionsServiceSpy(mockResult)
-        let sut = RouteSelectionService(flightConnectionsFetcher: spy)
+        let sut = RouteSelectionService(
+            flightConnectionsFetcher: spy,
+            shortestPathFinder: Dijkstra()
+        )
         
         trackForMemoryLeaks(spy, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)

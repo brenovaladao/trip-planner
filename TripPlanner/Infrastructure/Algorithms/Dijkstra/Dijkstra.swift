@@ -12,8 +12,10 @@ import Foundation
 /// - https://www.kodeco.com/279-swift-algorithm-club-swift-dijkstra-s-algorithm
 /// - https://en.wikipedia.org/wiki/Dijkstra's_algorithm
 /// -
-public enum Dijkstra {
-    static func shortestPath(departure: Node, destination: Node) -> Path? {
+public final class Dijkstra: ShortestPathFinding {
+    public init() {}
+    
+    public func shortestPath(departure: Node, destination: Node) -> Path? {
         var frontier: [Path] = [] {
             didSet { frontier.sort { $0.cumulativePrice < $1.cumulativePrice } }
         }

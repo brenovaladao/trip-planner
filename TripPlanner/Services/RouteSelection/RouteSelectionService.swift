@@ -9,11 +9,16 @@ import Foundation
 
 public final class RouteSelectionService {
     private let flightConnectionsFetcher: FlightConnectionsFetching
+    private let shortestPathFinder: ShortestPathFinding
     
     public struct RouteNotPossibleError: Error {}
 
-    public init(flightConnectionsFetcher: FlightConnectionsFetching) {
+    public init(
+        flightConnectionsFetcher: FlightConnectionsFetching,
+        shortestPathFinder: ShortestPathFinding
+    ) {
         self.flightConnectionsFetcher = flightConnectionsFetcher
+        self.shortestPathFinder = shortestPathFinder
     }
 }
 
@@ -45,7 +50,7 @@ extension RouteSelectionService: RouteSelectionCalculating {
         
         guard let departureNode = nodes.first(where: { $0.city ==  departureCity }),
               let destinationNode = nodes.first(where: { $0.city ==  destinationCity }),
-              let path = Dijkstra.shortestPath(departure: departureNode, destination: destinationNode)
+              let path = shortestPathFinder.shortestPath(departure: departureNode, destination: destinationNode)
         else { throw RouteNotPossibleError() }
         
         let cityNames: [String] = path.lightPath
